@@ -9,5 +9,11 @@ export default NextAuth({
       clientSecret: process.env.COGNITO_CLIENT_SECRET || '',
       issuer: process.env.COGNITO_ISSUER
     })
-  ]
+  ],
+  // callbacks: {
+  //   async session({ session, token }) {
+  //     session.user.id = token.sub;
+  //     return session;
+  //   }
+  // }
 });

@@ -1,35 +1,23 @@
-import { signIn, signOut, useSession } from "next-auth/react"
-import { FC } from "react";
+import { stat } from "fs";
+import { signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
 
-const ProtectedPage:FC = () => {
-  const { data: session, status} = useSession(
-  //   {
-  //   required: true,
-  //   onUnauthenticated() {
-  //     signIn();
-  //   }
-  // }
-);
+export default function MembershipPage() {
+  const { data: session, status} = useSession();
+
+  useEffect(() => {
+    if (status !== 'loading' && !session) {
+      signIn('cognito');
+    }
+  }, [session, status]);
 
   if (status === "loading") {
     return <p>Loading...</p>;
   }
 
-  if (session) {
-    return (
-      <>
-        <p>Signed ins as {session?.user?.email}</p>
-        <button onClick={() => signOut()}>Sign Out</button>
-      </>
-    )
-  }
-
   return (
     <div>
-      <h1>Not signed in</h1>
-      <button onClick={() => signIn()}>Sign in</button>
+      {session ? `Signed in as ${session.user.email}` : 'You are not signed in.'}
     </div>
   )
 }
-
-export default ProtectedPage;
