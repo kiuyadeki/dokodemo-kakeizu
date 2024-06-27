@@ -47,7 +47,7 @@ y: selectedNode.position.y - BASE_GENERATIONS_SPACING },
     leftParentNode.data.spouse.push(rightParentNode.id);
 
     const edgesToAdd = [
-      createEdge(selectedNode.id, maritalNode.id, 'smoothstep', 'personSourceTop', 'maritalTargetBottom'),
+      createEdge(selectedNode.id, maritalNode.id, 'parentChild', 'personSourceTop', 'maritalTargetBottom'),
       createEdge(leftParentNode.id, maritalNode.id, 'smoothstep', 'personSourceRight', 'maritalTargetLeft'),
       createEdge(rightParentNode.id, maritalNode.id, 'smoothstep', 'personSourceLeft', 'maritalTargetRight'),
     ];
