@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "nextfamilytree",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authnextfamilytreed58e572c",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
