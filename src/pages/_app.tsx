@@ -8,7 +8,7 @@ Amplify.configure(amplifyconfig);
 
 const Myapp = ( { Component, pageProps, signOut, user}: AppProps & WithAuthenticatorProps) => {
   return (
-      <Component {...pageProps} />
+      <Component {...pageProps} signOut={signOut} user={user} />
   )
 }
 
