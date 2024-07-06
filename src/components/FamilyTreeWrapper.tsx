@@ -3,7 +3,7 @@ import { wholeNodesState } from '../recoil/WholeNodesState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { use, useEffect, useMemo, useRef, useState } from 'react';
 import { PersonNode } from './PersonNode';
 import { MaritalNode } from './MaritalStatusNode';
 import {
@@ -27,13 +27,12 @@ import { generateClient } from 'aws-amplify/api';
 import { listFamilyTrees } from '@/graphql/queries';
 import { FamilyTree } from '@/API';
 import { createFamilyTree } from '@/graphql/mutations';
+import { fetchUserAttributes } from 'aws-amplify/auth';
 
 const OuterBox = styled.div`
   width: 100vw;
   height: 100vh;
 `;
-
-const client = generateClient();
 
 export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
   const { openModal } = props;
@@ -41,7 +40,7 @@ export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
   const [nodesUpdated, setNodesUpdated] = useRecoilState(nodesUpdatedState);
-  // const [familyTrees, setFamilyTrees] = useState<FamilyTree>();
+  const [familyTreeInstance, setFamilyTreeInstance] = useState(null);
 
 
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
@@ -101,32 +100,6 @@ marital: MaritalNode }), []);
       openModal();
     }
   };
-
-  async function fetchFamilyTree() {
-    try {
-      const familfyTreeData = await client.graphql({
-        query: listFamilyTrees,
-      });
-      const familyTrees = familfyTreeData.data.listFamilyTrees.items;
-      console.log('familyTrees', familyTrees);
-    } catch(error) {
-      console.error('Error fetching family tree:', error)
-    }
-  }
-
-  async function addFamilyTree() {
-    try {
-      await client.graphql({
-        query: createFamilyTree,
-        variables: { input: { owner: 'test', data: 'test' }}
-      });
-      // const familyTrees = familyTreeData.data.listFamilyTrees.items;
-      // console.log('familyTrees', familyTrees);
-    } catch(error) {
-      console.error('Error fetching family tree:', error)
-    }
-    
-  }
 
   return (
     <OuterBox className='wrapper' ref={reactFlowWrapper}>
