@@ -1,13 +1,46 @@
-import { WithAuthenticatorProps } from "@aws-amplify/ui-react";
-import { signOut } from "aws-amplify/auth";
+import { WithAuthenticatorProps } from '@aws-amplify/ui-react';
+import { signOut } from 'aws-amplify/auth';
+import { Box, Button, Center, ChakraBaseProvider, ChakraProvider, Container, Heading, Text, extendTheme } from '@chakra-ui/react';
+import { color } from 'framer-motion';
+import { UseMicroModal } from '@/hooks/useMicromodal';
+import { CreateProjectModal } from '@/components/CreateProjectModal';
 
-const HomePage = ({signOut, user}: WithAuthenticatorProps) => {
-    return (
-        <div>
-            <h1>Home</h1>
-            <button onClick={signOut}>Sign Out {user!.username}</button>
-        </div>
-    )
-}
+const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        bg: 'gray.100',
+        color: 'gray.800',
+      },
+    },
+  },
+});
+
+const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
+  const { Modal, open, close } = UseMicroModal('create-family-tree-modal');
+
+  return (
+    <ChakraProvider theme={theme}>
+      <Center minHeight='100dvh' p={10}>
+        <Container maxW='3xl' bg='white' p={10} borderRadius='md' shadow='md' position='relative'>
+          <Box pb={8}>
+            <Heading as='h2' size='md' mb={4}>
+              編集する家系図を選択してください。
+            </Heading>
+            <Button>家系図①</Button>
+          </Box>
+
+          <Text mb={6}>または</Text>
+          <Button onClick={open}>新しく家系図を作る</Button>
+            <Modal>
+              <CreateProjectModal />
+            </Modal>
+
+        </Container>
+      </Center>
+          <Button onClick={signOut}>Sign Out {user!.username}</Button>
+    </ChakraProvider>
+  );
+};
 
 export default HomePage;

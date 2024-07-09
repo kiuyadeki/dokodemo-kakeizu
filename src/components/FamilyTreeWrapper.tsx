@@ -3,7 +3,7 @@ import { wholeNodesState } from '../recoil/WholeNodesState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
-import { use, useEffect, useMemo, useRef, useState } from 'react';
+import { use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PersonNode } from './PersonNode';
 import { MaritalNode } from './MaritalStatusNode';
 import {
@@ -41,6 +41,14 @@ export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
   const [nodesUpdated, setNodesUpdated] = useRecoilState(nodesUpdatedState);
   const [familyTreeInstance, setFamilyTreeInstance] = useState(null);
+
+  const onSave = () => {
+    if(reactFlowInstance) {
+      const tree = reactFlowInstance.toObject();
+      sessionStorage.setItem('example-familyTree', JSON.stringify(tree));
+      console.log('tree', tree);
+    }
+  }
 
 
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
@@ -91,6 +99,7 @@ marital: MaritalNode }), []);
   useEffect(() => {
     if (selectedNode) {
       setNodesUpdated(true);
+      onSave();
     }
   }, [selectedNode]);
 
