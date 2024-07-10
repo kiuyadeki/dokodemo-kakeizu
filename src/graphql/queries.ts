@@ -12,6 +12,7 @@ export const getFamilyTree = /* GraphQL */ `query GetFamilyTree($id: ID!) {
   getFamilyTree(id: $id) {
     id
     owner
+    name
     data
     createdAt
     updatedAt
@@ -31,6 +32,7 @@ export const listFamilyTrees = /* GraphQL */ `query ListFamilyTrees(
     items {
       id
       owner
+      name
       data
       createdAt
       updatedAt

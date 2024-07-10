@@ -5,6 +5,7 @@ input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONL
 type FamilyTree @model @auth(rules: [{allow: owner, operations: [create, update, read, delete]}]) {
   id: ID!
   owner: String!
+  name: String!
   data: AWSJSON
 }
 

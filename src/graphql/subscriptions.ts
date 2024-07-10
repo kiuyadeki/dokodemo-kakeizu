@@ -15,6 +15,7 @@ export const onCreateFamilyTree = /* GraphQL */ `subscription OnCreateFamilyTree
   onCreateFamilyTree(filter: $filter, owner: $owner) {
     id
     owner
+    name
     data
     createdAt
     updatedAt
@@ -32,6 +33,7 @@ export const onUpdateFamilyTree = /* GraphQL */ `subscription OnUpdateFamilyTree
   onUpdateFamilyTree(filter: $filter, owner: $owner) {
     id
     owner
+    name
     data
     createdAt
     updatedAt
@@ -49,6 +51,7 @@ export const onDeleteFamilyTree = /* GraphQL */ `subscription OnDeleteFamilyTree
   onDeleteFamilyTree(filter: $filter, owner: $owner) {
     id
     owner
+    name
     data
     createdAt
     updatedAt

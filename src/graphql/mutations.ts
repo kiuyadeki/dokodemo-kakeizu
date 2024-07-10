@@ -15,6 +15,7 @@ export const createFamilyTree = /* GraphQL */ `mutation CreateFamilyTree(
   createFamilyTree(input: $input, condition: $condition) {
     id
     owner
+    name
     data
     createdAt
     updatedAt
@@ -32,6 +33,7 @@ export const updateFamilyTree = /* GraphQL */ `mutation UpdateFamilyTree(
   updateFamilyTree(input: $input, condition: $condition) {
     id
     owner
+    name
     data
     createdAt
     updatedAt
@@ -49,6 +51,7 @@ export const deleteFamilyTree = /* GraphQL */ `mutation DeleteFamilyTree(
   deleteFamilyTree(input: $input, condition: $condition) {
     id
     owner
+    name
     data
     createdAt
     updatedAt

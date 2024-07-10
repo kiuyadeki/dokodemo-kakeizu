@@ -5,11 +5,13 @@
 export type CreateFamilyTreeInput = {
   id?: string | null,
   owner: string,
+  name: string,
   data?: string | null,
 };
 
 export type ModelFamilyTreeConditionInput = {
   owner?: ModelStringInput | null,
+  name?: ModelStringInput | null,
   data?: ModelStringInput | null,
   and?: Array< ModelFamilyTreeConditionInput | null > | null,
   or?: Array< ModelFamilyTreeConditionInput | null > | null,
@@ -62,6 +64,7 @@ export type FamilyTree = {
   __typename: "FamilyTree",
   id: string,
   owner: string,
+  name: string,
   data?: string | null,
   createdAt: string,
   updatedAt: string,
@@ -70,6 +73,7 @@ export type FamilyTree = {
 export type UpdateFamilyTreeInput = {
   id: string,
   owner?: string | null,
+  name?: string | null,
   data?: string | null,
 };
 
@@ -152,6 +156,7 @@ export type DeletePrivateNoteInput = {
 export type ModelFamilyTreeFilterInput = {
   id?: ModelIDInput | null,
   owner?: ModelStringInput | null,
+  name?: ModelStringInput | null,
   data?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
@@ -219,6 +224,7 @@ export type ModelPrivateNoteConnection = {
 
 export type ModelSubscriptionFamilyTreeFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
   data?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
@@ -288,6 +294,7 @@ export type CreateFamilyTreeMutation = {
     __typename: "FamilyTree",
     id: string,
     owner: string,
+    name: string,
     data?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -304,6 +311,7 @@ export type UpdateFamilyTreeMutation = {
     __typename: "FamilyTree",
     id: string,
     owner: string,
+    name: string,
     data?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -320,6 +328,7 @@ export type DeleteFamilyTreeMutation = {
     __typename: "FamilyTree",
     id: string,
     owner: string,
+    name: string,
     data?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -434,6 +443,7 @@ export type GetFamilyTreeQuery = {
     __typename: "FamilyTree",
     id: string,
     owner: string,
+    name: string,
     data?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -453,6 +463,7 @@ export type ListFamilyTreesQuery = {
       __typename: "FamilyTree",
       id: string,
       owner: string,
+      name: string,
       data?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -545,6 +556,7 @@ export type OnCreateFamilyTreeSubscription = {
     __typename: "FamilyTree",
     id: string,
     owner: string,
+    name: string,
     data?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -561,6 +573,7 @@ export type OnUpdateFamilyTreeSubscription = {
     __typename: "FamilyTree",
     id: string,
     owner: string,
+    name: string,
     data?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -577,6 +590,7 @@ export type OnDeleteFamilyTreeSubscription = {
     __typename: "FamilyTree",
     id: string,
     owner: string,
+    name: string,
     data?: string | null,
     createdAt: string,
     updatedAt: string,
