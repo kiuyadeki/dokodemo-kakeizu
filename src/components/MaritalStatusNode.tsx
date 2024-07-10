@@ -51,6 +51,7 @@ export const MaritalNode = (props: NodeProps<MaritalData>) => {
       return newNodes;
     });
   };
+  const isDivorced = data.isDivorced ?? false;
 
   return (
     <NodeContainer onClick={handleClick}>

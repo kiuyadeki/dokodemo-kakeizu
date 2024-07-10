@@ -1,8 +1,9 @@
 import { createFamilyTree } from '@/graphql/mutations';
 import { generateClient } from 'aws-amplify/api';
 import { fetchUserAttributes } from 'aws-amplify/auth';
+import { ReactFlowJsonObject } from 'reactflow';
 
-export const createNewFamilyTree = async (familyTreeData: object) => {
+export const createNewFamilyTree = async (familyTreeData: ReactFlowJsonObject, projectName: string) => {
   const client = generateClient();
   const user = await fetchUserAttributes();
 
@@ -15,6 +16,7 @@ export const createNewFamilyTree = async (familyTreeData: object) => {
       variables: {
         input: {
           owner: user.sub,
+          name: projectName,
           data: JSON.stringify(familyTreeData),
         },
       },

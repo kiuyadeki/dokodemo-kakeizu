@@ -1,6 +1,6 @@
-import { BirthData } from '../types/PersonNodeData';
+import { BirthInfo } from '../types/PersonNodeData';
 
-export function formatBirthDay(data: BirthData): string {
+export function formatBirthDay(data: BirthInfo): string {
   const { birthYear, birthMonth, birthDate } = data;
   if (!birthYear) return '';
   if (!birthMonth) return `${birthYear}`;

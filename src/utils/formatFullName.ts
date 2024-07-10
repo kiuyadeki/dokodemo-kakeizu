@@ -1,6 +1,6 @@
 interface NameData {
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export function formatFullName(data: NameData): string {
