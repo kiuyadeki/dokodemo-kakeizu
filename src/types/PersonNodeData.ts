@@ -23,7 +23,7 @@ export interface FamilyInfo {
   descendants: number;
   descendantsWidth: number;
   ancestors: number;
-  siblings: string[];
+  siblings?: string[];
   maritalPosition?: 'right' | 'left';
   maritalNodeId?: string;
   isDivorced?: boolean;
@@ -34,11 +34,6 @@ export interface MaritalData {
 }
 
 export type PersonData = PersonInfo & BirthInfo & FamilyInfo;
-
-// export interface PersonData extends PersonInfo, BirthInfo, FamilyInfo {
-  
-// }
-
 interface NodeData<T> extends Node<T> {
   type: 'person' | 'marital';
   data: T;
@@ -46,18 +41,4 @@ interface NodeData<T> extends Node<T> {
 
 export type PersonNodeData = NodeData<PersonData>;
 export type MaritalNodeData = NodeData<Partial<PersonData>>;
-// export type MaritalNodeData = NodeData<MaritalData>;
 
-// export interface MaritalData {
-//   isDivorced: boolean;
-// }
-
-// export interface PersonNodeData extends Node<PersonData> {
-//   type: 'person';
-//   data: PersonData;
-// }
-
-// export interface MaritalNodeData extends Node<PersonData | MaritalData> {
-//   type: 'marital';
-//   data: PersonData | MaritalData;
-// }

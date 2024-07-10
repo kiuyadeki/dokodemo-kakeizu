@@ -21,6 +21,7 @@ export const createNewFamilyTree = async (familyTreeData: ReactFlowJsonObject, p
         },
       },
     });
+    console.log('create family tree', data);
 
     return data.data.createFamilyTree;
   } catch (error) {
