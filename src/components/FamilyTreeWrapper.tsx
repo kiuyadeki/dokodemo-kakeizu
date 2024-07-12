@@ -28,6 +28,7 @@ import { listFamilyTrees } from '@/graphql/queries';
 import { FamilyTree } from '@/API';
 import { createFamilyTree } from '@/graphql/mutations';
 import { fetchUserAttributes } from 'aws-amplify/auth';
+import { fetchFamilyTree } from '@/utils/fetchFamilyTree';
 
 const OuterBox = styled.div`
   width: 100vw;
@@ -46,7 +47,7 @@ export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
     if(reactFlowInstance) {
       const tree = reactFlowInstance.toObject();
       sessionStorage.setItem('example-familyTree', JSON.stringify(tree));
-      console.log('tree', tree);
+      // console.log('tree', tree);
     }
   }
 
@@ -102,6 +103,10 @@ marital: MaritalNode }), []);
       onSave();
     }
   }, [selectedNode]);
+
+  useEffect(() => {
+    fetchFamilyTree();
+  }, [])
 
   const handleNodeClick = (clickedNode: PersonNodeData) => {
     setSelectedNode(clickedNode);
