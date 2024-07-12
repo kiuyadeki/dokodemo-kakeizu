@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// this is an auto generated file. This will be overwritten
 
 import * as APITypes from "../API";
 type GeneratedQuery<InputType, OutputType> = string & {
@@ -8,22 +7,7 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getFamilyTree = /* GraphQL */ `query GetFamilyTree($id: ID!) {
-  getFamilyTree(id: $id) {
-    id
-    owner
-    name
-    data
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetFamilyTreeQueryVariables,
-  APITypes.GetFamilyTreeQuery
->;
-export const listFamilyTrees = /* GraphQL */ `query ListFamilyTrees(
+export const listFamilyTreeSummary = /* GraphQL */ `query listFamilyTrees(
   $filter: ModelFamilyTreeFilterInput
   $limit: Int
   $nextToken: String
@@ -31,15 +15,9 @@ export const listFamilyTrees = /* GraphQL */ `query ListFamilyTrees(
   listFamilyTrees(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      owner
       name
-      data
-      createdAt
-      updatedAt
-      __typename
     }
     nextToken
-    __typename
   }
 }
 ` as GeneratedQuery<

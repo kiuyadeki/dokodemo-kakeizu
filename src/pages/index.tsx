@@ -4,6 +4,9 @@ import { Box, Button, Center, ChakraBaseProvider, ChakraProvider, Container, Hea
 import { color } from 'framer-motion';
 import { UseMicroModal } from '@/hooks/useMicromodal';
 import { CreateProjectModal } from '@/components/CreateProjectModal';
+import { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect, useState } from 'react';
+import { fetchFamilyTreeSummary } from '@/utils/fetchFamilyTreeSummary';
+import { fail } from 'assert';
 
 const theme = extendTheme({
   styles: {
@@ -18,6 +21,17 @@ const theme = extendTheme({
 
 const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
   const { Modal, open, close } = UseMicroModal('create-family-tree-modal');
+  const [familyTreeSummary, setFamilyTreeSummary] = useState<any>([]);
+  const fetchData = async () => {
+    const result = await fetchFamilyTreeSummary();
+    if (result) {
+      setFamilyTreeSummary(result);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [])
 
   return (
     <ChakraProvider theme={theme}>
@@ -27,8 +41,11 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
             <Heading as='h2' size='md' mb={4}>
               編集する家系図を選択してください。
             </Heading>
-            <Button>家系図①</Button>
+            {familyTreeSummary.map((tree: { id: Key | null | undefined; name: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => (
+                <Button key={tree.id}>{tree.name}</Button>
+            ))}
           </Box>
+
 
           <Text mb={6}>または</Text>
           <Button onClick={open}>新しく家系図を作る</Button>
@@ -36,9 +53,9 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
               <CreateProjectModal />
             </Modal>
 
+          <Button onClick={signOut}>Sign Out {user!.username}</Button>
         </Container>
       </Center>
-          <Button onClick={signOut}>Sign Out {user!.username}</Button>
     </ChakraProvider>
   );
 };
