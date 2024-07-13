@@ -507,9 +507,9 @@ const initialFamilyTree: ReactFlowJsonObject = { nodes: [], edges: [], viewport:
 
 type formInputs = {
   projectName: string;
-}
+};
 
-export const CreateProjectModal: FC = memo(function CreateProjectModalComponent() {
+export const CreateNewProject: FC = memo(function CreateNewProjectComponent() {
   const {
     handleSubmit,
     register,
@@ -517,28 +517,28 @@ export const CreateProjectModal: FC = memo(function CreateProjectModalComponent(
   } = useForm<formInputs>();
 
   const onSubmit = handleSubmit((data) => {
-    createNewFamilyTree(initialFamilyTree, data.projectName)
+    createNewFamilyTree(initialFamilyTree, data.projectName);
     console.log(data.projectName);
   });
 
   return (
-    <Box p={12}>
+    <Box>
       <form onSubmit={onSubmit}>
         <FormControl mb={6} isInvalid={!!errors.projectName}>
-          <Input size='md' placeholder='〇〇家' 
-          {...register('projectName', {
-            required: '家系図名を入力してください',
-            maxLength: {value: 20, message: '20文字以内で入力してください'}
-          })}
+          <Input
+            size='md'
+            placeholder='〇〇家'
+            {...register('projectName', {
+              required: '家系図名を入力してください',
+              maxLength: { value: 20, message: '20文字以内で入力してください' },
+            })}
           />
-          {errors.projectName && (
-          <FormErrorMessage>
-            {errors.projectName.message}
-          </FormErrorMessage>
-          )}
+          {errors.projectName && <FormErrorMessage>{errors.projectName.message}</FormErrorMessage>}
         </FormControl>
-        <Flex justify='flex-end'>
-          <Button type='submit' colorScheme='blue' isLoading={isSubmitting} >作成</Button>
+        <Flex justify='flex-start'>
+          <Button paddingInline="40px" type='submit' colorScheme='blue' isLoading={isSubmitting}>
+            作成
+          </Button>
         </Flex>
       </form>
     </Box>
