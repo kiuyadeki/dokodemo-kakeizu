@@ -1,9 +1,10 @@
-import { createNewFamilyTree } from "@/utils/createNewFamilyTree";
-import { Box, Button, Flex, Input } from "@chakra-ui/react";
-import { FC, memo, useState } from "react";
-import { ReactFlowJsonObject } from "reactflow";
+import { createNewFamilyTree } from '@/utils/createNewFamilyTree';
+import { Box, Button, Flex, FormControl, FormErrorMessage, Input } from '@chakra-ui/react';
+import { FC, memo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ReactFlowJsonObject } from 'reactflow';
 
-const initialFamilyTree: ReactFlowJsonObject = {nodes: [], edges: [], viewport: {x: 1, y: 1, zoom: 1}};
+const initialFamilyTree: ReactFlowJsonObject = { nodes: [], edges: [], viewport: { x: 1, y: 1, zoom: 1 } };
 // const demoNodes = [
 //   {
 //       "id": "0",
@@ -504,15 +505,42 @@ const initialFamilyTree: ReactFlowJsonObject = {nodes: [], edges: [], viewport: 
 // ]
 // const initialFamilyTree: ReactFlowJsonObject = {nodes: demoNodes, edges: demoEdges, viewport: {x: 1, y: 1, zoom: 1}};
 
-export const CreateProjectModal:FC = memo(function CreateProjectModalComponent() {
-  const [projectName, setProjectName] = useState("");
+type formInputs = {
+  projectName: string;
+}
+
+export const CreateProjectModal: FC = memo(function CreateProjectModalComponent() {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm<formInputs>();
+
+  const onSubmit = handleSubmit((data) => {
+    createNewFamilyTree(initialFamilyTree, data.projectName)
+    console.log(data.projectName);
+  });
 
   return (
     <Box p={12}>
-      <Input mb={6} size="md" placeholder="〇〇家" value={projectName} onChange={(e) => setProjectName(e.target.value)} />
-      <Flex justify="flex-end">
-      <Button onClick={() => createNewFamilyTree(initialFamilyTree, projectName)}>作成</Button>
-      </Flex>
+      <form onSubmit={onSubmit}>
+        <FormControl mb={6} isInvalid={!!errors.projectName}>
+          <Input size='md' placeholder='〇〇家' 
+          {...register('projectName', {
+            required: '家系図名を入力してください',
+            maxLength: {value: 20, message: '20文字以内で入力してください'}
+          })}
+          />
+          {errors.projectName && (
+          <FormErrorMessage>
+            {errors.projectName.message}
+          </FormErrorMessage>
+          )}
+        </FormControl>
+        <Flex justify='flex-end'>
+          <Button type='submit' colorScheme='blue' isLoading={isSubmitting} >作成</Button>
+        </Flex>
+      </form>
     </Box>
-  )
-})
+  );
+});

@@ -1,6 +1,6 @@
 import { WithAuthenticatorProps } from '@aws-amplify/ui-react';
 import { signOut } from 'aws-amplify/auth';
-import { Box, Button, Center, ChakraBaseProvider, ChakraProvider, Container, Heading, Text, extendTheme } from '@chakra-ui/react';
+import { Box, Button, Center, ChakraBaseProvider, ChakraProvider, Container, Flex, Heading, Text, extendTheme } from '@chakra-ui/react';
 import { color } from 'framer-motion';
 import { UseMicroModal } from '@/hooks/useMicromodal';
 import { CreateProjectModal } from '@/components/CreateProjectModal';
@@ -22,6 +22,7 @@ const theme = extendTheme({
 const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
   const { Modal, open, close } = UseMicroModal('create-family-tree-modal');
   const [familyTreeSummary, setFamilyTreeSummary] = useState<any>([]);
+  
   const fetchData = async () => {
     const result = await fetchFamilyTreeSummary();
     if (result) {
@@ -41,9 +42,12 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
             <Heading as='h2' size='md' mb={4}>
               編集する家系図を選択してください。
             </Heading>
+
+            <Flex columnGap={8}>
             {familyTreeSummary.map((tree: { id: Key | null | undefined; name: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => (
                 <Button key={tree.id}>{tree.name}</Button>
             ))}
+            </Flex>
           </Box>
 
 

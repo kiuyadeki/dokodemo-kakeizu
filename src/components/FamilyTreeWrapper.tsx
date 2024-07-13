@@ -29,6 +29,7 @@ import { FamilyTree } from '@/API';
 import { createFamilyTree } from '@/graphql/mutations';
 import { fetchUserAttributes } from 'aws-amplify/auth';
 import { fetchFamilyTree } from '@/utils/fetchFamilyTree';
+import { updateFamilyTreeData } from '@/utils/updateFamilyTree';
 
 const OuterBox = styled.div`
   width: 100vw;
@@ -51,6 +52,16 @@ export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
     }
   }
 
+  const onUpdate = () => {
+    if(reactFlowInstance) {
+      const tree = reactFlowInstance.toObject();
+      updateFamilyTreeData(JSON.stringify(tree), 'aa9230d2-3c05-4cab-ae52-a9cc5e81b8ed');
+    }
+  }
+
+  useEffect(() => {
+    onUpdate();
+  }, []);
 
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
   const nodeTypes = useMemo(() => ({ person: PersonNode,
