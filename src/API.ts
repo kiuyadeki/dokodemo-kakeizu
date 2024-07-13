@@ -2,25 +2,19 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateFamilyTreeInput = {
-  id?: string | null,
-  owner: string,
-  name: string,
-  data?: string | null,
-};
-
-export type ModelFamilyTreeConditionInput = {
+export type ModelFamilyTreeFilterInput = {
+  id?: ModelIDInput | null,
   owner?: ModelStringInput | null,
   name?: ModelStringInput | null,
   data?: ModelStringInput | null,
-  and?: Array< ModelFamilyTreeConditionInput | null > | null,
-  or?: Array< ModelFamilyTreeConditionInput | null > | null,
-  not?: ModelFamilyTreeConditionInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+  and?: Array< ModelFamilyTreeFilterInput | null > | null,
+  or?: Array< ModelFamilyTreeFilterInput | null > | null,
+  not?: ModelFamilyTreeFilterInput | null,
 };
 
-export type ModelStringInput = {
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -60,40 +54,7 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type FamilyTree = {
-  __typename: "FamilyTree",
-  id: string,
-  owner: string,
-  name: string,
-  data?: string | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type UpdateFamilyTreeInput = {
-  id: string,
-  owner?: string | null,
-  name?: string | null,
-  data?: string | null,
-};
-
-export type DeleteFamilyTreeInput = {
-  id: string,
-};
-
-export type ModelFamilyTreeFilterInput = {
-  id?: ModelIDInput | null,
-  owner?: ModelStringInput | null,
-  name?: ModelStringInput | null,
-  data?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelFamilyTreeFilterInput | null > | null,
-  or?: Array< ModelFamilyTreeFilterInput | null > | null,
-  not?: ModelFamilyTreeFilterInput | null,
-};
-
-export type ModelIDInput = {
+export type ModelStringInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -113,6 +74,45 @@ export type ModelFamilyTreeConnection = {
   __typename: "ModelFamilyTreeConnection",
   items:  Array<FamilyTree | null >,
   nextToken?: string | null,
+};
+
+export type FamilyTree = {
+  __typename: "FamilyTree",
+  id: string,
+  owner: string,
+  name: string,
+  data?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type CreateFamilyTreeInput = {
+  id?: string | null,
+  owner: string,
+  name: string,
+  data?: string | null,
+};
+
+export type ModelFamilyTreeConditionInput = {
+  owner?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  data?: ModelStringInput | null,
+  and?: Array< ModelFamilyTreeConditionInput | null > | null,
+  or?: Array< ModelFamilyTreeConditionInput | null > | null,
+  not?: ModelFamilyTreeConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type UpdateFamilyTreeInput = {
+  id: string,
+  owner?: string | null,
+  name?: string | null,
+  data?: string | null,
+};
+
+export type DeleteFamilyTreeInput = {
+  id: string,
 };
 
 export type ModelSubscriptionFamilyTreeFilterInput = {
@@ -154,6 +154,24 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
+};
+
+export type listFamilyTreesQueryVariables = {
+  filter?: ModelFamilyTreeFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type listFamilyTreesQuery = {
+  listFamilyTrees?:  {
+    __typename: "ModelFamilyTreeConnection",
+    items:  Array< {
+      __typename: "FamilyTree",
+      id: string,
+      name: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
 };
 
 export type CreateFamilyTreeMutationVariables = {
