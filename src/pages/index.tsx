@@ -1,9 +1,9 @@
 import { WithAuthenticatorProps } from '@aws-amplify/ui-react';
 import { Box, Button, Center, ChakraBaseProvider, ChakraProvider, Container, Flex, Heading, Text, extendTheme } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { fetchFamilyTreeSummary } from '@/utils/fetchFamilyTreeSummary';
 import Link from 'next/link';
 import { CreateNewProject } from '@/components/CreateNewProject';
+import { fetchFamilyTreeSummary } from '@/services/fetchFamilyTreeSummary';
 
 const theme = extendTheme({
   styles: {

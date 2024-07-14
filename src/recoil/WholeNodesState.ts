@@ -11,7 +11,7 @@ export const initialNode: PersonNodeData | MaritalNodeData = {
     birthDate: undefined,
     gender: undefined,
     profilePicture: undefined,
-    profilePictureURL: undefined,
+    profilePictureURL: '',
     parents: [],
     children: [],
     spouse: [],

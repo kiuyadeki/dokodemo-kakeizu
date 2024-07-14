@@ -1,4 +1,5 @@
-import { createNewFamilyTree } from '@/utils/createNewFamilyTree';
+
+import { createNewFamilyTree } from '@/services/createNewFamilyTree';
 import { Box, Button, Flex, FormControl, FormErrorMessage, Input } from '@chakra-ui/react';
 import { FC, memo, useState } from 'react';
 import { useForm } from 'react-hook-form';

@@ -1,6 +1,5 @@
 import { updateFamilyTree } from "@/graphql/mutations";
 import { generateClient } from "aws-amplify/api";
-import { ReactFlowJsonObject } from "reactflow";
 
 export const updateFamilyTreeData = async (familyTreeData: string, projectId: string) => {
   const client = generateClient();

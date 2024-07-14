@@ -1,6 +1,5 @@
 import { listFamilyTreeSummary } from "@/graphql/customQueries";
 import { generateClient } from "aws-amplify/api"
-import { fetchUserAttributes } from "aws-amplify/auth";
 
 export const fetchFamilyTreeSummary = async () => {
   const client = generateClient();

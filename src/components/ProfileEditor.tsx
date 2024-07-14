@@ -10,14 +10,14 @@ import { IoChevronDown } from 'react-icons/io5';
 import { PersonNodeData } from '../types/PersonNodeData';
 
 type Inputs = {
-  lastName: string;
-  firstName: string;
-  birthYear: number;
-  birthMonth: number;
-  birthDate: number;
-  gender: string;
-  profilePicture: File | null;
-  profilePictureURL: string | null;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  birthYear?: number;
+  birthMonth?: number;
+  birthDate?: number;
+  profilePicture?: File;
+  profilePictureURL?: string;
 };
 
 type ProfileEditorProps = {
@@ -171,7 +171,7 @@ const HiddenInput = styled.input.attrs({ type: 'file' })`
 `;
 
 interface StyledButtonProps {
-  marginTop?: string;
+  margintop?: string;
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
@@ -194,7 +194,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   background: #edf2f7;
   color: #1a202c;
   cursor: pointer;
-  margin-top: ${props => props.marginTop || '0'};
+  margin-top: ${props => props.margintop || '0'};
 `;
 
 const ImageFrame = styled.figure`
@@ -262,7 +262,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
   // ファイルが選択されたときにreact-hook-formの値を更新
   const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleImageChange(event);
-    const file = event.target.files ? event.target.files[0] : null;
+    const file = event.target.files ? event.target.files[0] : undefined;
     if (file) {
       const previewURL = URL.createObjectURL(file);
       setPreviewImageURL(previewURL);
@@ -281,14 +281,8 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
         ...selectedNode,
         data: {
           ...selectedNode.data,
-          lastName: data.lastName,
-          firstName: data.firstName,
-          birthYear: data.birthYear,
-          birthMonth: data.birthMonth,
-          birthDate: data.birthDate,
-          gender: data.gender,
-          profilePicture: data.profilePicture,
-          profilePictureURL: data.profilePicture instanceof File ? URL.createObjectURL(data.profilePicture) : null,
+          ...data,
+          profilePictureURL: data.profilePicture instanceof File ? URL.createObjectURL(data.profilePicture) : undefined,
         },
       };
       return new Promise (function(resolve) {
@@ -369,7 +363,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
         </FormControl>
         <FormControl>
           <SelectWrapper>
-            <SelectInput placeholder='月' {...register('birthMonth')}>
+            <SelectInput {...register('birthMonth')}>
               {months.map(month => (
                 <option key={month} value={month}>
                   {month}
@@ -381,7 +375,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
         </FormControl>
         <FormControl>
           <SelectWrapper>
-            <SelectInput placeholder='日' {...register('birthDate')}>
+            <SelectInput {...register('birthDate')}>
               {dates.map(date => (
                 <option key={date} value={date}>
                   {date}
@@ -416,7 +410,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
         )}
       </FormControl>
 
-      <StyledButton marginTop='20px' type='submit'>
+      <StyledButton margintop='20px' type='submit'>
         保存する
       </StyledButton>
     </form>

@@ -23,13 +23,8 @@ import { BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '../utils/consta
 import { ParentChildEdge } from './ParentChildEdge';
 import styled from 'styled-components';
 import { isPersonNodeData } from '@/typeGuards/personTypeGuards';
-import { generateClient } from 'aws-amplify/api';
-import { listFamilyTrees } from '@/graphql/queries';
-import { FamilyTree } from '@/API';
-import { createFamilyTree } from '@/graphql/mutations';
-import { fetchUserAttributes } from 'aws-amplify/auth';
-import { fetchFamilyTree } from '@/utils/fetchFamilyTree';
-import { updateFamilyTreeData } from '@/utils/updateFamilyTree';
+import { updateFamilyTreeData } from '@/services/updateFamilyTreeData';
+import { fetchFamilyTree } from '@/services/fetchFamilyTree';
 
 const OuterBox = styled.div`
   width: 100vw;

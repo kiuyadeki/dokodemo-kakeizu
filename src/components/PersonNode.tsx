@@ -6,8 +6,8 @@ import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 import { BiSolidUser } from 'react-icons/bi';
 import styled, { css, keyframes } from 'styled-components';
-import { formatBirthDay } from '../utils/formatBirthDay';
-import { formatFullName } from '../utils/formatFullName';
+import { formatBirthDay } from '../helpers/formatBirthDay';
+import { formatFullName } from '../helpers/formatFullName';
 
 interface StyledBoxProps {
   isSelected: boolean;
