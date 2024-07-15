@@ -1,17 +1,18 @@
 import { useCallback } from 'react';
-import client from 'micromodal';
+import MicroModal from 'micromodal';
 
-export const useHook = (id: string) => {
+export const useHook = (id: string, onCloseFunction: () => void) => {
   const open = useCallback(() => {
-    client.show(id, {
+    MicroModal.show(id, {
       disableScroll: true,
       awaitCloseAnimation: true,
       awaitOpenAnimation: true,
+      onClose: onCloseFunction,
     });
   }, [id]);
 
   const close = useCallback(() => {
-    client.close(id);
+    MicroModal.close(id);
   }, [id]);
 
   return { open,

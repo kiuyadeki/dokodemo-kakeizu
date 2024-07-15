@@ -10,6 +10,7 @@ import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { IoCloseOutline } from 'react-icons/io5';
 import styled from 'styled-components';
+import { ProfileEditorState } from '@/recoil/profileEditorState';
 
 type SelectActionModalProps = {
   closeModal: () => void;
@@ -109,7 +110,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const [nodesUpdated, setNodesUpdated] = useRecoilState(nodesUpdatedState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
-  const [showProfileEditor, setShowProfileEditor] = useState<boolean>(false);
+  const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
   const addParentToSelectedNode = useAddParentToSelectedNode(setWholeNodes, setWholeEdges, () => setNodesUpdated(true));
   const addChildToSelectedNode = useAddChildToSelectedNode(wholeNodes, setWholeNodes, wholeEdges, setWholeEdges, () =>
     setNodesUpdated(true)
@@ -123,6 +124,11 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
     }
   };
 
+  const closeAndInitModal = () => {
+    closeModal();
+    setShowProfileEditor(false);
+  }
+
   let hasParents = false;
   let hasSpouse = false;
   if (selectedNode) {
@@ -133,11 +139,11 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   return (
     <>
       <ModalBody>
-        <CloseButton onClick={closeModal}>
+        <CloseButton onClick={closeAndInitModal}>
           <IoCloseOutline size={25} color='currentColor' />
         </CloseButton>
         {showProfileEditor ? (
-          <ProfileEditor onClose={closeModal} setShowProfileEditor={setShowProfileEditor} />
+          <ProfileEditor onClose={closeAndInitModal} />
         ) : (
           <>
             <ButtonList>

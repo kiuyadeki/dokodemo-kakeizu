@@ -1,4 +1,5 @@
 import { FamilyTree } from "@/components/FamilyTree";
+import { ChakraProvider } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -9,7 +10,9 @@ function AppPage( ){
   console.log('projectId', projectId);
 
   return (
+    <ChakraProvider>
       <FamilyTree projectId={projectId} />
+    </ChakraProvider>
   )
 };
 
