@@ -1,5 +1,5 @@
 import { FormControl, FormLabel, HStack, Select } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface BirthInputProps {
@@ -9,7 +9,7 @@ interface BirthInputProps {
   register: UseFormRegister<FieldValues>;
 }
 
-export const ProfileBirthInput: FC<BirthInputProps> = ({ register, yearValue, monthValue, dateValue }) => {
+export const ProfileBirthInput: FC<BirthInputProps> = memo(({ register, yearValue, monthValue, dateValue }) => {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => 1900 + i);
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -49,4 +49,6 @@ export const ProfileBirthInput: FC<BirthInputProps> = ({ register, yearValue, mo
       </HStack>
     </>
   );
-};
+});
+
+ProfileBirthInput.displayName = 'ProfileBirthInput';

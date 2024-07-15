@@ -1,13 +1,14 @@
 import { Handle, NodeProps, Position } from 'reactflow';
-import { PersonData } from '../types/PersonNodeData';
-import { BASE_PERSON_NODE_WIDTH } from '../utils/constants';
+import { PersonData } from '../../types/PersonNodeData';
+import { BASE_PERSON_NODE_WIDTH } from '../../utils/constants';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
-import { selectedNodeState } from '../recoil/selectedNodeState';
+import { selectedNodeState } from '../../recoil/selectedNodeState';
 import { BiSolidUser } from 'react-icons/bi';
 import styled, { css, keyframes } from 'styled-components';
-import { formatBirthDay } from '../helpers/formatBirthDay';
-import { formatFullName } from '../helpers/formatFullName';
+import { formatBirthDay } from '../../helpers/formatBirthDay';
+import { formatFullName } from '../../helpers/formatFullName';
+import { memo } from 'react';
 
 interface StyledBoxProps {
   isSelected: boolean;
@@ -53,7 +54,7 @@ const selectedStyle = css`
 `;
 
 const StyledBox = styled.div.withConfig({
-  shouldForwardProp: (prop) => !["isSelected"].includes(prop)
+  shouldForwardProp: (prop) => !['isSelected'].includes(prop),
 })<StyledBoxProps>`
   position: relative;
   width: ${BASE_PERSON_NODE_WIDTH}px;
@@ -78,7 +79,7 @@ const StyledBox = styled.div.withConfig({
 `;
 
 const IconBox = styled.div.withConfig({
-  shouldForwardProp: (prop) => !["isSelected"].includes(prop)
+  shouldForwardProp: (prop) => !['isSelected'].includes(prop),
 })<StyledBoxProps>`
   display: flex;
   align-items: center;
@@ -120,16 +121,13 @@ const Text = styled.p`
   font-size: 16px;
 `;
 
-export const PersonNode = (props: NodeProps<PersonData>) => {
+export const PersonNode = memo((props: NodeProps<PersonData>) => {
   const { id, data } = props;
   const { birthYear, birthMonth, birthDate, firstName, lastName, profilePictureURL } = data;
   const selectedNode = useRecoilValue(selectedNodeState);
   const isSelected = id === selectedNode?.id;
-  const fullName = formatFullName({ firstName,
-lastName });
-  const birthDay = formatBirthDay({ birthYear,
-birthMonth,
-birthDate });
+  const fullName = formatFullName({ firstName, lastName });
+  const birthDay = formatBirthDay({ birthYear, birthMonth, birthDate });
 
   return (
     <>
@@ -137,15 +135,7 @@ birthDate });
       <StyledHandle type='source' position={Position.Left} id='personSourceLeft' />
       <StyledHandle type='source' position={Position.Top} id='personSourceTop' />
       <AnimatePresence>
-        <motion.div
-          key={data.label}
-          variants={variants}
-          initial='initial'
-          animate='animate'
-          exit='exit'
-          transition={{ duration: 0.8,
-ease: 'easeOut' }}
-        >
+        <motion.div key={data.label} variants={variants} initial='initial' animate='animate' exit='exit' transition={{ duration: 0.8, ease: 'easeOut' }}>
           <StyledBox isSelected={isSelected}>
             <IconBox isSelected={isSelected}>
               <IconInner>
@@ -170,4 +160,6 @@ ease: 'easeOut' }}
       </AnimatePresence>
     </>
   );
-};
+});
+
+PersonNode.displayName = 'PersonNode';

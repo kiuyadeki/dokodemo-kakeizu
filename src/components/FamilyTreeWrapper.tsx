@@ -4,23 +4,15 @@ import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
 import { use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { PersonNode } from './PersonNode';
-import { MaritalNode } from './MaritalStatusNode';
-import {
-  ReactFlow,
-  Background,
-  BackgroundVariant,
-  useEdgesState,
-  useNodesState,
-  useReactFlow,
-  useViewport,
-} from 'reactflow';
+import { PersonNode } from './ui/PersonNode';
+import { MaritalNode } from './ui/MaritalStatusNode';
+import { ReactFlow, Background, BackgroundVariant, useEdgesState, useNodesState, useReactFlow, useViewport } from 'reactflow';
 import { filterDirectLineagesNodes } from '../utils/filterDirectLineageNodes';
 import { calculateNodesPosition } from '../utils/calculateNodesPosition';
 import { PersonNodeData } from '../types/PersonNodeData';
 import { getSelectedNodePosition } from '../utils/getSelectedNodePosition';
 import { BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '../utils/constants';
-import { ParentChildEdge } from './ParentChildEdge';
+import { ParentChildEdge } from './ui/ParentChildEdge';
 import styled from 'styled-components';
 import { isPersonNodeData } from '@/typeGuards/personTypeGuards';
 import { updateFamilyTreeData } from '@/services/updateFamilyTreeData';
@@ -40,27 +32,26 @@ export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
   const [familyTreeInstance, setFamilyTreeInstance] = useState(null);
 
   const onSave = () => {
-    if(reactFlowInstance) {
+    if (reactFlowInstance) {
       const tree = reactFlowInstance.toObject();
       sessionStorage.setItem('example-familyTree', JSON.stringify(tree));
       // console.log('tree', tree);
     }
-  }
+  };
 
   const onUpdate = () => {
-    if(reactFlowInstance) {
+    if (reactFlowInstance) {
       const tree = reactFlowInstance.toObject();
       updateFamilyTreeData(JSON.stringify(tree), 'aa9230d2-3c05-4cab-ae52-a9cc5e81b8ed');
     }
-  }
+  };
 
-  useEffect(() => {
-    onUpdate();
-  }, []);
+  // useEffect(() => {
+  //   onUpdate();
+  // }, []);
 
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
-  const nodeTypes = useMemo(() => ({ person: PersonNode,
-marital: MaritalNode }), []);
+  const nodeTypes = useMemo(() => ({ person: PersonNode, marital: MaritalNode }), []);
   const edgeTypes = useMemo(() => ({ parentChild: ParentChildEdge }), []);
   const [nodes, setNodes, onNodesChange] = useNodesState(wholeNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(wholeEdges);
@@ -79,23 +70,16 @@ marital: MaritalNode }), []);
   }, [reactFlowInstance]);
   useEffect(() => {
     console.log('wholeNodes', wholeNodes);
-    console.log('wholeEdges', wholeEdges);
+    // console.log('wholeEdges', wholeEdges);
     if (nodesUpdated && selectedNode) {
       const calculatedWholeNodes = calculateNodesPosition(wholeNodes, selectedNode);
       if (!calculatedWholeNodes) return;
       setWholeNodes(calculatedWholeNodes);
-      const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(
-        calculatedWholeNodes,
-        wholeEdges,
-        selectedNode
-      );
+      const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(calculatedWholeNodes, wholeEdges, selectedNode);
       setNodes(directLineageNodes);
       setEdges(directLineageEdges);
       setNodesUpdated(false);
-      const [selectedNodePostionX, selectedNodePostionY] = getSelectedNodePosition(
-        calculatedWholeNodes,
-        selectedNode
-      ) || [0, 0];
+      const [selectedNodePostionX, selectedNodePostionY] = getSelectedNodePosition(calculatedWholeNodes, selectedNode) || [0, 0];
       setCenter(selectedNodePostionX + BASE_PERSON_NODE_WIDTH / 2, selectedNodePostionY + BASE_PERSON_NODE_HEIGHT / 2, {
         zoom,
         duration: 1000,
@@ -112,7 +96,7 @@ marital: MaritalNode }), []);
 
   useEffect(() => {
     fetchFamilyTree();
-  }, [])
+  }, []);
 
   const handleNodeClick = (clickedNode: PersonNodeData) => {
     setSelectedNode(clickedNode);

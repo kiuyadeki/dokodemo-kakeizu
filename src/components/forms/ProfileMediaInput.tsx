@@ -2,7 +2,7 @@ import { useProfilePictureUpload } from "@/hooks/useProfilePictureChange";
 import { PersonNodeData } from "@/types/PersonNodeData";
 import { ProfileEditorInputs } from "@/types/profileEditorInputs";
 import { Button, FormControl, FormLabel, Image, Input } from "@chakra-ui/react";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, memo, useEffect, useRef, useState } from "react";
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 interface MediarInputProps {
@@ -12,7 +12,7 @@ interface MediarInputProps {
   selectedNode: PersonNodeData | null;
 }
 
-export const ProfileMediaInput: FC<MediarInputProps> = ({register, setValue, mediaValue, selectedNode}) => {
+export const ProfileMediaInput: FC<MediarInputProps> = memo(({register, setValue, mediaValue, selectedNode}) => {
 
   const { uploadedImage, handleImageChange } = useProfilePictureUpload();
   const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
@@ -68,4 +68,6 @@ export const ProfileMediaInput: FC<MediarInputProps> = ({register, setValue, med
       )}
     </FormControl>
   );
-};
+});
+
+ProfileMediaInput.displayName = 'ProfileMediaInput';

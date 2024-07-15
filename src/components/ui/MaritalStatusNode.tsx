@@ -1,5 +1,5 @@
 import { Handle, NodeProps, Position } from 'reactflow';
-import { BASE_MARITAL_NODE_HEIGHT, BASE_MARITAL_NODE_WIDTH } from '../utils/constants';
+import { BASE_MARITAL_NODE_HEIGHT, BASE_MARITAL_NODE_WIDTH } from '../../utils/constants';
 
 import { GiBigDiamondRing } from 'react-icons/gi';
 import { TfiUnlink } from 'react-icons/tfi';
@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { MaritalData } from '@/types/PersonNodeData';
 import { wholeNodesState } from '@/recoil/WholeNodesState';
+import { memo } from 'react';
 
 const StyledHandle = styled(Handle)`
   opacity: 0;
@@ -38,13 +39,13 @@ const NodeInner = styled.div`
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 `;
 
-export const MaritalNode = (props: NodeProps<MaritalData>) => {
+export const MaritalNode = memo((props: NodeProps<MaritalData>) => {
   const { id, data } = props;
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const handleClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setWholeNodes(prevNodes => {
-      const currentNodeId = prevNodes.findIndex(node => node.id === id);
+    setWholeNodes((prevNodes) => {
+      const currentNodeId = prevNodes.findIndex((node) => node.id === id);
       if (currentNodeId === -1) return prevNodes;
       const newNodes = [...prevNodes];
       newNodes[currentNodeId].data.isDivorced = !newNodes[currentNodeId].data.isDivorced;
@@ -61,4 +62,6 @@ export const MaritalNode = (props: NodeProps<MaritalData>) => {
       <StyledHandle type='target' position={Position.Bottom} id='maritalTargetBottom' />
     </NodeContainer>
   );
-};
+});
+
+MaritalNode.displayName = 'MaritalNode';

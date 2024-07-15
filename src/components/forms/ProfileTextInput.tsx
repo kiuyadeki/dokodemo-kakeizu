@@ -1,5 +1,5 @@
 import { FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, memo } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
 interface TextInputProps {
@@ -9,7 +9,7 @@ interface TextInputProps {
   errorMessage?: string;
 }
 
-export const ProfileTextInput: FC<TextInputProps> = ({textValue, label, register, errorMessage}) => {
+export const ProfileTextInput: FC<TextInputProps> = memo(({textValue, label, register, errorMessage}) => {
   return (
     <FormControl>
       <FormLabel htmlFor={textValue}>{label}</FormLabel>
@@ -19,4 +19,6 @@ export const ProfileTextInput: FC<TextInputProps> = ({textValue, label, register
       )}
     </FormControl>
   );
-};
+});
+
+ProfileTextInput.displayName = 'ProfileTextInput';

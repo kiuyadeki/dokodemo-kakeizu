@@ -1,5 +1,5 @@
 import { FormLabel, HStack, Radio, RadioGroup, Stack } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface Gender {
@@ -26,7 +26,7 @@ interface GenderInputProps {
   register: UseFormRegister<FieldValues>;
 }
 
-export const ProfileGenderInput: FC<GenderInputProps> = ({register, genderValue}) => {
+export const ProfileGenderInput: FC<GenderInputProps> = memo(({register, genderValue}) => {
   return (
     <>
       <FormLabel mt={6}>性別</FormLabel>
@@ -41,4 +41,6 @@ export const ProfileGenderInput: FC<GenderInputProps> = ({register, genderValue}
       </HStack>
     </>
   );
-};
+});
+
+ProfileGenderInput.displayName = 'ProfileGenderInput';
