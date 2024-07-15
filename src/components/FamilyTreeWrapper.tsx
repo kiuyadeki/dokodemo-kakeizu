@@ -17,11 +17,8 @@ import styled from 'styled-components';
 import { isPersonNodeData } from '@/typeGuards/personTypeGuards';
 import { updateFamilyTreeData } from '@/services/updateFamilyTreeData';
 import { fetchFamilyTree } from '@/services/fetchFamilyTree';
-
-const OuterBox = styled.div`
-  width: 100vw;
-  height: 100vh;
-`;
+import { useHandlePersonNodeClick } from '@/hooks/useHandlePersonNodeClick';
+import { Box } from '@chakra-ui/react';
 
 export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
   const { openModal } = props;
@@ -55,7 +52,7 @@ export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
   const edgeTypes = useMemo(() => ({ parentChild: ParentChildEdge }), []);
   const [nodes, setNodes, onNodesChange] = useNodesState(wholeNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(wholeEdges);
-  // const onConnect = useCallback((params: Connection) => setEdges(eds => addEdge(params, eds)), []);
+  const handleNodeClick = useHandlePersonNodeClick(openModal);
   const { setCenter } = useReactFlow();
   const { x, y, zoom } = useViewport();
   const reactFlowInstance = useReactFlow();
@@ -94,19 +91,8 @@ export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
     }
   }, [selectedNode]);
 
-  useEffect(() => {
-    fetchFamilyTree();
-  }, []);
-
-  const handleNodeClick = (clickedNode: PersonNodeData) => {
-    setSelectedNode(clickedNode);
-    if (selectedNode && clickedNode.id === selectedNode.id) {
-      openModal();
-    }
-  };
-
   return (
-    <OuterBox className='wrapper' ref={reactFlowWrapper}>
+    <Box w='100vw' h='100vh' className='wrapper' ref={reactFlowWrapper}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -114,11 +100,8 @@ export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
         edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        // onConnect={onConnect}
         onNodeClick={(e, node) => {
-          if (isPersonNodeData(node)) {
-            handleNodeClick(node);
-          }
+          handleNodeClick(node, selectedNode)
         }}
         nodesDraggable={false}
         fitView
@@ -127,6 +110,6 @@ export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
       >
         <Background color='#ddd' variant={BackgroundVariant.Lines} gap={[340, 250]} />
       </ReactFlow>
-    </OuterBox>
+    </Box>
   );
 };

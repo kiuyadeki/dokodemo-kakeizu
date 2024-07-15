@@ -132,8 +132,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
           <>
             <Grid templateColumns="repeat(2, 1fr)" gap={5}>
               <Button
-                size="lg"
-                disabled={hasParents}
+                isDisabled={hasParents}
                 onClick={() => {
                   addParentToSelectedNode();
                   closeModal();
@@ -142,7 +141,6 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
                 親を追加
               </Button>
               <Button
-                size="lg"
                 onClick={() => {
                   addChildToSelectedNode();
                   closeModal();
@@ -150,9 +148,8 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
               >
                 子を追加
               </Button>
-              <Button
-                size="lg" 
-                disabled={hasSpouse}
+              <Button 
+                isDisabled={hasSpouse}
                 onClick={() => {
                   addSpouseToSelectedNode();
                   closeModal();
@@ -161,7 +158,6 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
                 配偶者を追加
               </Button>
               <Button
-                size="lg"
                 onClick={() => {
                   displayProfileEditor();
                 }}
