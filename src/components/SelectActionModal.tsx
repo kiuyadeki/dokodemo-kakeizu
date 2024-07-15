@@ -10,27 +10,12 @@ import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { IoCloseOutline } from 'react-icons/io5';
 import styled from 'styled-components';
+import { ProfileEditorState } from '@/recoil/profileEditorState';
+import { Button, Flex, Grid } from '@chakra-ui/react';
 
 type SelectActionModalProps = {
   closeModal: () => void;
 };
-
-const ModalBox = styled.section`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 100%;
-  outline: none;
-  border-radius: 0.375rem;
-  color: inherit;
-  margin-top: 4rem;
-  margin-bottom: 4rem;
-  z-index: 1400;
-  background-color: #fff;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  max-width: 28rem;
-  padding: 0.75rem;
-`;
 
 const ButtonList = styled.div`
   display: grid;
@@ -109,7 +94,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const [nodesUpdated, setNodesUpdated] = useRecoilState(nodesUpdatedState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
-  const [showProfileEditor, setShowProfileEditor] = useState<boolean>(false);
+  const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
   const addParentToSelectedNode = useAddParentToSelectedNode(setWholeNodes, setWholeEdges, () => setNodesUpdated(true));
   const addChildToSelectedNode = useAddChildToSelectedNode(wholeNodes, setWholeNodes, wholeEdges, setWholeEdges, () =>
     setNodesUpdated(true)
@@ -123,6 +108,11 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
     }
   };
 
+  const closeAndInitModal = () => {
+    closeModal();
+    setShowProfileEditor(false);
+  }
+
   let hasParents = false;
   let hasSpouse = false;
   if (selectedNode) {
@@ -133,50 +123,48 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   return (
     <>
       <ModalBody>
-        <CloseButton onClick={closeModal}>
+        <CloseButton onClick={closeAndInitModal}>
           <IoCloseOutline size={25} color='currentColor' />
         </CloseButton>
         {showProfileEditor ? (
-          <ProfileEditor onClose={closeModal} setShowProfileEditor={setShowProfileEditor} />
+          <ProfileEditor onClose={closeAndInitModal} />
         ) : (
           <>
-            <ButtonList>
-              <StyledButton
-                disabled={hasParents}
-                // isDisabled={hasParents}
+            <Grid templateColumns="repeat(2, 1fr)" gap={5}>
+              <Button
+                isDisabled={hasParents}
                 onClick={() => {
                   addParentToSelectedNode();
                   closeModal();
                 }}
               >
                 親を追加
-              </StyledButton>
-              <StyledButton
+              </Button>
+              <Button
                 onClick={() => {
                   addChildToSelectedNode();
                   closeModal();
                 }}
               >
                 子を追加
-              </StyledButton>
-              <StyledButton
-                disabled={hasSpouse}
-                // isDisabled={hasSpouse}
+              </Button>
+              <Button 
+                isDisabled={hasSpouse}
                 onClick={() => {
                   addSpouseToSelectedNode();
                   closeModal();
                 }}
               >
                 配偶者を追加
-              </StyledButton>
-              <StyledButton
+              </Button>
+              <Button
                 onClick={() => {
                   displayProfileEditor();
                 }}
               >
                 情報を編集
-              </StyledButton>
-            </ButtonList>
+              </Button>
+            </Grid>
           </>
         )}
       </ModalBody>

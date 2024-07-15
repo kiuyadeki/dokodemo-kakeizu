@@ -1,12 +1,18 @@
-import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
+import { Amplify } from 'aws-amplify';
+import '@aws-amplify/ui-react/styles.css';
+import amplifyconfig from '../amplifyconfiguration.json';
+import { WithAuthenticatorProps, withAuthenticator } from '@aws-amplify/ui-react';
+import { RecoilRoot } from 'recoil';
 
-const Myapp = ( { Component, pageProps: { session, ...pageProps }}: AppProps) => {
+Amplify.configure(amplifyconfig);
+
+const Myapp = ( { Component, pageProps, signOut, user}: AppProps & WithAuthenticatorProps) => {
   return (
-    <SessionProvider session={pageProps.session} refetchInterval={5 * 60}>
-      <Component {...pageProps} />
-    </SessionProvider>
+    <RecoilRoot>
+      <Component {...pageProps} signOut={signOut} user={user} />
+    </RecoilRoot>
   )
 }
 
-export default Myapp;
+export default withAuthenticator(Myapp);

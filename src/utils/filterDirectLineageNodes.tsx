@@ -1,3 +1,4 @@
+import { isPersonNodeData } from '@/typeGuards/personTypeGuards';
 import { PersonNodeData, MaritalNodeData } from '../types/PersonNodeData';
 import { Edge } from 'reactflow';
 
@@ -23,7 +24,7 @@ directLineageEdges: wholeEdges };
       if (!node || lineageNodes.has(node)) return;
       lineageNodes.add(node);
 
-      if (node.type === 'person') {
+      if (isPersonNodeData(node)) {
         if (node.data.spouse.length && lineage !== 'isParent') {
           node.data.spouse.forEach(spouseId => {
             const spouseNode = wholeNodes.find(n => n.id === spouseId);

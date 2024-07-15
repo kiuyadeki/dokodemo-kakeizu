@@ -39,7 +39,7 @@ const setDescendants = (wholeNodes: (PersonNodeData | MaritalNodeData)[]) => {
 
     if (node.data.children.length === 1) {
       const childNode = wholeNodes.find(n => n.id === node.data.children[0]);
-      if (childNode && childNode.type === 'person' && !childNode.data.spouse.length) {
+      if (childNode && childNode.type === 'person' && !childNode.data.spouse!.length) {
         childWidths = [[BASE_MARITAL_SPACING * 2 + BASE_SIBLINGS_SPACING]];
       }
     }
@@ -97,8 +97,8 @@ const calculateChildNodePosition = (
 ) => {
   if (!node) return;
   node.position.y = level * BASE_GENERATIONS_SPACING;
-  if (node.type === 'person') {
-    const nodeDescendantsWidth = node.data.descendantsWidth;
+  if (isPersonNodeData(node)) {
+    const nodeDescendantsWidth = node.data.descendantsWidth || 0;
     const nodeMaritalPosition = node.data.maritalPosition;
 
     switch (nodeMaritalPosition) {
@@ -109,7 +109,7 @@ const calculateChildNodePosition = (
         node.position.x = offsetX + (nodeDescendantsWidth - BASE_SIBLINGS_SPACING) / 2 + BASE_MARITAL_SPACING;
         break;
       default:
-        if (!(node.data.siblings.length > 1)) {
+        if (!(node.data.siblings?.length || 0 > 1)) {
           node.position.x = offsetX + BASE_MARITAL_SPACING;
         } else {
           node.position.x = offsetX;
@@ -182,14 +182,14 @@ const calculateParentNodePosition = (
   node.position.y = -level * BASE_GENERATIONS_SPACING;
   if (node.type === 'person') {
     const nodeMaritalPosition = node.data.maritalPosition;
-    let parentOffset = node.data.ancestors * BASE_MARITAL_SPACING;
+    let parentOffset = node.data.ancestors || 0 * BASE_MARITAL_SPACING;
 
     switch (ancestorsSide) {
       case 'left':
         const rightParentNode = wholeNodes.find(
           parentNode =>
             parentNode.type === 'person' &&
-            node.data.parents.includes(parentNode.id) &&
+            node.data.parents?.includes(parentNode.id) &&
             parentNode.data.maritalPosition === 'right'
         ) as PersonNodeData;
         if (rightParentNode) {
@@ -202,7 +202,7 @@ const calculateParentNodePosition = (
         const leftParentNode = wholeNodes.find(
           parentNode =>
             parentNode.type === 'person' &&
-            node.data.parents.includes(parentNode.id) &&
+            node.data.parents?.includes(parentNode.id) &&
             parentNode.data.maritalPosition === 'left'
         ) as PersonNodeData;
         if (leftParentNode) {
@@ -245,9 +245,9 @@ const calculateParentNodePosition = (
       }
     }
 
-    node.data.parents.forEach(parentId => {
+    node.data.parents?.forEach(parentId => {
       const parentNode = wholeNodes.find(n => n.id === parentId) as PersonNodeData;
-      if (node.id === selectedNode.id && parentNode.data.maritalPosition) {
+      if (node.id === selectedNode.id && parentNode.data.maritalPosition && isPersonNodeData(node)) {
         if (parentNode.data.maritalPosition === 'left') {
           calculateParentNodePosition(
             wholeNodes,
@@ -267,7 +267,7 @@ const calculateParentNodePosition = (
             parentNode.data.maritalPosition
           );
         }
-      } else if (parentNode && parentNode.data.maritalPosition) {
+      } else if (parentNode && parentNode.data.maritalPosition && isPersonNodeData(node)) {
         calculateParentNodePosition(
           wholeNodes,
           parentNode,
@@ -292,7 +292,7 @@ export function calculateNodesPosition(
   setDescendants(wholeNodesCopy);
   setAncestors(wholeNodesCopy);
 
-  const siblingsNodes = wholeNodesCopy.filter(node => selectedNodesCopy.data.siblings.includes(node.id));
+  const siblingsNodes = wholeNodesCopy.filter(node => selectedNodesCopy.data.siblings?.includes(node.id));
   const sortedSiblingsNodes = siblingsNodes.sort((a, b) => {
     const getAge = (node: PersonNodeData) => {
       const birthYear = node.data.birthYear;
