@@ -6,10 +6,10 @@ import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
 import { use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PersonNode } from './ui/PersonNode';
 import { MaritalNode } from './ui/MaritalStatusNode';
-import { ReactFlow, Background, BackgroundVariant, useEdgesState, useNodesState, useReactFlow, useViewport } from 'reactflow';
+import { ReactFlow, Background, BackgroundVariant, useEdgesState, useNodesState, useReactFlow, useViewport, Edge, Node } from 'reactflow';
 import { filterDirectLineagesNodes } from '../utils/filterDirectLineageNodes';
 import { calculateNodesPosition } from '../utils/calculateNodesPosition';
-import { PersonNodeData } from '../types/PersonNodeData';
+import { PersonData, PersonNodeData } from '../types/PersonNodeData';
 import { getSelectedNodePosition } from '../utils/getSelectedNodePosition';
 import { BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '../utils/constants';
 import { ParentChildEdge } from './ui/ParentChildEdge';
@@ -20,7 +20,7 @@ import { fetchFamilyTree } from '@/services/fetchFamilyTree';
 import { useHandlePersonNodeClick } from '@/hooks/useHandlePersonNodeClick';
 import { Box } from '@chakra-ui/react';
 
-export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
+export const FamilyTreeWrapper = (props: { openModal: () => void; nodes: Node<PersonData>[]; edges: Edge[] }) => {
   const { openModal } = props;
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
@@ -101,7 +101,7 @@ export const FamilyTreeWrapper = (props: { openModal: () => void }) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeClick={(e, node) => {
-          handleNodeClick(node, selectedNode)
+          handleNodeClick(node, selectedNode);
         }}
         nodesDraggable={false}
         fitView

@@ -1,24 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Edge } from 'reactflow';
-import { PersonNodeData, MaritalNodeData } from '../types/PersonNodeData';
+import { Edge, Node } from 'reactflow';
+import { PersonData } from '../types/PersonNodeData';
 import { createMaritalNode, createPersonNode } from '../utils/nodeUtils';
 import { createEdge } from '../utils/edgeUtils';
-import {
-  BASE_GENERATIONS_SPACING,
-  BASE_MARITAL_NODE_HEIGHT,
-  BASE_MARITAL_NODE_WIDTH,
-  BASE_MARITAL_SPACING,
-  BASE_PERSON_NODE_HEIGHT,
-  BASE_PERSON_NODE_WIDTH,
-} from '../utils/constants';
+import { BASE_GENERATIONS_SPACING, BASE_MARITAL_NODE_HEIGHT, BASE_MARITAL_NODE_WIDTH, BASE_MARITAL_SPACING, BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '../utils/constants';
 import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 
-export const useAddParentToSelectedNode = (
-  setWholeNodes: Dispatch<SetStateAction<(PersonNodeData | MaritalNodeData)[]>>,
-  setWholeEdges: Dispatch<SetStateAction<Edge[]>>,
-  onUpdated: () => void
-) => {
+export const useAddParentToSelectedNode = (setWholeNodes: Dispatch<SetStateAction<Node<PersonData>[]>>, setWholeEdges: Dispatch<SetStateAction<Edge[]>>, onUpdated: () => void) => {
   const selectedNode = useRecoilValue(selectedNodeState);
   const addParentToSelectedNode = () => {
     if (!selectedNode) return;
@@ -28,15 +17,11 @@ export const useAddParentToSelectedNode = (
       y: selectedNode.position.y - BASE_GENERATIONS_SPACING + (BASE_PERSON_NODE_HEIGHT - BASE_MARITAL_NODE_HEIGHT) / 2,
     });
     const leftParentNode = createPersonNode(
-      { x: selectedNode.position.x - BASE_MARITAL_SPACING,
-y: selectedNode.position.y - BASE_GENERATIONS_SPACING },
-      { children: [selectedNode.id],
-maritalNodeId: maritalNode.id,
-maritalPosition: 'left' }
+      { x: selectedNode.position.x - BASE_MARITAL_SPACING, y: selectedNode.position.y - BASE_GENERATIONS_SPACING },
+      { children: [selectedNode.id], maritalNodeId: maritalNode.id, maritalPosition: 'left' }
     );
     const rightParentNode = createPersonNode(
-      { x: selectedNode.position.x + BASE_MARITAL_SPACING,
-y: selectedNode.position.y - BASE_GENERATIONS_SPACING },
+      { x: selectedNode.position.x + BASE_MARITAL_SPACING, y: selectedNode.position.y - BASE_GENERATIONS_SPACING },
       {
         children: [selectedNode.id],
         spouse: [leftParentNode.id],
@@ -60,12 +45,8 @@ y: selectedNode.position.y - BASE_GENERATIONS_SPACING },
       },
     };
 
-    setWholeNodes(prevNodes =>
-      prevNodes
-        .map(node => (node.id === selectedNode.id ? updatedNode : node))
-        .concat([maritalNode, leftParentNode, rightParentNode])
-    );
-    setWholeEdges(prevEdges => [...prevEdges, ...edgesToAdd]);
+    setWholeNodes((prevNodes) => prevNodes.map((node) => (node.id === selectedNode.id ? updatedNode : node)).concat([maritalNode, leftParentNode, rightParentNode]));
+    setWholeEdges((prevEdges) => [...prevEdges, ...edgesToAdd]);
     if (onUpdated) {
       onUpdated();
     }

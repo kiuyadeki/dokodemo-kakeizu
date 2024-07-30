@@ -6,8 +6,8 @@ export interface PersonInfo {
   gender?: string;
   profilePicture?: File;
   profilePictureURL?: string;
-  label: string;
-  selected: boolean;
+  label?: string;
+  selected?: boolean;
 }
 
 export interface BirthInfo {
@@ -17,12 +17,12 @@ export interface BirthInfo {
 }
 
 export interface FamilyInfo {
-  parents: string[];
-  children: string[];
-  spouse: string[];
-  descendants: number;
-  descendantsWidth: number;
-  ancestors: number;
+  parents?: string[];
+  children?: string[];
+  spouse?: string[];
+  descendants?: number;
+  descendantsWidth?: number;
+  ancestors?: number;
   siblings?: string[];
   maritalPosition?: 'right' | 'left';
   maritalNodeId?: string;
@@ -34,7 +34,7 @@ export interface MaritalData {
 }
 
 export type PersonData = PersonInfo & BirthInfo & FamilyInfo;
-interface NodeData<T> extends Node<T> {
+export interface NodeData<T> extends Node<T> {
   type: 'person' | 'marital';
   data: T;
 }

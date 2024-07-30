@@ -6,7 +6,7 @@ import { selectedNodeState } from '../recoil/selectedNodeState';
 function useOutgoingEdges(wholeEdges: Edge[]) {
   const selectedNode = useRecoilValue(selectedNodeState);
   const outgoingEdges = useMemo(() => {
-    if (selectedNode) {
+    if (selectedNode && Array.isArray(wholeEdges)) {
       return wholeEdges.filter(e => e.source === selectedNode.id);
     } else {
       return [];
