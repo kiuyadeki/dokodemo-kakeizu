@@ -7,14 +7,14 @@ import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 import styled from 'styled-components';
 import { IoChevronDown } from 'react-icons/io5';
-import { PersonNodeData } from '../types/PersonNodeData';
+import { PersonNodeType } from '../types/PersonNodeType';
 import { ProfileEditorInputs } from '@/types/profileEditorInputs';
 import { ProfileTextInput } from './forms/ProfileTextInput';
 import { Button, HStack } from '@chakra-ui/react';
 import { ProfileGenderInput } from './forms/ProfileGenderInput';
 import { ProfileBirthInput } from './forms/ProfileBirthInput';
 import { ProfileMediaInput } from './forms/ProfileMediaInput';
-import { isPersonNodeData } from '@/typeGuards/personTypeGuards';
+import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
 
 type ProfileEditorProps = {
   onClose: () => void;
@@ -33,7 +33,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
   const [nodesUpdated, setNodesUpdated] = useRecoilState(nodesUpdatedState);
   const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
 
-  const updateNodeData = (data: ProfileEditorInputs, selectedNode: PersonNodeData): Promise<PersonNodeData> => {
+  const updateNodeData = (data: ProfileEditorInputs, selectedNode: PersonNodeType): Promise<PersonNodeType> => {
     const updatedNode = {
       ...selectedNode,
       data: {
@@ -61,7 +61,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
   };
 
   useEffect(() => {
-    if (isPersonNodeData(selectedNode)) {
+    if (isPersonNodeType(selectedNode)) {
       const { lastName, firstName, birthYear, birthMonth, birthDate, gender, profilePicture } = selectedNode.data;
       setValue('lastName', lastName || '');
       setValue('firstName', firstName || '');

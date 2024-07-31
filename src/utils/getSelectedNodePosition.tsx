@@ -1,13 +1,13 @@
-import { MaritalNodeData, PersonNodeData } from '../types/PersonNodeData';
-import { isPersonNodeData } from '../typeGuards/personTypeGuards';
+import { MaritalNodeType, PersonNodeType } from '../types/PersonNodeType';
+import { isPersonNodeType } from '../typeGuards/personTypeGuards';
 
-export function getSelectedNodePosition(nodesList: Node<PersonData>[], selectedNode: PersonNodeData): number[] {
+export function getSelectedNodePosition(nodesList: (PersonNodeType | MaritalNodeType)[], selectedNode: PersonNodeType): number[] {
   const defaultPosition = [0, 0];
 
   if (!selectedNode || !nodesList.length) return defaultPosition;
 
   const displayedNode = nodesList.find((node) => node.id === selectedNode.id);
-  if (!displayedNode || !isPersonNodeData(displayedNode)) return defaultPosition;
+  if (!isPersonNodeType(displayedNode)) return defaultPosition;
   if (displayedNode.position.x === undefined || !displayedNode.position.y === undefined) {
     return [selectedNode.position.x, selectedNode.position.y];
   }

@@ -9,18 +9,17 @@ import { MaritalNode } from './ui/MaritalStatusNode';
 import { ReactFlow, Background, BackgroundVariant, useEdgesState, useNodesState, useReactFlow, useViewport, Edge, Node } from 'reactflow';
 import { filterDirectLineagesNodes } from '../utils/filterDirectLineageNodes';
 import { calculateNodesPosition } from '../utils/calculateNodesPosition';
-import { PersonData, PersonNodeData } from '../types/PersonNodeData';
+import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
 import { getSelectedNodePosition } from '../utils/getSelectedNodePosition';
 import { BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '../utils/constants';
 import { ParentChildEdge } from './ui/ParentChildEdge';
-import styled from 'styled-components';
-import { isPersonNodeData } from '@/typeGuards/personTypeGuards';
+import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
 import { updateFamilyTreeData } from '@/services/updateFamilyTreeData';
 import { fetchFamilyTree } from '@/services/fetchFamilyTree';
 import { useHandlePersonNodeClick } from '@/hooks/useHandlePersonNodeClick';
 import { Box } from '@chakra-ui/react';
 
-export const FamilyTreeWrapper = (props: { openModal: () => void; nodes: Node<PersonData>[]; edges: Edge[] }) => {
+export const FamilyTreeWrapper = (props: { openModal: () => void; nodes: (PersonNodeType | MaritalNodeType)[]; edges: Edge[] }) => {
   const { openModal } = props;
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
@@ -57,7 +56,7 @@ export const FamilyTreeWrapper = (props: { openModal: () => void; nodes: Node<Pe
   const { x, y, zoom } = useViewport();
   const reactFlowInstance = useReactFlow();
   useEffect(() => {
-    setSelectedNode(wholeNodes[0] as PersonNodeData);
+    setSelectedNode(wholeNodes[0] as PersonNodeType);
   }, []);
 
   useEffect(() => {

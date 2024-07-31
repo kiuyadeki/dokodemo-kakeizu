@@ -1,12 +1,11 @@
 import { selectedNodeState } from '@/recoil/selectedNodeState';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 import { wholeNodesState } from '@/recoil/WholeNodesState';
-import { PersonNodeData } from '@/types/PersonNodeData';
 import { calculateNodesPosition } from '@/utils/calculateNodesPosition';
 import { BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '@/utils/constants';
 import { filterDirectLineagesNodes } from '@/utils/filterDirectLineageNodes';
 import { getSelectedNodePosition } from '@/utils/getSelectedNodePosition';
-import { Edge, Node, SetCenter, useEdgesState, useNodesState, useReactFlow, useViewport } from 'reactflow';
+import { useEdgesState, useNodesState, useReactFlow, useViewport } from 'reactflow';
 import { useRecoilState } from 'recoil';
 
 export const useInitFamilyTree = () => {
@@ -21,7 +20,7 @@ export const useInitFamilyTree = () => {
   const updateFamilyTreeData = () => {
     if (!selectedNode) return;
     const calculatedWholeNodes = calculateNodesPosition(wholeNodes, selectedNode);
-  
+
     if (!calculatedWholeNodes) return;
     setWholeNodes(calculatedWholeNodes);
     const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(calculatedWholeNodes, wholeEdges, selectedNode);

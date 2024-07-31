@@ -1,18 +1,18 @@
 import { useProfilePictureUpload } from "@/hooks/useProfilePictureChange";
-import { PersonNodeData } from "@/types/PersonNodeData";
+import { PersonNodeType } from "@/types/PersonNodeType";
 import { ProfileEditorInputs } from "@/types/profileEditorInputs";
 import { Button, FormControl, FormLabel, Image, Input } from "@chakra-ui/react";
 import { FC, memo, useEffect, useRef, useState } from "react";
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
-interface MediarInputProps {
+interface MediaInputProps {
   mediaValue: string;
   setValue: UseFormSetValue<ProfileEditorInputs>;
   register: UseFormRegister<FieldValues>;
-  selectedNode: PersonNodeData | null;
+  selectedNode: PersonNodeType;
 }
 
-export const ProfileMediaInput: FC<MediarInputProps> = memo(({register, setValue, mediaValue, selectedNode}) => {
+export const ProfileMediaInput: FC<MediaInputProps> = memo(({register, setValue, mediaValue, selectedNode}) => {
 
   const { uploadedImage, handleImageChange } = useProfilePictureUpload();
   const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);

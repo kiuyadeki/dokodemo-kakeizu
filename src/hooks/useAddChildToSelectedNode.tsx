@@ -1,17 +1,17 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Edge, Node } from 'reactflow';
 import useOutgoingEdges from './useOutgoingEdges';
-import { PersonNodeData, PersonData } from '../types/PersonNodeData';
+import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
 import { createMaritalNode, createPersonNode } from '../utils/nodeUtils';
 import { createEdge } from '../utils/edgeUtils';
 import { BASE_GENERATIONS_SPACING, BASE_MARITAL_SPACING } from '../utils/constants';
-import { isPersonNodeData } from '../typeGuards/personTypeGuards';
+import { isPersonNodeType } from '../typeGuards/personTypeGuards';
 import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 
 export const useAddChildToSelectedNode = (
-  wholeNodes: Node<PersonData>[],
-  setWholeNodes: Dispatch<SetStateAction<Node<PersonData>[]>>,
+  wholeNodes: (PersonNodeType | MaritalNodeType)[],
+  setWholeNodes: Dispatch<SetStateAction<(PersonNodeType | MaritalNodeType)[]>>,
   wholeEdges: Edge[],
   setWholeEdges: Dispatch<SetStateAction<Edge[]>>,
   onUpdated: () => void
@@ -20,14 +20,14 @@ export const useAddChildToSelectedNode = (
   const outgoingEdges = useOutgoingEdges(wholeEdges);
 
   const addChildToSelectedNode = () => {
-    if (!selectedNode || !isPersonNodeData(selectedNode)) return;
+    if (!selectedNode || !isPersonNodeType(selectedNode)) return;
 
     let selectedNodeMaritalPosition = selectedNode.data.maritalPosition;
     if (!selectedNodeMaritalPosition) {
       selectedNodeMaritalPosition = 'left';
     }
-    let maritalNodeId: Node<PersonData>['id'];
-    let spouseID: Node<PersonData>['id'] = selectedNode.data.spouse[0] || '';
+    let maritalNodeId: PersonNodeType['id'];
+    let spouseID: PersonNodeType['id'] = selectedNode.data.spouse[0] || '';
     if (!selectedNode.data.spouse.length) {
       const maritalNode = createMaritalNode({
         x: selectedNode.position.x + BASE_MARITAL_SPACING,
@@ -59,12 +59,12 @@ export const useAddChildToSelectedNode = (
     );
     childNode.data.siblings?.push(childNode.id);
 
-    const updateChildren = (node: PersonNodeData, childId: string): PersonNodeData => ({
+    const updateChildren = (node: PersonNodeType, childId: string): PersonNodeType => ({
       ...node,
       data: { ...node.data, children: [...node.data.children, childId] },
     });
 
-    const updateSpouseAndChildren = (node: PersonNodeData, spouseId: string, childId: string, maritalNodeId: string, maritalPosition: 'left' | 'right' | null): PersonNodeData => ({
+    const updateSpouseAndChildren = (node: PersonNodeType, spouseId: PersonNodeType['id'], childId: PersonNodeType['id'], maritalNodeId: string, maritalPosition: PersonNodeType['data']['maritalPosition']): PersonNodeType => ({
       ...node,
       data: {
         ...node.data,
@@ -75,7 +75,7 @@ export const useAddChildToSelectedNode = (
       },
     });
 
-    const updateSiblings = (node: PersonNodeData, siblings: string[], childId: string): PersonNodeData => ({
+    const updateSiblings = (node: PersonNodeType, siblings: string[], childId: string): PersonNodeType => ({
       ...node,
       data: { ...node.data, siblings: [...siblings, childId] },
     });
@@ -83,7 +83,7 @@ export const useAddChildToSelectedNode = (
     setWholeNodes((prevNodes) =>
       prevNodes
         .map((node) => {
-          if (isPersonNodeData(node)) {
+          if (isPersonNodeType(node)) {
             if (node.id == spouseID) {
               return updateChildren(node, childNode.id);
             } else if (node.id === selectedNode.id) {

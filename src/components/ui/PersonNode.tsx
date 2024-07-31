@@ -1,5 +1,4 @@
 import { Handle, NodeProps, Position } from 'reactflow';
-import { PersonData } from '../../types/PersonNodeData';
 import { BASE_PERSON_NODE_WIDTH } from '../../utils/constants';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
@@ -9,6 +8,7 @@ import styled, { css, keyframes } from 'styled-components';
 import { formatBirthDay } from '../../helpers/formatBirthDay';
 import { formatFullName } from '../../helpers/formatFullName';
 import { memo } from 'react';
+import { PersonNodeType } from '@/types/PersonNodeType';
 
 interface StyledBoxProps {
   isSelected: boolean;
@@ -121,7 +121,7 @@ const Text = styled.p`
   font-size: 16px;
 `;
 
-export const PersonNode = memo((props: NodeProps<PersonData>) => {
+export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
   const { id, data } = props;
   const { birthYear, birthMonth, birthDate, firstName, lastName, profilePictureURL } = data;
   const selectedNode = useRecoilValue(selectedNodeState);

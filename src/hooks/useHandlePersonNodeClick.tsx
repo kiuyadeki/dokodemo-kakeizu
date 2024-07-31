@@ -1,16 +1,16 @@
 import { selectedNodeState } from "@/recoil/selectedNodeState";
-import { isPersonNodeData } from "@/typeGuards/personTypeGuards";
-import { PersonNodeData } from "@/types/PersonNodeData";
+import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
+import { PersonNodeType } from "@/types/PersonNodeType";
 import { Node } from "reactflow";
 import { useRecoilState } from "recoil";
 
 export const useHandlePersonNodeClick = (openModal: () => void) => {
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
 
-  return (clickedNode: Node, selectedNode: PersonNodeData | null) => {
-    if (!isPersonNodeData(clickedNode) || !isPersonNodeData(selectedNode)) return;
+  return (clickedNode: Node, selectedNode: PersonNodeType | null) => {
+    if (!isPersonNodeType(clickedNode) || !isPersonNodeType(selectedNode)) return;
     setSelectedNode(clickedNode);
-    if (selectedNode && clickedNode.id === selectedNode.id) {
+    if (isPersonNodeType(selectedNode) && clickedNode.id === selectedNode.id) {
       openModal();
     }
   }

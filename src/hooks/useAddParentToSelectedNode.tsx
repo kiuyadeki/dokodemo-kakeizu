@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Edge, Node } from 'reactflow';
-import { PersonData } from '../types/PersonNodeData';
 import { createMaritalNode, createPersonNode } from '../utils/nodeUtils';
 import { createEdge } from '../utils/edgeUtils';
 import { BASE_GENERATIONS_SPACING, BASE_MARITAL_NODE_HEIGHT, BASE_MARITAL_NODE_WIDTH, BASE_MARITAL_SPACING, BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '../utils/constants';
 import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
+import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 
-export const useAddParentToSelectedNode = (setWholeNodes: Dispatch<SetStateAction<Node<PersonData>[]>>, setWholeEdges: Dispatch<SetStateAction<Edge[]>>, onUpdated: () => void) => {
+export const useAddParentToSelectedNode = (setWholeNodes: Dispatch<SetStateAction<(PersonNodeType | MaritalNodeType)[]>>, setWholeEdges: Dispatch<SetStateAction<Edge[]>>, onUpdated: () => void) => {
   const selectedNode = useRecoilValue(selectedNodeState);
   const addParentToSelectedNode = () => {
     if (!selectedNode) return;

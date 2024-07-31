@@ -1,9 +1,9 @@
 import { Node } from 'reactflow';
-import { PersonData } from '../types/PersonNodeData';
+import { PersonNodeType } from '@/types/PersonNodeType';
 
-export const isPersonNodeData = function (node: Node | null): node is Node<PersonData> {
+export const isPersonNodeType = function (node: Node | null | undefined): node is PersonNodeType {
   if (!node || !node.data) return false;
-  const data = node.data as Partial<PersonData>;
+  const data = node.data;
   return (
     node.type === 'person' &&
     'label' in data &&

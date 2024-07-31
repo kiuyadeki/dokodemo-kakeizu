@@ -1,17 +1,17 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Edge } from 'reactflow';
-import { PersonNodeData, MaritalNodeData } from '../types/PersonNodeData';
 import { createMaritalNode, createPersonNode } from '../utils/nodeUtils';
 import { createEdge } from '../utils/edgeUtils';
 import { BASE_MARITAL_SPACING } from '../utils/constants';
 import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
+import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
+import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 
-export const useAddSpouseToSelectedNode = (setWholeNodes: Dispatch<SetStateAction<Node<PersonData>[]>>, setWholeEdges: Dispatch<SetStateAction<Edge[]>>, onUpdated: () => void) => {
+export const useAddSpouseToSelectedNode = (setWholeNodes: Dispatch<SetStateAction<(PersonNodeType | MaritalNodeType)[]>>, setWholeEdges: Dispatch<SetStateAction<Edge[]>>, onUpdated: () => void) => {
   const selectedNode = useRecoilValue(selectedNodeState);
-  // const [lastAddedNode, setLastAddedNode] = useRecoilState(lastAddedNodeState);
   const addSpouseToSelectedNode = () => {
-    if (selectedNode) {
+    if (isPersonNodeType(selectedNode)) {
       let selectedNodeMaritalPosition = selectedNode.data.maritalPosition;
       if (!selectedNodeMaritalPosition) {
         selectedNodeMaritalPosition = 'left';
@@ -31,7 +31,6 @@ export const useAddSpouseToSelectedNode = (setWholeNodes: Dispatch<SetStateActio
           maritalPosition: selectedNodeMaritalPosition === 'left' ? 'right' : 'left',
         }
       );
-      // setLastAddedNode(SpouseNode);
 
       const spouseToMaritalEdge = createEdge(SpouseNode.id, maritalNode.id, 'smoothstep', 'personSourceLeft', 'maritalTargetRight');
 
