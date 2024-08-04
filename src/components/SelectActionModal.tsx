@@ -96,10 +96,15 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
   const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
   const addParentToSelectedNode = useAddParentToSelectedNode(setWholeNodes, setWholeEdges, () => setNodesUpdated(true));
-  const addChildToSelectedNode = useAddChildToSelectedNode(wholeNodes, setWholeNodes, wholeEdges, setWholeEdges, () =>
-    setNodesUpdated(true)
-  );
-  const addSpouseToSelectedNode = useAddSpouseToSelectedNode(setWholeNodes, setWholeEdges, () => setNodesUpdated(true));
+  const {addChildToSelectedNode, localNodes: childLocalNodes, localEdges: childLocalEdges} = useAddChildToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+  const {addSpouseToSelectedNode, localNodes: spouseLocalNodes, localEdges: spouseLocalEdges} = useAddSpouseToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+
+  useEffect(() => {
+    if (nodesUpdated) {
+      setWholeNodes(childLocalNodes);
+      setWholeEdges(childLocalEdges)
+    }
+  }, [childLocalNodes, childLocalEdges]);
 
   // 情報を編集
   const displayProfileEditor = () => {

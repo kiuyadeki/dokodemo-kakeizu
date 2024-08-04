@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Edge, Node } from 'reactflow';
 import useOutgoingEdges from './useOutgoingEdges';
 import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
@@ -8,24 +8,24 @@ import { BASE_GENERATIONS_SPACING, BASE_MARITAL_SPACING } from '../utils/constan
 import { isPersonNodeType } from '../typeGuards/personTypeGuards';
 import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
+import { updateSiblings } from '@/utils/updateSiblings';
+import { updateChildren } from '@/utils/updateChildren';
+import { getMaritalPosition } from '@/utils/getMaritalPosition';
+import { updateSpouseAndChildren } from '@/utils/updateSpouseAndChildren';
 
 export const useAddChildToSelectedNode = (
-  wholeNodes: (PersonNodeType | MaritalNodeType)[],
-  setWholeNodes: Dispatch<SetStateAction<(PersonNodeType | MaritalNodeType)[]>>,
-  wholeEdges: Edge[],
-  setWholeEdges: Dispatch<SetStateAction<Edge[]>>,
-  onUpdated: () => void
+  nodeList: (PersonNodeType | MaritalNodeType)[],
+  edgeList: Edge[],
+  selectedNode: PersonNodeType | undefined,
 ) => {
-  const selectedNode = useRecoilValue(selectedNodeState);
-  const outgoingEdges = useOutgoingEdges(wholeEdges);
+  const outgoingEdges = useOutgoingEdges(edgeList);
+  const [localNodes, setLocalNodes] = useState(nodeList);
+  const [localEdges, setLocalEdges] = useState(edgeList);
 
   const addChildToSelectedNode = () => {
     if (!selectedNode || !isPersonNodeType(selectedNode)) return;
 
-    let selectedNodeMaritalPosition = selectedNode.data.maritalPosition;
-    if (!selectedNodeMaritalPosition) {
-      selectedNodeMaritalPosition = 'left';
-    }
+    let selectedNodeMaritalPosition = getMaritalPosition(selectedNode);
     let maritalNodeId: PersonNodeType['id'];
     let spouseID: PersonNodeType['id'] = selectedNode.data.spouse[0] || '';
     if (!selectedNode.data.spouse.length) {
@@ -43,8 +43,8 @@ export const useAddChildToSelectedNode = (
         }
       );
       spouseID = spouseNode.id;
-      setWholeNodes((prevNodes) => [...prevNodes, maritalNode, spouseNode]);
-      setWholeEdges((prevEdges) => [
+      setLocalNodes((prevNodes) => [...prevNodes, maritalNode, spouseNode]);
+      setLocalEdges((prevEdges) => [
         ...prevEdges,
         createEdge(selectedNode.id, maritalNodeId, 'smoothstep', 'personSourceRight', 'maritalTargetLeft'),
         createEdge(spouseID, maritalNodeId, 'smoothstep', 'personSourceLeft', 'maritalTargetRight'),
@@ -59,32 +59,11 @@ export const useAddChildToSelectedNode = (
     );
     childNode.data.siblings?.push(childNode.id);
 
-    const updateChildren = (node: PersonNodeType, childId: string): PersonNodeType => ({
-      ...node,
-      data: { ...node.data, children: [...node.data.children, childId] },
-    });
-
-    const updateSpouseAndChildren = (node: PersonNodeType, spouseId: PersonNodeType['id'], childId: PersonNodeType['id'], maritalNodeId: string, maritalPosition: PersonNodeType['data']['maritalPosition']): PersonNodeType => ({
-      ...node,
-      data: {
-        ...node.data,
-        spouse: [...node.data.spouse, spouseId],
-        children: [...node.data.children, childId],
-        maritalNodeId,
-        maritalPosition,
-      },
-    });
-
-    const updateSiblings = (node: PersonNodeType, siblings: string[], childId: string): PersonNodeType => ({
-      ...node,
-      data: { ...node.data, siblings: [...siblings, childId] },
-    });
-
-    setWholeNodes((prevNodes) =>
+    setLocalNodes((prevNodes) =>
       prevNodes
         .map((node) => {
           if (isPersonNodeType(node)) {
-            if (node.id == spouseID) {
+            if (node.id === spouseID) {
               return updateChildren(node, childNode.id);
             } else if (node.id === selectedNode.id) {
               return updateSpouseAndChildren(node, spouseID, childNode.id, maritalNodeId, selectedNodeMaritalPosition);
@@ -97,11 +76,8 @@ export const useAddChildToSelectedNode = (
         .concat([childNode])
     );
 
-    setWholeEdges((prevEdges) => [...prevEdges, createEdge(childNode.id, maritalNodeId, 'parentChild', 'personSourceTop', 'maritalTargetBottom')]);
-    if (onUpdated) {
-      onUpdated();
-    }
+    setLocalEdges((prevEdges) => [...prevEdges, createEdge(childNode.id, maritalNodeId, 'parentChild', 'personSourceTop', 'maritalTargetBottom')]);
   };
 
-  return addChildToSelectedNode;
+  return {addChildToSelectedNode, localNodes, localEdges};
 };

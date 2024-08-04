@@ -2,7 +2,7 @@ import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
 import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
 import { Edge } from 'reactflow';
 
-export function filterDirectLineagesNodes(wholeNodes: (PersonNodeType | MaritalNodeType)[], wholeEdges: Edge[], selectedNode: PersonNodeType | null) {
+export function filterDirectLineagesNodes(wholeNodes: (PersonNodeType | MaritalNodeType)[], wholeEdges: Edge[], selectedNode: PersonNodeType | undefined) {
   const findDirectLineage = () => {
     if (!selectedNode || selectedNode.type !== 'person') {
       return { directLineageNodes: wholeNodes, directLineageEdges: wholeEdges };

@@ -239,7 +239,7 @@ const calculateParentNodePosition = (
   }
 };
 
-export function calculateNodesPosition(wholeNodes: (PersonNodeType | MaritalNodeType)[], selectedNode: PersonNodeType | null) {
+export function calculateNodesPosition(wholeNodes: (PersonNodeType | MaritalNodeType)[], selectedNode: PersonNodeType | undefined) {
   if (!selectedNode) return;
   const wholeNodesCopy = structuredClone(wholeNodes);
   const selectedNodesCopy = wholeNodesCopy.find((node) => node.id === selectedNode.id);

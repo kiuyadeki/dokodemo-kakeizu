@@ -9,7 +9,7 @@ interface MediaInputProps {
   mediaValue: string;
   setValue: UseFormSetValue<ProfileEditorInputs>;
   register: UseFormRegister<FieldValues>;
-  selectedNode: PersonNodeType;
+  selectedNode: PersonNodeType | undefined;
 }
 
 export const ProfileMediaInput: FC<MediaInputProps> = memo(({register, setValue, mediaValue, selectedNode}) => {

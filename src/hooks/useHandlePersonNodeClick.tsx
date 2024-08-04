@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 export const useHandlePersonNodeClick = (openModal: () => void) => {
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
 
-  return (clickedNode: Node, selectedNode: PersonNodeType | null) => {
+  return (clickedNode: Node, selectedNode: PersonNodeType | undefined) => {
     if (!isPersonNodeType(clickedNode) || !isPersonNodeType(selectedNode)) return;
     setSelectedNode(clickedNode);
     if (isPersonNodeType(selectedNode) && clickedNode.id === selectedNode.id) {
