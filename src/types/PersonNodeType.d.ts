@@ -31,10 +31,10 @@ export interface MaritalData {
 }
 
 export type PersonData = BirthInfo & FamilyInfo;
-export interface NodeData<T, U> extends Node<T> {
-  type: U;
+export interface NodeData<T> extends Node<T> {
+  type: string;
   data: T;
 }
 
-export type PersonNodeType = NodeData<PersonData, 'person'>;
-export type MaritalNodeType = NodeData<MaritalData, 'marital'>;
+export type MaritalNodeType = NodeData<MaritalData>;
+export type PersonNodeType = NodeData<PersonData>;

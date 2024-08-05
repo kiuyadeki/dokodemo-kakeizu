@@ -2,6 +2,7 @@ import { FamilyTree } from "@/components/FamilyTree";
 import { ChakraProvider } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { ReactFlowProvider } from "reactflow";
 
 
 function AppPage( ){
@@ -11,7 +12,9 @@ function AppPage( ){
 
   return (
     <ChakraProvider>
-      <FamilyTree projectId={projectId} />
+      <ReactFlowProvider>
+        <FamilyTree projectId={projectId} />
+      </ReactFlowProvider>
     </ChakraProvider>
   )
 };

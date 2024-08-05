@@ -5,7 +5,7 @@ import { GiBigDiamondRing } from 'react-icons/gi';
 import { TfiUnlink } from 'react-icons/tfi';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { MaritalData, MaritalNodeType } from '@/types/PersonNodeType';
+import { MaritalNodeType } from '@/types/PersonNodeType';
 import { wholeNodesState } from '@/recoil/WholeNodesState';
 import { memo } from 'react';
 

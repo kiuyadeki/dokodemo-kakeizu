@@ -1,33 +1,33 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { Edge, Node } from 'reactflow';
+import { Dispatch, SetStateAction } from 'react';
+import { Edge } from 'reactflow';
 import useOutgoingEdges from './useOutgoingEdges';
-import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
 import { createMaritalNode, createPersonNode } from '../utils/nodeUtils';
 import { createEdge } from '../utils/edgeUtils';
 import { BASE_GENERATIONS_SPACING, BASE_MARITAL_SPACING } from '../utils/constants';
 import { isPersonNodeType } from '../typeGuards/personTypeGuards';
 import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
-import { updateSiblings } from '@/utils/updateSiblings';
-import { updateChildren } from '@/utils/updateChildren';
-import { getMaritalPosition } from '@/utils/getMaritalPosition';
-import { updateSpouseAndChildren } from '@/utils/updateSpouseAndChildren';
+import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 
 export const useAddChildToSelectedNode = (
-  nodeList: (PersonNodeType | MaritalNodeType)[],
-  edgeList: Edge[],
-  selectedNode: PersonNodeType | undefined,
+  wholeNodes: (PersonNodeType | MaritalNodeType)[],
+  setWholeNodes: Dispatch<SetStateAction<(MaritalNodeType | MaritalNodeType)[]>>,
+  wholeEdges: Edge[],
+  setWholeEdges: Dispatch<SetStateAction<Edge[]>>,
+  onUpdated: () => void
 ) => {
-  const outgoingEdges = useOutgoingEdges(edgeList);
-  const [localNodes, setLocalNodes] = useState(nodeList);
-  const [localEdges, setLocalEdges] = useState(edgeList);
+  const selectedNode = useRecoilValue(selectedNodeState);
+  const outgoingEdges = useOutgoingEdges(wholeEdges);
 
   const addChildToSelectedNode = () => {
-    if (!selectedNode || !isPersonNodeType(selectedNode)) return;
+    if (!selectedNode) return;
 
-    let selectedNodeMaritalPosition = getMaritalPosition(selectedNode);
-    let maritalNodeId: PersonNodeType['id'];
-    let spouseID: PersonNodeType['id'] = selectedNode.data.spouse[0] || '';
+    let selectedNodeMaritalPosition = selectedNode.data.maritalPosition;
+    if (!selectedNodeMaritalPosition) {
+      selectedNodeMaritalPosition = 'left';
+    }
+    let maritalNodeId: MaritalNodeType['id'];
+    let spouseID: MaritalNodeType['id'] = selectedNode.data.spouse[0] || '';
     if (!selectedNode.data.spouse.length) {
       const maritalNode = createMaritalNode({
         x: selectedNode.position.x + BASE_MARITAL_SPACING,
@@ -35,7 +35,8 @@ export const useAddChildToSelectedNode = (
       });
       maritalNodeId = maritalNode.id;
       const spouseNode = createPersonNode(
-        { x: selectedNode.position.x + BASE_MARITAL_SPACING * 2, y: selectedNode.position.y },
+        { x: selectedNode.position.x + BASE_MARITAL_SPACING * 2,
+y: selectedNode.position.y },
         {
           spouse: [selectedNode.id],
           maritalNodeId: maritalNodeId,
@@ -43,27 +44,61 @@ export const useAddChildToSelectedNode = (
         }
       );
       spouseID = spouseNode.id;
-      setLocalNodes((prevNodes) => [...prevNodes, maritalNode, spouseNode]);
-      setLocalEdges((prevEdges) => [
+      setWholeNodes(prevNodes => [...prevNodes, maritalNode, spouseNode]);
+      setWholeEdges(prevEdges => [
         ...prevEdges,
         createEdge(selectedNode.id, maritalNodeId, 'smoothstep', 'personSourceRight', 'maritalTargetLeft'),
         createEdge(spouseID, maritalNodeId, 'smoothstep', 'personSourceLeft', 'maritalTargetRight'),
       ]);
     } else {
-      maritalNodeId = outgoingEdges.find((edge) => edge.sourceHandle === 'personSourceRight' || edge.sourceHandle === 'personSourceLeft')?.target || '';
+      maritalNodeId =
+        outgoingEdges.find(
+          edge => edge.sourceHandle === 'personSourceRight' || edge.sourceHandle === 'personSourceLeft'
+        )?.target || '';
     }
 
     const childNode = createPersonNode(
-      { x: selectedNode.position.x + BASE_MARITAL_SPACING, y: selectedNode.position.y + BASE_GENERATIONS_SPACING },
-      { parents: [selectedNode.id, spouseID], siblings: [...selectedNode.data.children] }
+      { x: selectedNode.position.x + BASE_MARITAL_SPACING,
+y: selectedNode.position.y + BASE_GENERATIONS_SPACING },
+      { parents: [selectedNode.id, spouseID],
+siblings: [...selectedNode.data.children] }
     );
     childNode.data.siblings?.push(childNode.id);
 
-    setLocalNodes((prevNodes) =>
+    const updateChildren = (node: PersonNodeType, childId: string): PersonNodeType => ({
+      ...node,
+      data: { ...node.data,
+children: [...node.data.children, childId] },
+    });
+
+    const updateSpouseAndChildren = (
+      node: PersonNodeType,
+      spouseId: string,
+      childId: string,
+      maritalNodeId: string,
+      maritalPosition: 'left' | 'right' | undefined
+    ): PersonNodeType => ({
+      ...node,
+      data: {
+        ...node.data,
+        spouse: [...node.data.spouse, spouseId],
+        children: [...node.data.children, childId],
+        maritalNodeId,
+        maritalPosition,
+      },
+    });
+
+    const updateSiblings = (node: PersonNodeType, siblings: string[], childId: string): PersonNodeType => ({
+      ...node,
+      data: { ...node.data,
+siblings: [...siblings, childId] },
+    });
+
+    setWholeNodes(prevNodes =>
       prevNodes
-        .map((node) => {
+        .map(node => {
           if (isPersonNodeType(node)) {
-            if (node.id === spouseID) {
+            if (node.id == spouseID) {
               return updateChildren(node, childNode.id);
             } else if (node.id === selectedNode.id) {
               return updateSpouseAndChildren(node, spouseID, childNode.id, maritalNodeId, selectedNodeMaritalPosition);
@@ -76,8 +111,15 @@ export const useAddChildToSelectedNode = (
         .concat([childNode])
     );
 
-    setLocalEdges((prevEdges) => [...prevEdges, createEdge(childNode.id, maritalNodeId, 'parentChild', 'personSourceTop', 'maritalTargetBottom')]);
+    setWholeEdges(prevEdges => [
+      ...prevEdges,
+      createEdge(childNode.id, maritalNodeId, 'parentChild', 'personSourceTop', 'maritalTargetBottom'),
+    ]);
+
+    // if (onUpdated) {
+    //   onUpdated();
+    // }
   };
 
-  return {addChildToSelectedNode, localNodes, localEdges};
+  return addChildToSelectedNode;
 };

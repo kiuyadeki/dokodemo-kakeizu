@@ -3,13 +3,13 @@ import { wholeNodesState } from '../recoil/WholeNodesState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
-import { use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PersonNode } from './ui/PersonNode';
 import { MaritalNode } from './ui/MaritalStatusNode';
-import { ReactFlow, Background, BackgroundVariant, useEdgesState, useNodesState, useReactFlow, useViewport, Edge, Node } from 'reactflow';
+import { ReactFlow, Background, BackgroundVariant, useEdgesState, useNodesState, useReactFlow, useViewport, Edge, Node, OnNodesChange, OnEdgesChange } from 'reactflow';
 import { filterDirectLineagesNodes } from '../utils/filterDirectLineageNodes';
 import { calculateNodesPosition } from '../utils/calculateNodesPosition';
-import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
+import { PersonNodeType, MaritalNodeType, MaritalData } from '../types/PersonNodeType';
 import { getSelectedNodePosition } from '../utils/getSelectedNodePosition';
 import { BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '../utils/constants';
 import { ParentChildEdge } from './ui/ParentChildEdge';
@@ -19,28 +19,36 @@ import { fetchFamilyTree } from '@/services/fetchFamilyTree';
 import { useHandlePersonNodeClick } from '@/hooks/useHandlePersonNodeClick';
 import { Box } from '@chakra-ui/react';
 
-export const FamilyTreeWrapper = (props: { openModal: () => void; nodes: (PersonNodeType | MaritalNodeType)[]; edges: Edge[] }) => {
-  const { openModal } = props;
+interface FamilyTreeWrapperProps {
+  openModal: () => void;
+  nodes: Node<MaritalData, string | undefined>[];
+  edges: Edge[];
+  onNodesChange: OnNodesChange;
+  onEdgesChange: OnEdgesChange;
+  updateFamilyTree: () => void;
+}
+
+export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
+  const { openModal, nodes, edges, onNodesChange, onEdgesChange, updateFamilyTree } = props;
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
   const [nodesUpdated, setNodesUpdated] = useRecoilState(nodesUpdatedState);
-  const [familyTreeInstance, setFamilyTreeInstance] = useState(null);
 
-  const onSave = () => {
-    if (reactFlowInstance) {
-      const tree = reactFlowInstance.toObject();
-      sessionStorage.setItem('example-familyTree', JSON.stringify(tree));
-      // console.log('tree', tree);
-    }
-  };
+  // const onSave = () => {
+  //   if (reactFlowInstance) {
+  //     const tree = reactFlowInstance.toObject();
+  //     sessionStorage.setItem('example-familyTree', JSON.stringify(tree));
+  //     // console.log('tree', tree);
+  //   }
+  // };
 
-  const onUpdate = () => {
-    if (reactFlowInstance) {
-      const tree = reactFlowInstance.toObject();
-      updateFamilyTreeData(JSON.stringify(tree), 'aa9230d2-3c05-4cab-ae52-a9cc5e81b8ed');
-    }
-  };
+  // const onUpdate = () => {
+  //   if (reactFlowInstance) {
+  //     const tree = reactFlowInstance.toObject();
+  //     updateFamilyTreeData(JSON.stringify(tree), 'aa9230d2-3c05-4cab-ae52-a9cc5e81b8ed');
+  //   }
+  // };
 
   // useEffect(() => {
   //   onUpdate();
@@ -49,44 +57,35 @@ export const FamilyTreeWrapper = (props: { openModal: () => void; nodes: (Person
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
   const nodeTypes = useMemo(() => ({ person: PersonNode, marital: MaritalNode }), []);
   const edgeTypes = useMemo(() => ({ parentChild: ParentChildEdge }), []);
-  const [nodes, setNodes, onNodesChange] = useNodesState(wholeNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(wholeEdges);
+  // const [nodes, setNodes, onNodesChange] = useNodesState(wholeNodes);
+  // const [edges, setEdges, onEdgesChange] = useEdgesState(wholeEdges);
   const handleNodeClick = useHandlePersonNodeClick(openModal);
-  const { setCenter } = useReactFlow();
-  const { x, y, zoom } = useViewport();
-  const reactFlowInstance = useReactFlow();
+  // const { setCenter } = useReactFlow();
+  // const { x, y, zoom } = useViewport();
+  // const reactFlowInstance = useReactFlow();
   useEffect(() => {
     setSelectedNode(wholeNodes[0] as PersonNodeType);
   }, []);
 
-  useEffect(() => {
-    reactFlowInstance.fitView({
-      padding: 20,
-    });
-  }, [reactFlowInstance]);
+  // useEffect(() => {
+  //   reactFlowInstance.fitView({
+  //     padding: 20,
+  //   });
+  // }, [reactFlowInstance]);
   useEffect(() => {
     console.log('wholeNodes', wholeNodes);
     // console.log('wholeEdges', wholeEdges);
     if (nodesUpdated && selectedNode) {
-      const calculatedWholeNodes = calculateNodesPosition(wholeNodes, selectedNode);
-      if (!calculatedWholeNodes) return;
-      setWholeNodes(calculatedWholeNodes);
-      const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(calculatedWholeNodes, wholeEdges, selectedNode);
-      setNodes(directLineageNodes);
-      setEdges(directLineageEdges);
+      updateFamilyTree();
       setNodesUpdated(false);
-      const [selectedNodePostionX, selectedNodePostionY] = getSelectedNodePosition(calculatedWholeNodes, selectedNode) || [0, 0];
-      setCenter(selectedNodePostionX + BASE_PERSON_NODE_WIDTH / 2, selectedNodePostionY + BASE_PERSON_NODE_HEIGHT / 2, {
-        zoom,
-        duration: 1000,
-      });
     }
   }, [nodesUpdated]);
 
   useEffect(() => {
     if (selectedNode) {
+      console.log('selectedNode chenged');
       setNodesUpdated(true);
-      onSave();
+      // onSave();
     }
   }, [selectedNode]);
 
