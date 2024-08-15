@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 
-export const useAddParentToSelectedNode = (setWholeNodes: Dispatch<SetStateAction<(PersonNodeType | MaritalNodeType)[]>>, setWholeEdges: Dispatch<SetStateAction<Edge[]>>, onUpdated: () => void) => {
+export const useAddParentToSelectedNode = (setWholeNodes: Dispatch<SetStateAction<(PersonNodeType | MaritalNodeType)[]>>, setWholeEdges: Dispatch<SetStateAction<Edge[]>>) => {
   const selectedNode = useRecoilValue(selectedNodeState);
   const addParentToSelectedNode = () => {
     if (!selectedNode) return;
@@ -47,9 +47,6 @@ export const useAddParentToSelectedNode = (setWholeNodes: Dispatch<SetStateActio
 
     setWholeNodes((prevNodes) => prevNodes.map((node) => (node.id === selectedNode.id ? updatedNode : node)).concat([maritalNode, leftParentNode, rightParentNode]));
     setWholeEdges((prevEdges) => [...prevEdges, ...edgesToAdd]);
-    if (onUpdated) {
-      onUpdated();
-    }
   };
 
   return addParentToSelectedNode;

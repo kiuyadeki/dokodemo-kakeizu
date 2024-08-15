@@ -23,7 +23,7 @@ export const FamilyTree: FC<FamilyTreeProps> = memo(function FamilyTreeComponent
     <>
       <FamilyTreeWrapper openModal={open} nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange} updateFamilyTree={updateFamilyTree} />
       <Modal>
-        <SelectActionModal closeModal={close} />
+        <SelectActionModal closeModal={close} updateFamilyTree={updateFamilyTree} />
       </Modal>
     </>
   );

@@ -3,18 +3,20 @@ import { ProfileEditor } from './ProfileEditor';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 import { useAddParentToSelectedNode } from '../hooks/useAddParentToSelectedNode';
-import { useAddChildToSelectedNode } from '../hooks/useAddChildToSelectedNode';
+import { addChildNodeToSelectedNode } from '../utils/addChildNodeToSelectedNode';
 import { useAddSpouseToSelectedNode } from '../hooks/useAddSpouseToSelectedNode';
 import { wholeNodesState } from '../recoil/WholeNodesState';
-import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { IoCloseOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 import { ProfileEditorState } from '@/recoil/profileEditorState';
 import { Button, Flex, Grid } from '@chakra-ui/react';
+import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { Edge } from 'reactflow';
 
 type SelectActionModalProps = {
   closeModal: () => void;
+  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void;
 };
 
 const ButtonList = styled.div`
@@ -89,22 +91,28 @@ const CloseButton = styled.button`
 `;
 
 export const SelectActionModal: FC<SelectActionModalProps> = memo(function SelectActionModalComponent(props) {
-  const { closeModal } = props;
+  const { closeModal, updateFamilyTree } = props;
   const selectedNode = useRecoilValue(selectedNodeState);
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
-  const [nodesUpdated, setNodesUpdated] = useRecoilState(nodesUpdatedState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
   const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
-  const addParentToSelectedNode = useAddParentToSelectedNode(setWholeNodes, setWholeEdges, () => setNodesUpdated(true));
-  const addChildToSelectedNode = useAddChildToSelectedNode(wholeNodes, setWholeNodes, wholeEdges, setWholeEdges, () =>
-    setNodesUpdated(true)
-  );
-  const {addSpouseToSelectedNode, localNodes: spouseLocalNodes, localEdges: spouseLocalEdges} = useAddSpouseToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+  const addParentToSelectedNode = useAddParentToSelectedNode(setWholeNodes, setWholeEdges);
+  const { addSpouseToSelectedNode, localNodes: spouseLocalNodes, localEdges: spouseLocalEdges } = useAddSpouseToSelectedNode(wholeNodes, wholeEdges, selectedNode);
 
-  useEffect(() => {
-    console.log('addChildToSelectedNode');
-    setNodesUpdated(true);
-  }, [addChildToSelectedNode]);
+  const updateNodesAndEdges = (AddedNode: 'parent' | 'child' | 'spouse') => {
+    switch (AddedNode) {
+      case 'parent':
+        break;
+      case 'child':
+        const {nodesCopy, edgesCopy} = addChildNodeToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+        updateFamilyTree(nodesCopy, edgesCopy);
+        break;
+      case 'spouse':
+        break;
+      default:
+        break;
+    }
+  }
 
   // 情報を編集
   const displayProfileEditor = () => {
@@ -116,7 +124,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const closeAndInitModal = () => {
     closeModal();
     setShowProfileEditor(false);
-  }
+  };
 
   let hasParents = false;
   let hasSpouse = false;
@@ -135,7 +143,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
           <ProfileEditor onClose={closeAndInitModal} />
         ) : (
           <>
-            <Grid templateColumns="repeat(2, 1fr)" gap={5}>
+            <Grid templateColumns='repeat(2, 1fr)' gap={5}>
               <Button
                 isDisabled={hasParents}
                 onClick={() => {
@@ -147,7 +155,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
               </Button>
               <Button
                 onClick={() => {
-                  addChildToSelectedNode();
+                  updateNodesAndEdges('child');
                   closeModal();
                 }}
               >

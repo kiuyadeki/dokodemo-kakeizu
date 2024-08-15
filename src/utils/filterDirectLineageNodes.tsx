@@ -4,7 +4,7 @@ import { Edge } from 'reactflow';
 
 export function filterDirectLineagesNodes(wholeNodes: (PersonNodeType | MaritalNodeType)[], wholeEdges: Edge[], selectedNode: PersonNodeType | undefined) {
   const findDirectLineage = () => {
-    if (!selectedNode || selectedNode.type !== 'person') {
+    if (!selectedNode || !isPersonNodeType(selectedNode)) {
       return { directLineageNodes: wholeNodes, directLineageEdges: wholeEdges };
     }
 
@@ -36,6 +36,8 @@ export function filterDirectLineagesNodes(wholeNodes: (PersonNodeType | MaritalN
             node.data.children.forEach((childId) => findRelatedNodesAndEdges(childId, selectedNodeId, 'isChild'));
             break;
           case 'isSelected':
+            console.log('isSelected', node);
+            console.log('wholeNodes', wholeNodes)
             node.data.siblings?.forEach((siblingsId) => findRelatedNodesAndEdges(siblingsId, selectedNodeId, 'isSibling'));
             node.data.children.forEach((childId) => findRelatedNodesAndEdges(childId, selectedNodeId, 'isChild'));
             node.data.parents.forEach((parentId) => findRelatedNodesAndEdges(parentId, selectedNodeId, 'isParent'));
@@ -43,7 +45,7 @@ export function filterDirectLineagesNodes(wholeNodes: (PersonNodeType | MaritalN
         }
 
         lineageNodes.forEach((node) => {
-          if (node.type === 'person') {
+          if (isPersonNodeType(node)) {
             const maritalNode = wholeNodes.find((n) => n.id === node.data.maritalNodeId);
             maritalNode && lineageNodes.add(maritalNode);
           }

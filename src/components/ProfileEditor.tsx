@@ -1,12 +1,8 @@
 import { FC, FormEvent, memo, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useProfilePictureUpload } from '../hooks/useProfilePictureChange';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { wholeNodesState } from '../recoil/WholeNodesState';
-import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
 import { selectedNodeState } from '../recoil/selectedNodeState';
-import styled from 'styled-components';
-import { IoChevronDown } from 'react-icons/io5';
 import { PersonNodeType } from '../types/PersonNodeType';
 import { ProfileEditorInputs } from '@/types/profileEditorInputs';
 import { ProfileTextInput } from './forms/ProfileTextInput';
@@ -30,8 +26,6 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
     setValue,
   } = useForm<ProfileEditorInputs>();
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
-  const [nodesUpdated, setNodesUpdated] = useRecoilState(nodesUpdatedState);
-  const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
 
   const updateNodeData = (data: ProfileEditorInputs, selectedNode: PersonNodeType): Promise<PersonNodeType> => {
     const updatedNode = {
@@ -57,7 +51,6 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
       );
     }
     onClose();
-    setNodesUpdated(true);
   };
 
   useEffect(() => {

@@ -37,7 +37,7 @@ const setDescendants = (wholeNodes: (PersonNodeType | MaritalNodeType)[]) => {
 
     if (node.data.children.length === 1) {
       const childNode = wholeNodes.find((n) => n.id === node.data.children[0]);
-      if (childNode && childNode.type === 'person' && !childNode.data.spouse!.length) {
+      if (isPersonNodeType(childNode) && !childNode.data.spouse!.length) {
         childWidths = [[BASE_MARITAL_SPACING * 2 + BASE_SIBLINGS_SPACING]];
       }
     }
@@ -178,7 +178,7 @@ const calculateParentNodePosition = (
     switch (ancestorsSide) {
       case 'left':
         const rightParentNode = wholeNodes.find(
-          (parentNode) => parentNode.type === 'person' && node.data.parents?.includes(parentNode.id) && parentNode.data.maritalPosition === 'right'
+          (parentNode) => isPersonNodeType(parentNode) && node.data.parents?.includes(parentNode.id) && parentNode.data.maritalPosition === 'right'
         ) as PersonNodeType;
         if (rightParentNode) {
           parentOffset = -rightParentNode.data.ancestors * BASE_MARITAL_SPACING - (rightParentNode.data.ancestors - 1) * BASE_PARENTS_GAP;
@@ -186,7 +186,7 @@ const calculateParentNodePosition = (
         break;
       case 'right':
         const leftParentNode = wholeNodes.find(
-          (parentNode) => parentNode.type === 'person' && node.data.parents?.includes(parentNode.id) && parentNode.data.maritalPosition === 'left'
+          (parentNode) => isPersonNodeType(parentNode) && node.data.parents?.includes(parentNode.id) && parentNode.data.maritalPosition === 'left'
         ) as PersonNodeType;
         if (leftParentNode) {
           parentOffset = leftParentNode.data.ancestors * BASE_MARITAL_SPACING + (leftParentNode.data.ancestors - 1) * BASE_PARENTS_GAP;
@@ -242,6 +242,7 @@ const calculateParentNodePosition = (
 export function calculateNodesPosition(wholeNodes: (PersonNodeType | MaritalNodeType)[], selectedNode: PersonNodeType | undefined) {
   if (!selectedNode) return;
   const wholeNodesCopy = structuredClone(wholeNodes);
+  if (!wholeNodesCopy) return;
   const selectedNodesCopy = wholeNodesCopy.find((node) => node.id === selectedNode.id);
   if (!selectedNodesCopy || !isPersonNodeType(selectedNodesCopy)) return;
   setDescendants(wholeNodesCopy);
@@ -264,7 +265,7 @@ export function calculateNodesPosition(wholeNodes: (PersonNodeType | MaritalNode
   let siblingsOffset = 0;
   sortedSiblingsNodes.forEach((node) => {
     calculateChildNodePosition(wholeNodesCopy, node, 0, siblingsOffset);
-    if ('data' in node && node.type === 'person' && node.data.descendantsWidth) {
+    if (isPersonNodeType(node)) {
       siblingsOffset += node.data.descendantsWidth;
     }
   });

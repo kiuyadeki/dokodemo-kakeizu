@@ -6,7 +6,7 @@ import { calculateNodesPosition } from '@/utils/calculateNodesPosition';
 import { BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '@/utils/constants';
 import { filterDirectLineagesNodes } from '@/utils/filterDirectLineageNodes';
 import { getSelectedNodePosition } from '@/utils/getSelectedNodePosition';
-import { useEdgesState, useNodesState, useReactFlow, useViewport } from 'reactflow';
+import { Edge, useEdgesState, useNodesState, useReactFlow, useViewport } from 'reactflow';
 import { useRecoilState } from 'recoil';
 
 export const useInitFamilyTree = () => {
@@ -18,14 +18,16 @@ export const useInitFamilyTree = () => {
   const { zoom } = useViewport();
   const reactFlowInstance = useReactFlow();
 
-  const updateFamilyTree = () => {
-    console.log('updateFamilyTree');
+  const updateFamilyTree = (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => {
     if (!selectedNode) return;
-    const calculatedWholeNodes = calculateNodesPosition(wholeNodes, selectedNode);
+    const calculatedWholeNodes = calculateNodesPosition(nodes, selectedNode);
 
     if (!calculatedWholeNodes) return;
     setWholeNodes(calculatedWholeNodes);
-    const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(calculatedWholeNodes, wholeEdges, selectedNode);
+    setWholeEdges(edges);
+    const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(calculatedWholeNodes, edges, selectedNode);
+    console.log('nodes', nodes)
+    console.log('directLineageNodes', directLineageNodes, calculatedWholeNodes);
     setNodes(directLineageNodes);
     setEdges(directLineageEdges);
     const [selectedNodePositionX, selectedNodePositionY] = getSelectedNodePosition(calculatedWholeNodes, selectedNode);
