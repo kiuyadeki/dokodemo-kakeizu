@@ -2,9 +2,7 @@ import { FC, memo, useEffect, useReducer, useState } from 'react';
 import { ProfileEditor } from './ProfileEditor';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
-import { useAddParentToSelectedNode } from '../hooks/useAddParentToSelectedNode';
 import { addChildNodeToSelectedNode } from '../utils/addChildNodeToSelectedNode';
-import { useAddSpouseToSelectedNode } from '../hooks/useAddSpouseToSelectedNode';
 import { wholeNodesState } from '../recoil/WholeNodesState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { IoCloseOutline } from 'react-icons/io5';
@@ -13,6 +11,8 @@ import { ProfileEditorState } from '@/recoil/profileEditorState';
 import { Button, Flex, Grid } from '@chakra-ui/react';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 import { Edge } from 'reactflow';
+import { addParentToSelectedNode } from '@/utils/addParentToSelectedNode';
+import { addSpouseToSelectedNode } from '@/utils/addSpouseToSelectedNode';
 
 type SelectActionModalProps = {
   closeModal: () => void;
@@ -96,18 +96,22 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
   const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
-  const addParentToSelectedNode = useAddParentToSelectedNode(setWholeNodes, setWholeEdges);
-  const { addSpouseToSelectedNode, localNodes: spouseLocalNodes, localEdges: spouseLocalEdges } = useAddSpouseToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+  // const addParentToSelectedNode = useAddParentToSelectedNode(setWholeNodes, setWholeEdges);
+  // const { addSpouseToSelectedNode, localNodes: spouseLocalNodes, localEdges: spouseLocalEdges } = useAddSpouseToSelectedNode(wholeNodes, wholeEdges, selectedNode);
 
   const updateNodesAndEdges = (AddedNode: 'parent' | 'child' | 'spouse') => {
     switch (AddedNode) {
       case 'parent':
+        const { nodesCopy: nodesCopyParent, edgesCopy: edgesCopyParent } = addParentToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+        updateFamilyTree(nodesCopyParent, edgesCopyParent);
         break;
       case 'child':
-        const {nodesCopy, edgesCopy} = addChildNodeToSelectedNode(wholeNodes, wholeEdges, selectedNode);
-        updateFamilyTree(nodesCopy, edgesCopy);
+        const {nodesCopy: nodesCopyChild, edgesCopy: edgesCopyChild} = addChildNodeToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+        updateFamilyTree(nodesCopyChild, edgesCopyChild);
         break;
       case 'spouse':
+        const { nodesCopy: nodesCopySpouse, edgesCopy: edgesCopySpouse } = addSpouseToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+        updateFamilyTree(nodesCopySpouse, edgesCopySpouse);
         break;
       default:
         break;
@@ -147,7 +151,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
               <Button
                 isDisabled={hasParents}
                 onClick={() => {
-                  addParentToSelectedNode();
+                  updateNodesAndEdges('parent');
                   closeModal();
                 }}
               >
@@ -164,7 +168,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
               <Button
                 isDisabled={hasSpouse}
                 onClick={() => {
-                  addSpouseToSelectedNode();
+                  updateNodesAndEdges('spouse');
                   closeModal();
                 }}
               >

@@ -36,8 +36,6 @@ export function filterDirectLineagesNodes(wholeNodes: (PersonNodeType | MaritalN
             node.data.children.forEach((childId) => findRelatedNodesAndEdges(childId, selectedNodeId, 'isChild'));
             break;
           case 'isSelected':
-            console.log('isSelected', node);
-            console.log('wholeNodes', wholeNodes)
             node.data.siblings?.forEach((siblingsId) => findRelatedNodesAndEdges(siblingsId, selectedNodeId, 'isSibling'));
             node.data.children.forEach((childId) => findRelatedNodesAndEdges(childId, selectedNodeId, 'isChild'));
             node.data.parents.forEach((parentId) => findRelatedNodesAndEdges(parentId, selectedNodeId, 'isParent'));

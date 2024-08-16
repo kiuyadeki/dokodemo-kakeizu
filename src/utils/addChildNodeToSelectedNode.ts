@@ -6,9 +6,9 @@ import { BASE_GENERATIONS_SPACING, BASE_MARITAL_SPACING } from './constants';
 import { isPersonNodeType } from '../typeGuards/personTypeGuards';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 
-export const addChildNodeToSelectedNode = (wholeNodes: (PersonNodeType | MaritalNodeType)[], wholeEdges: Edge[], selectedNode: PersonNodeType | undefined) => {
-  const nodesCopy = [...wholeNodes];
-  const edgesCopy = [...wholeEdges];
+export const addChildNodeToSelectedNode = (nodeList: (PersonNodeType | MaritalNodeType)[], edgeList: Edge[], selectedNode: PersonNodeType | undefined) => {
+  const nodesCopy = [...nodeList];
+  const edgesCopy = [...edgeList];
   const outgoingEdges = extractEdgesFromNode(edgesCopy, selectedNode);
 
   if (!selectedNode) return { nodesCopy, edgesCopy };

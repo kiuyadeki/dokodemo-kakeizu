@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { wholeNodesState } from '../recoil/WholeNodesState';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 import { FC, use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -9,6 +9,7 @@ import { PersonNodeType, MaritalNodeType, MaritalData } from '../types/PersonNod
 import { ParentChildEdge } from './ui/ParentChildEdge';
 import { useHandlePersonNodeClick } from '@/hooks/useHandlePersonNodeClick';
 import { Box } from '@chakra-ui/react';
+import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 
 interface FamilyTreeWrapperProps {
   openModal: () => void;
@@ -21,7 +22,8 @@ interface FamilyTreeWrapperProps {
 
 export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
   const { openModal, nodes, edges, onNodesChange, onEdgesChange, updateFamilyTree } = props;
-  const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
+  const wholeNodes = useRecoilValue(wholeNodesState);
+  const wholeEdges = useRecoilValue(wholeEdgesState);
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
 
   // const onSave = () => {
@@ -51,6 +53,10 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
     setSelectedNode(wholeNodes[0] as PersonNodeType);
   }, []);
 
+  useEffect(() => {
+    updateFamilyTree(wholeNodes, wholeEdges);
+  }, [selectedNode]);
+
   return (
     <Box w='100vw' h='100vh' className='wrapper' ref={reactFlowWrapper}>
       <ReactFlow
@@ -62,10 +68,12 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
         onEdgesChange={onEdgesChange}
         onNodeClick={(e, node) => {
           handleNodeClick(node, selectedNode);
+          updateFamilyTree(wholeNodes, wholeEdges);
+          console.log('selectedNode', selectedNode);
         }}
         nodesDraggable={false}
         fitView
-        fitViewOptions={{ padding: 10 }}
+        fitViewOptions={{ padding: 20 }}
         proOptions={{ hideAttribution: true }}
       >
         <Background color='#ddd' variant={BackgroundVariant.Lines} gap={[340, 250]} />
