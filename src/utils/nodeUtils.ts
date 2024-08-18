@@ -30,6 +30,7 @@ export const createPersonNode = (position: PersonNodeType['position'], dataOverr
       maritalPosition: undefined,
       selected: false,
       isDivorced: false,
+      isVisible: true,
       ...dataOverrides,
     },
     position: { ...position },

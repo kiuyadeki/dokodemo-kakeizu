@@ -96,8 +96,6 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
   const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
-  // const addParentToSelectedNode = useAddParentToSelectedNode(setWholeNodes, setWholeEdges);
-  // const { addSpouseToSelectedNode, localNodes: spouseLocalNodes, localEdges: spouseLocalEdges } = useAddSpouseToSelectedNode(wholeNodes, wholeEdges, selectedNode);
 
   const updateNodesAndEdges = (AddedNode: 'parent' | 'child' | 'spouse') => {
     switch (AddedNode) {

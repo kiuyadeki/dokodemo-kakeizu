@@ -7,8 +7,9 @@ import { BiSolidUser } from 'react-icons/bi';
 import styled, { css, keyframes } from 'styled-components';
 import { formatBirthDay } from '../../helpers/formatBirthDay';
 import { formatFullName } from '../../helpers/formatFullName';
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { PersonNodeType } from '@/types/PersonNodeType';
+import { Text } from '@chakra-ui/react';
 
 interface StyledBoxProps {
   isSelected: boolean;
@@ -117,10 +118,6 @@ const InformationBox = styled.div`
   text-align: center;
 `;
 
-const Text = styled.p`
-  font-size: 16px;
-`;
-
 export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
   const { id, data } = props;
   const { birthYear, birthMonth, birthDate, firstName, lastName, profilePictureURL } = data;
@@ -135,28 +132,35 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
       <StyledHandle type='source' position={Position.Left} id='personSourceLeft' />
       <StyledHandle type='source' position={Position.Top} id='personSourceTop' />
       <AnimatePresence>
-        <motion.div key={data.label} variants={variants} initial='initial' animate='animate' exit='exit' transition={{ duration: 0.8, ease: 'easeOut' }}>
-          <StyledBox isSelected={isSelected}>
-            <IconBox isSelected={isSelected}>
-              <IconInner>
-                {profilePictureURL ? (
-                  <CustomProfileIcon src={profilePictureURL} />
-                ) : (
-                  <DefaultProfileIcon>
-                    <BiSolidUser size={100} color='#ffffff' />
-                  </DefaultProfileIcon>
-                )}
-              </IconInner>
-            </IconBox>
+        {data.isVisible && (
+          <motion.div key={data.label} variants={variants} initial='initial' animate='animate' exit='exit' transition={{ duration: 0.8, ease: 'easeOut' }}
+          onAnimationComplete={(definition) => {
+            if (definition === 'exit') {
+            }
+          }}
+          >
+            <StyledBox isSelected={isSelected}>
+              <IconBox isSelected={isSelected}>
+                <IconInner>
+                  {profilePictureURL ? (
+                    <CustomProfileIcon src={profilePictureURL} />
+                  ) : (
+                    <DefaultProfileIcon>
+                      <BiSolidUser size={100} color='#ffffff' />
+                    </DefaultProfileIcon>
+                  )}
+                </IconInner>
+              </IconBox>
 
-            <InformationBox>
-              <Text>{id}</Text>
-              <Text>{fullName}</Text>
-              <Text>{birthDay}</Text>
-              <Text>{data.gender}</Text>
-            </InformationBox>
-          </StyledBox>
-        </motion.div>
+              <InformationBox>
+                <Text>{id}</Text>
+                <Text>{fullName}</Text>
+                <Text>{birthDay}</Text>
+                <Text>{data.gender}</Text>
+              </InformationBox>
+            </StyledBox>
+          </motion.div>
+        )}
       </AnimatePresence>
     </>
   );

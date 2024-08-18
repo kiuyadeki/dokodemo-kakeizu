@@ -69,7 +69,6 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
         onNodeClick={(e, node) => {
           handleNodeClick(node, selectedNode);
           updateFamilyTree(wholeNodes, wholeEdges);
-          console.log('selectedNode', selectedNode);
         }}
         nodesDraggable={false}
         fitView

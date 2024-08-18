@@ -16,7 +16,7 @@ export const createEdge = (
     targetHandle,
     focusable: false,
     style: {
-      stroke: '#FF0072',
+      stroke: '#a85',
     },
   };
 };

@@ -24,6 +24,7 @@ export interface FamilyInfo {
   maritalPosition?: 'right' | 'left';
   maritalNodeId?: string;
   isDivorced: boolean;
+  isVisible?: boolean;
 }
 
 export interface MaritalData {

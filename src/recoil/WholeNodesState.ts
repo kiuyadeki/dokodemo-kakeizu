@@ -22,6 +22,7 @@ export const initialNode: (PersonNodeType | MaritalNodeType) = {
     ancestors: 0,
     selected: true,
     isDivorced: false,
+    isVisible: true,
   },
   position: { x: 0,
 y: 0 },
