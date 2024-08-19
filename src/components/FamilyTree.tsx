@@ -9,10 +9,16 @@ import { ProfileEditorState } from '@/recoil/profileEditorState';
 import { useInitFamilyTree } from '@/hooks/useInitFamilyTree';
 
 interface FamilyTreeProps {
-  projectId: string | string[] | undefined;
+  projectId: string | undefined;
+  familyTreeData: any;
 }
 
-export const FamilyTree: FC<FamilyTreeProps> = memo(function FamilyTreeComponent({ projectId }) {
+export const FamilyTree: FC<FamilyTreeProps> = memo(function FamilyTreeComponent({ projectId, familyTreeData }) {
+  useEffect(() => {
+    if (familyTreeData) {
+      console.log('familyTreeData', familyTreeData);
+    }
+  }, [familyTreeData]);
   const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
   const { Modal, open, close } = UseMicroModal('select-action-modal', () => {
     setShowProfileEditor(false);

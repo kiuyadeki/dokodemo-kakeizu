@@ -23,6 +23,7 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
     const result = await fetchFamilyTreeSummary();
     if (result) {
       setFamilyTreeSummary(result);
+      console.log(result);
     }
   };
 
