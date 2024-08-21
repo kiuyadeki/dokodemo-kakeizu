@@ -8,23 +8,34 @@ import { ReactFlow, Background, BackgroundVariant, useEdgesState, useNodesState,
 import { PersonNodeType, MaritalNodeType, MaritalData } from '../types/PersonNodeType';
 import { ParentChildEdge } from './ui/ParentChildEdge';
 import { useHandlePersonNodeClick } from '@/hooks/useHandlePersonNodeClick';
-import { Box } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 
 interface FamilyTreeWrapperProps {
+  projectId: string | undefined;
   openModal: () => void;
   nodes: Node<MaritalData, string | undefined>[];
   edges: Edge[];
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void;
+  onUpdate: (id: string) => void;
+  familyTreeData: string | null | undefined;
 }
 
 export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
-  const { openModal, nodes, edges, onNodesChange, onEdgesChange, updateFamilyTree } = props;
+  const { projectId, openModal, nodes, edges, onNodesChange, onEdgesChange, updateFamilyTree, onUpdate, familyTreeData } = props;
   const wholeNodes = useRecoilValue(wholeNodesState);
   const wholeEdges = useRecoilValue(wholeEdgesState);
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
+  const formatedFamilyTreeData = useMemo(() => {
+    if (!familyTreeData) return;
+    return JSON.parse(familyTreeData);
+  }, [familyTreeData]);
+
+  useEffect(() => {
+    console.log('formatedFamilyTreeData', formatedFamilyTreeData.nodes, formatedFamilyTreeData.edges);
+  }, [formatedFamilyTreeData]);
 
   // const onSave = () => {
   //   if (reactFlowInstance) {
@@ -41,7 +52,7 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
   //   }
   // };
 
-  // useEffect(() => {
+  // useEffect(() => 
   //   onUpdate();
   // }, []);
 
@@ -53,15 +64,27 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
     setSelectedNode(wholeNodes[0] as PersonNodeType);
   }, []);
 
+  const handleSaveButtonClick = () => {
+    if (projectId) {
+      onUpdate(projectId);
+    } else {
+      openModal();
+    }
+  }
+
   useEffect(() => {
     updateFamilyTree(wholeNodes, wholeEdges);
   }, [selectedNode]);
 
   return (
     <Box w='100vw' h='100vh' className='wrapper' ref={reactFlowWrapper}>
+      {/* onUpdate(projectId);でdynamodb上のデータを更新する？要検証 */}
+      <Button onClick={handleSaveButtonClick} position="absolute" right={4} top={4} zIndex={10}>Update</Button>
       <ReactFlow
-        nodes={nodes}
-        edges={edges}
+        // nodes={nodes}
+        // edges={edges}
+        nodes={formatedFamilyTreeData.nodes}
+        edges={formatedFamilyTreeData.edges}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}

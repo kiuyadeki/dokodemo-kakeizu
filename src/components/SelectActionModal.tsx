@@ -93,8 +93,8 @@ const CloseButton = styled.button`
 export const SelectActionModal: FC<SelectActionModalProps> = memo(function SelectActionModalComponent(props) {
   const { closeModal, updateFamilyTree } = props;
   const selectedNode = useRecoilValue(selectedNodeState);
-  const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
-  const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
+  const wholeNodes = useRecoilValue(wholeNodesState);
+  const wholeEdges = useRecoilValue(wholeEdgesState);
   const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
 
   const updateNodesAndEdges = (AddedNode: 'parent' | 'child' | 'spouse') => {

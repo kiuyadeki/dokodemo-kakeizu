@@ -1,6 +1,7 @@
 import { selectedNodeState } from '@/recoil/selectedNodeState';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 import { wholeNodesState } from '@/recoil/WholeNodesState';
+import { updateFamilyTreeData } from '@/services/updateFamilyTreeData';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 import { calculateNodesPosition } from '@/utils/calculateNodesPosition';
 import { BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '@/utils/constants';
@@ -18,12 +19,20 @@ export const useInitFamilyTree = () => {
   const { zoom } = useViewport();
   const reactFlowInstance = useReactFlow();
 
+  const onUpdate = (id: string) => {
+    if (reactFlowInstance) {
+      const tree = reactFlowInstance.toObject();
+      updateFamilyTreeData(JSON.stringify(tree), id);
+    }
+  };
+
   const updateFamilyTree = (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => {
     if (!selectedNode) return;
     const calculatedWholeNodes = calculateNodesPosition(nodes, selectedNode);
 
     if (!calculatedWholeNodes) return;
     setWholeNodes(calculatedWholeNodes);
+    // console.log('calculatedWholeNodes', calculatedWholeNodes);
     setWholeEdges(edges);
     const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(calculatedWholeNodes, edges, selectedNode);
     setNodes(directLineageNodes);
@@ -36,5 +45,5 @@ export const useInitFamilyTree = () => {
   }
 
 
-  return { nodes, edges, onNodesChange, onEdgesChange, updateFamilyTree };
+  return { nodes, edges, onNodesChange, onEdgesChange, onUpdate, updateFamilyTree };
 };
