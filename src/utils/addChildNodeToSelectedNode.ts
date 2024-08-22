@@ -5,6 +5,9 @@ import { createEdge } from './edgeUtils';
 import { BASE_GENERATIONS_SPACING, BASE_MARITAL_SPACING } from './constants';
 import { isPersonNodeType } from '../typeGuards/personTypeGuards';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { updateSpouseAndChildren } from './updateSpouseAndChildren';
+import { updateSiblings } from './updateSiblings';
+import { updateChildren } from './updateChildren';
 
 export const addChildNodeToSelectedNode = (nodeList: (PersonNodeType | MaritalNodeType)[], edgeList: Edge[], selectedNode: PersonNodeType | undefined) => {
   const nodesCopy = [...nodeList];
@@ -48,27 +51,6 @@ export const addChildNodeToSelectedNode = (nodeList: (PersonNodeType | MaritalNo
     { parents: [selectedNode.id, spouseID], siblings: [...selectedNode.data.children] }
   );
   childNode.data.siblings?.push(childNode.id);
-
-  const updateChildren = (node: PersonNodeType, childId: string): PersonNodeType => ({
-    ...node,
-    data: { ...node.data, children: [...node.data.children, childId] },
-  });
-
-  const updateSpouseAndChildren = (node: PersonNodeType, spouseId: string, childId: string, maritalNodeId: string, maritalPosition: 'left' | 'right' | undefined): PersonNodeType => ({
-    ...node,
-    data: {
-      ...node.data,
-      spouse: [...node.data.spouse, spouseId],
-      children: [...node.data.children, childId],
-      maritalNodeId,
-      maritalPosition,
-    },
-  });
-
-  const updateSiblings = (node: PersonNodeType, siblings: string[], childId: string): PersonNodeType => ({
-    ...node,
-    data: { ...node.data, siblings: [...siblings, childId] },
-  });
 
   const updatedNodesCopy = nodesCopy
     .map((node) => {
