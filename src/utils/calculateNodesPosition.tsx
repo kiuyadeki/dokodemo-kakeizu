@@ -26,7 +26,7 @@ const setDescendants = (wholeNodes: (PersonNodeType | MaritalNodeType)[]) => {
 
     const node = wholeNodes.find((node) => node.id === nodeId) as PersonNodeType;
     if (!isPersonNodeType(node) || !node.data.children.length) {
-      const defaultSpacing = node?.data.spouse.length ? BASE_MARITAL_SPACING * 2 + BASE_SIBLINGS_SPACING : BASE_SIBLINGS_SPACING;
+      const defaultSpacing = node?.data?.spouse?.length ? BASE_MARITAL_SPACING * 2 + BASE_SIBLINGS_SPACING : BASE_SIBLINGS_SPACING;
       return [[defaultSpacing]];
     }
 
@@ -110,6 +110,7 @@ const calculateChildNodePosition = (wholeNodes: (PersonNodeType | MaritalNodeTyp
     }
     // 配偶者の位置計算
     node.data.spouse.forEach((spouseId) => {
+      if (spouseId === node.id) return;
       const spouseNode = wholeNodes.find((n) => n.id === spouseId);
       if (spouseNode) {
         switch (nodeMaritalPosition) {
@@ -149,7 +150,7 @@ const calculateChildNodePosition = (wholeNodes: (PersonNodeType | MaritalNodeTyp
       const childNode = wholeNodes.find((n) => n.id === childId) as PersonNodeType;
       if (childNode) {
         calculateChildNodePosition(wholeNodes, childNode, level + 1, cumulativeOffset);
-        if (childNode.data.children.length) {
+        if (childNode?.data?.children?.length) {
           cumulativeOffset += childNode.data.descendantsWidth;
         } else {
           cumulativeOffset += BASE_SIBLINGS_SPACING;

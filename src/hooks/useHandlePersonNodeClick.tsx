@@ -4,12 +4,10 @@ import { wholeNodesState } from "@/recoil/WholeNodesState";
 import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
 import { MaritalNodeType, PersonNodeType } from "@/types/PersonNodeType";
 import { Edge, Node } from "reactflow";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 export const useHandlePersonNodeClick = (openModal: () => void, updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void) => {
-  const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
-  const wholeNodes = useRecoilValue(wholeNodesState);
-  const wholeEdges = useRecoilValue(wholeEdgesState);
+  const setSelectedNode = useSetRecoilState(selectedNodeState);
 
   return (clickedNode: Node, selectedNode: PersonNodeType | undefined) => {
     if (!isPersonNodeType(clickedNode) || !isPersonNodeType(selectedNode)) return;

@@ -2,26 +2,18 @@ import { fetchFamilyTree } from '@/services/fetchFamilyTree';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-export const useFetchFamilyTreeData = () => {
-  const router = useRouter();
-  const [projectId, setProjectId] = useState<string | undefined>(undefined);
+export const useFetchFamilyTreeData = (id: string | undefined) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [familyTreeData, setFamilyTreeData] = useState<string | null | undefined>(undefined);
 
   useEffect(() => {
-    const queryProjectId = Array.isArray(router.query.projectId) ? router.query.projectId[0] : router.query.projectId;
-    if (queryProjectId) {
-      setProjectId(queryProjectId);
-    }
-  }, [router.query]);
-
-  useEffect(() => {
-    if (projectId) {
-      fetchFamilyTree(projectId).then((data) => {
+    if (id) {
+      fetchFamilyTree(id).then((data) => {
         if (!data) return;
         setFamilyTreeData(data.data?.getFamilyTree?.data);
       });
     }
-  }, [projectId]);
+  }, [id]);
 
-  return {familyTreeData, projectId};
+  return {familyTreeData, id};
 };
