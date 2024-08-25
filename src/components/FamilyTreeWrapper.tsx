@@ -12,19 +12,18 @@ import { Box, Button } from '@chakra-ui/react';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 
 interface FamilyTreeWrapperProps {
-  // projectId: string | undefined;
   openModal: () => void;
+  projectId: string | undefined;
   nodes: Node<MaritalData, string | undefined>[];
   edges: Edge[];
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void;
   onUpdate: (id: string) => void;
-  // familyTreeData: string | null | undefined;
 }
 
 export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
-  const { openModal, nodes, edges, onNodesChange, onEdgesChange, updateFamilyTree, onUpdate} = props;
+  const { openModal, projectId, nodes, edges, onNodesChange, onEdgesChange, updateFamilyTree, onUpdate} = props;
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
@@ -34,24 +33,18 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
   const edgeTypes = useMemo(() => ({ parentChild: ParentChildEdge }), []);
   const handleNodeClick = useHandlePersonNodeClick(openModal, updateFamilyTree);
   useEffect(() => {
-    console.log('nodes', nodes);
     if (!nodes.length) return;
     setWholeNodes(nodes as (PersonNodeType | MaritalNodeType)[]);
     setWholeEdges(edges);
     setSelectedNode(wholeNodes[0] as PersonNodeType);
   }, []);
 
-  useEffect(() => {
-    console.log('wholeNodes', wholeNodes);
-    console.log('wholeEdges', wholeEdges);
-  },[wholeNodes]);
-
   const handleSaveButtonClick = () => {
-    // if (projectId) {
-    //   onUpdate(projectId);
-    // } else {
-    //   openModal();
-    // }
+    if (projectId) {
+      onUpdate(projectId);
+    } else {
+      openModal();
+    }
   }
 
   useEffect(() => {
@@ -60,7 +53,6 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
 
   return (
     <Box w='100vw' h='100vh' className='wrapper' ref={reactFlowWrapper}>
-      {/* onUpdate(projectId);でdynamodb上のデータを更新する？要検証 */}
       <Button onClick={handleSaveButtonClick} position="absolute" right={4} top={4} zIndex={10}>Update</Button>
       <ReactFlow
         nodes={nodes}

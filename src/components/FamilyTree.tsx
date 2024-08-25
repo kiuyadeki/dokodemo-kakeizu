@@ -16,7 +16,7 @@ export const FamilyTree: FC = memo(function FamilyTreeComponent() {
   const { Modal, open, close } = UseMicroModal('select-action-modal', () => {
     setShowProfileEditor(false);
   });
-  const {isLoading, nodes, edges, onNodesChange, onEdgesChange, onUpdate, updateFamilyTree } = useInitFamilyTree();
+  const {isLoading, projectId, nodes, edges, onNodesChange, onEdgesChange, onUpdate, updateFamilyTree } = useInitFamilyTree();
 
   return (
     <>
@@ -25,7 +25,7 @@ export const FamilyTree: FC = memo(function FamilyTreeComponent() {
           <Spinner size='lg' />
         </Center>
       ) : (
-        <FamilyTreeWrapper openModal={open} nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange} updateFamilyTree={updateFamilyTree} onUpdate={onUpdate} />
+        <FamilyTreeWrapper projectId={projectId} openModal={open} nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange} updateFamilyTree={updateFamilyTree} onUpdate={onUpdate} />
       )}
       <Modal>
         <SelectActionModal closeModal={close} updateFamilyTree={updateFamilyTree} />

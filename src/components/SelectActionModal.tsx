@@ -142,7 +142,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
           <IoCloseOutline size={25} color='currentColor' />
         </CloseButton>
         {showProfileEditor ? (
-          <ProfileEditor onClose={closeAndInitModal} />
+          <ProfileEditor onClose={closeAndInitModal} updateFamilyTree={updateFamilyTree} />
         ) : (
           <>
             <Grid templateColumns='repeat(2, 1fr)' gap={5}>

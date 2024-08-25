@@ -14,7 +14,6 @@ export const isPersonNodeType = function (node: Node | null | undefined): node i
     'descendants' in data &&
     'descendantsWidth' in data &&
     'ancestors' in data &&
-    'maritalPosition' in data &&
     'selected' in data
   );
 };

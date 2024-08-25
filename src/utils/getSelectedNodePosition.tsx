@@ -3,7 +3,6 @@ import { isPersonNodeType } from '../typeGuards/personTypeGuards';
 
 export function getSelectedNodePosition(nodesList: (PersonNodeType | MaritalNodeType)[], selectedNode: PersonNodeType): number[] {
   const defaultPosition = [0, 0];
-
   if (!selectedNode || !nodesList.length) return defaultPosition;
 
   const displayedNode = nodesList.find((node) => node.id === selectedNode.id);

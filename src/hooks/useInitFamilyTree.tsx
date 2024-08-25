@@ -68,7 +68,7 @@ export const useInitFamilyTree = () => {
 
     if (!calculatedWholeNodes) return;
     setWholeNodes(calculatedWholeNodes);
-    console.log('calculatedWholeNodes', calculatedWholeNodes);
+    // console.log('calculatedWholeNodes', calculatedWholeNodes);
     setWholeEdges(edges);
     const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(calculatedWholeNodes, edges, selectedNode);
     setNodes(directLineageNodes);
@@ -84,9 +84,10 @@ export const useInitFamilyTree = () => {
     if (!isLoadingId && formatedFamilyTreeData.nodes.length) {
       setNodes(formatedFamilyTreeData.nodes);
       setEdges(formatedFamilyTreeData.edges);
+      reactFlowInstance.setViewport(formatedFamilyTreeData.viewport);
       setIsLoading(false);
     }
   }, [familyTreeData]);
 
-  return { isLoading, nodes, edges, onNodesChange, onEdgesChange, onUpdate, updateFamilyTree };
+  return { isLoading, projectId, nodes, edges, onNodesChange, onEdgesChange, onUpdate, updateFamilyTree };
 };

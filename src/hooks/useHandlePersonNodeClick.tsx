@@ -10,7 +10,9 @@ export const useHandlePersonNodeClick = (openModal: () => void, updateFamilyTree
   const setSelectedNode = useSetRecoilState(selectedNodeState);
 
   return (clickedNode: Node, selectedNode: PersonNodeType | undefined) => {
-    if (!isPersonNodeType(clickedNode) || !isPersonNodeType(selectedNode)) return;
+    if (!isPersonNodeType(clickedNode) || !isPersonNodeType(selectedNode)) {
+      return;
+    } 
     setSelectedNode(clickedNode);
     if (isPersonNodeType(selectedNode) && clickedNode.id === selectedNode.id) {
       openModal();
