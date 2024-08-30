@@ -1,9 +1,10 @@
+import { putProfilePictureToS3 } from '@/utils/putProfilePictureToS3';
 import { ChangeEvent, useState } from 'react';
 
 export const useProfilePictureUpload = () => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
       if (file.size > 5242880) {
