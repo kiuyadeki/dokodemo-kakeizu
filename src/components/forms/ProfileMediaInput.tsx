@@ -1,6 +1,7 @@
 import { useProfilePictureUpload } from "@/hooks/useProfilePictureChange";
 import { PersonNodeType } from "@/types/PersonNodeType";
 import { ProfileEditorInputs } from "@/types/profileEditorInputs";
+import { putProfilePictureToS3 } from "@/utils/putProfilePictureToS3";
 import { Button, FormControl, FormLabel, Image, Input } from "@chakra-ui/react";
 import { FC, memo, useEffect, useRef, useState } from "react";
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
@@ -37,7 +38,7 @@ export const ProfileMediaInput: FC<MediaInputProps> = memo(({register, setValue,
   useEffect(() => {
     if (selectedNode) {
       const { profilePicture } = selectedNode.data;
-      if (profilePicture) {
+      if (profilePicture && Object.keys(profilePicture).length > 0) {
         setValue('profilePicture', profilePicture || '');
         const previewURL = typeof profilePicture === 'string' ? profilePicture : URL.createObjectURL(profilePicture);
         setPreviewImageURL(previewURL);

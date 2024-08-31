@@ -52,7 +52,7 @@ export const MaritalNode = memo((props: NodeProps<MaritalNodeType['data']>) => {
       return newNodes;
     });
   };
-  const isDivorced = data.isDivorced ?? false;
+  // const isDivorced = data.isDivorced ?? false;
 
   return (
     <NodeContainer onClick={handleClick}>

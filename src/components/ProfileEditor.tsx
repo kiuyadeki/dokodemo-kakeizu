@@ -29,7 +29,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
     formState: { errors, isSubmitting },
     setValue,
   } = useForm<ProfileEditorInputs>();
-  const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
+  const wholeNodes = useRecoilValue(wholeNodesState);
   const wholeEdges = useRecoilValue(wholeEdgesState);
   const wholeNodesCopy = [...wholeNodes];
   const wholeEdgesCopy = [...wholeEdges];
