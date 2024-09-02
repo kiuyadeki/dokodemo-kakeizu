@@ -14,13 +14,13 @@ export const putProfilePictureToS3 = async (file: File) => {
     });
     const result = await operation.result;
     console.log('S3 result',result);
-    const imageUrl = await getUrl({
+    const uploadedImageObject = await getUrl({
       path: result.path,
     });
-    console.log('image url', imageUrl);
-    return imageUrl['url'].href;
+    console.log('image url', uploadedImageObject);
+    return uploadedImageObject['url'].href;
 
   } catch (error) {
-    console.error('画像のアップロードに失敗しました', error);
+    throw new Error('画像のアップロードに失敗しました');
   }
 }

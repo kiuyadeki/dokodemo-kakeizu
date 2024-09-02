@@ -10,7 +10,7 @@ export interface FamilyInfo {
   firstName?: string;
   lastName?: string;
   gender?: string;
-  profilePicture?: File;
+  // profilePicture?: File;
   profilePictureURL?: string;
   label: string;
   selected: boolean;

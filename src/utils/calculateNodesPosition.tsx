@@ -227,7 +227,7 @@ const calculateParentNodePosition = (
 
     node.data.parents?.forEach((parentId) => {
       const parentNode = wholeNodes.find((n) => n.id === parentId) as PersonNodeType;
-      if (node.id === selectedNode.id && parentNode.data.maritalPosition && isPersonNodeType(node)) {
+      if (isPersonNodeType(node) && node.id === selectedNode.id && parentNode?.data?.maritalPosition) {
         if (parentNode.data.maritalPosition === 'left') {
           calculateParentNodePosition(wholeNodes, parentNode, node, level + 1, node.position.x, parentNode.data.maritalPosition);
         } else if (parentNode.data.maritalPosition === 'right') {

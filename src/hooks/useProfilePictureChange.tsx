@@ -2,7 +2,7 @@ import { putProfilePictureToS3 } from '@/utils/putProfilePictureToS3';
 import { ChangeEvent, useState } from 'react';
 
 export const useProfilePictureUpload = () => {
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<string | undefined>(undefined);
 
   const handleImageChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -16,14 +16,23 @@ export const useProfilePictureUpload = () => {
         event.target.value = '';
         return;
       } else {
-        const reader = new FileReader();
-        reader.onload = readEvent => {
-          const result = readEvent.target?.result;
-          if (typeof result === 'string') {
-            setUploadedImage(result);
-          }
-        };
-        reader.readAsDataURL(file);
+        putProfilePictureToS3(file).then((imageUrl) => {
+          setUploadedImage(imageUrl);
+          console.log('imageUrl', imageUrl);
+        })
+        .catch((error) => {
+          console.error(error);
+          setUploadedImage(undefined);
+        });
+
+        // const reader = new FileReader();
+        // reader.onload = readEvent => {
+        //   const result = readEvent.target?.result;
+        //   if (typeof result === 'string') {
+        //     setUploadedImage(result);
+        //   }
+        // };
+        // reader.readAsDataURL(file);
       }
     }
   };

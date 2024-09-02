@@ -36,6 +36,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
 
   const onSubmit = async (data: ProfileEditorInputs) => {
     if (selectedNode) {
+      console.log('submitData',data);
       const updatedNode = await updateNodeData(data, selectedNode);
       const updatedNodesCopy = wholeNodesCopy.map((node) => {
         return node.id === selectedNode.id ? updatedNode : node;
@@ -47,13 +48,14 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
 
   useEffect(() => {
     if (isPersonNodeType(selectedNode)) {
-      const { lastName, firstName, birthYear, birthMonth, birthDate, gender, profilePicture } = selectedNode.data;
+      const { lastName, firstName, birthYear, birthMonth, birthDate, gender, profilePictureURL } = selectedNode.data;
       setValue('lastName', lastName || '');
       setValue('firstName', firstName || '');
       setValue('birthYear', birthYear || new Date().getFullYear());
       setValue('birthMonth', birthMonth || 1);
       setValue('birthDate', birthDate || 1);
       setValue('gender', gender || '');
+      setValue('profilePictureURL', profilePictureURL || '');
     }
   }, [selectedNode, setValue]);
 
@@ -65,7 +67,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
       </HStack>
       <ProfileGenderInput register={register} genderValue='gender' />
       <ProfileBirthInput register={register} yearValue='birthYear' monthValue='birthMonth' dateValue='birthDate' />
-      <ProfileMediaInput register={register} setValue={setValue} mediaValue='profilePicture' selectedNode={selectedNode} />
+      <ProfileMediaInput register={register} setValue={setValue} mediaValue='profilePictureURL' selectedNode={selectedNode} />
 
       <Button mt={4} isLoading={isSubmitting} type='submit'>
         保存する
