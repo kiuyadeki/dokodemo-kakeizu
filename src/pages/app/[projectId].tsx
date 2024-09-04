@@ -1,19 +1,25 @@
-import { FamilyTree } from "@/components/FamilyTree";
-import { ChakraProvider } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { FamilyTree } from '@/components/FamilyTree';
+import { ChakraProvider } from '@chakra-ui/react';
+import { ReactFlowProvider } from 'reactflow';
+import { createGlobalStyle } from 'styled-components';
 
-
-function AppPage( ){
-  const router = useRouter();
-  const { projectId } = router.query;
-  console.log('projectId', projectId);
-
+const GlobalStyle = createGlobalStyle`
+  .react-flow__node {
+    transition: transform 0.4s ease-in-out;
+  }
+  `;
+  
+function AppPage() {
   return (
-    <ChakraProvider>
-      <FamilyTree projectId={projectId} />
-    </ChakraProvider>
-  )
-};
+    <>
+      <GlobalStyle />
+      <ChakraProvider>
+        <ReactFlowProvider>
+          <FamilyTree />
+        </ReactFlowProvider>
+      </ChakraProvider>
+    </>
+  );
+}
 
 export default AppPage;

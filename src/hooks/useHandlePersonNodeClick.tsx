@@ -1,16 +1,18 @@
 import { selectedNodeState } from "@/recoil/selectedNodeState";
-import { isPersonNodeData } from "@/typeGuards/personTypeGuards";
-import { PersonNodeData } from "@/types/PersonNodeData";
-import { Node } from "reactflow";
-import { useRecoilState } from "recoil";
+import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
+import { MaritalNodeType, PersonNodeType } from "@/types/PersonNodeType";
+import { Edge, Node } from "reactflow";
+import { useSetRecoilState } from "recoil";
 
-export const useHandlePersonNodeClick = (openModal: () => void) => {
-  const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
+export const useHandlePersonNodeClick = (openModal: () => void, updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void) => {
+  const setSelectedNode = useSetRecoilState(selectedNodeState);
 
-  return (clickedNode: Node, selectedNode: PersonNodeData | null) => {
-    if (!isPersonNodeData(clickedNode) || !isPersonNodeData(selectedNode)) return;
+  return (clickedNode: Node, selectedNode: PersonNodeType | undefined) => {
+    if (!isPersonNodeType(clickedNode) || !isPersonNodeType(selectedNode)) {
+      return;
+    } 
     setSelectedNode(clickedNode);
-    if (selectedNode && clickedNode.id === selectedNode.id) {
+    if (isPersonNodeType(selectedNode) && clickedNode.id === selectedNode.id) {
       openModal();
     }
   }

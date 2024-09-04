@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
-import { PersonNodeData } from '../types/PersonNodeData';
+import { PersonNodeType } from '../types/PersonNodeType';
 
-export const selectedNodeState = atom<PersonNodeData | null>({
+export const selectedNodeState = atom<PersonNodeType | undefined>({
   key: 'selectedNode',
-  default: null,
+  default: undefined,
 });

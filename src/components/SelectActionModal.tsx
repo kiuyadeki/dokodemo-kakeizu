@@ -1,20 +1,22 @@
-import { FC, memo, useState } from 'react';
+import { FC, memo, useEffect, useReducer, useState } from 'react';
 import { ProfileEditor } from './ProfileEditor';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
-import { useAddParentToSelectedNode } from '../hooks/useAddParentToSelectedNode';
-import { useAddChildToSelectedNode } from '../hooks/useAddChildToSelectedNode';
-import { useAddSpouseToSelectedNode } from '../hooks/useAddSpouseToSelectedNode';
+import { addChildNodeToSelectedNode } from '../utils/addChildNodeToSelectedNode';
 import { wholeNodesState } from '../recoil/WholeNodesState';
-import { nodesUpdatedState } from '../recoil/nodesUpdatedState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { IoCloseOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 import { ProfileEditorState } from '@/recoil/profileEditorState';
 import { Button, Flex, Grid } from '@chakra-ui/react';
+import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { Edge } from 'reactflow';
+import { addParentToSelectedNode } from '@/utils/addParentToSelectedNode';
+import { addSpouseToSelectedNode } from '@/utils/addSpouseToSelectedNode';
 
 type SelectActionModalProps = {
   closeModal: () => void;
+  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void;
 };
 
 const ButtonList = styled.div`
@@ -89,17 +91,30 @@ const CloseButton = styled.button`
 `;
 
 export const SelectActionModal: FC<SelectActionModalProps> = memo(function SelectActionModalComponent(props) {
-  const { closeModal } = props;
+  const { closeModal, updateFamilyTree } = props;
   const selectedNode = useRecoilValue(selectedNodeState);
-  const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
-  const [nodesUpdated, setNodesUpdated] = useRecoilState(nodesUpdatedState);
-  const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
+  const wholeNodes = useRecoilValue(wholeNodesState);
+  const wholeEdges = useRecoilValue(wholeEdgesState);
   const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
-  const addParentToSelectedNode = useAddParentToSelectedNode(setWholeNodes, setWholeEdges, () => setNodesUpdated(true));
-  const addChildToSelectedNode = useAddChildToSelectedNode(wholeNodes, setWholeNodes, wholeEdges, setWholeEdges, () =>
-    setNodesUpdated(true)
-  );
-  const addSpouseToSelectedNode = useAddSpouseToSelectedNode(setWholeNodes, setWholeEdges, () => setNodesUpdated(true));
+
+  const updateNodesAndEdges = (AddedNode: 'parent' | 'child' | 'spouse') => {
+    switch (AddedNode) {
+      case 'parent':
+        const { nodesCopy: nodesCopyParent, edgesCopy: edgesCopyParent } = addParentToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+        updateFamilyTree(nodesCopyParent, edgesCopyParent);
+        break;
+      case 'child':
+        const {nodesCopy: nodesCopyChild, edgesCopy: edgesCopyChild} = addChildNodeToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+        updateFamilyTree(nodesCopyChild, edgesCopyChild);
+        break;
+      case 'spouse':
+        const { nodesCopy: nodesCopySpouse, edgesCopy: edgesCopySpouse } = addSpouseToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+        updateFamilyTree(nodesCopySpouse, edgesCopySpouse);
+        break;
+      default:
+        break;
+    }
+  }
 
   // 情報を編集
   const displayProfileEditor = () => {
@@ -111,7 +126,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const closeAndInitModal = () => {
     closeModal();
     setShowProfileEditor(false);
-  }
+  };
 
   let hasParents = false;
   let hasSpouse = false;
@@ -127,14 +142,14 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
           <IoCloseOutline size={25} color='currentColor' />
         </CloseButton>
         {showProfileEditor ? (
-          <ProfileEditor onClose={closeAndInitModal} />
+          <ProfileEditor onClose={closeAndInitModal} updateFamilyTree={updateFamilyTree} />
         ) : (
           <>
-            <Grid templateColumns="repeat(2, 1fr)" gap={5}>
+            <Grid templateColumns='repeat(2, 1fr)' gap={5}>
               <Button
                 isDisabled={hasParents}
                 onClick={() => {
-                  addParentToSelectedNode();
+                  updateNodesAndEdges('parent');
                   closeModal();
                 }}
               >
@@ -142,16 +157,16 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
               </Button>
               <Button
                 onClick={() => {
-                  addChildToSelectedNode();
+                  updateNodesAndEdges('child');
                   closeModal();
                 }}
               >
                 子を追加
               </Button>
-              <Button 
+              <Button
                 isDisabled={hasSpouse}
                 onClick={() => {
-                  addSpouseToSelectedNode();
+                  updateNodesAndEdges('spouse');
                   closeModal();
                 }}
               >

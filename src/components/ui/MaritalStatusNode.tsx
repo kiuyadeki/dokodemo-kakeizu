@@ -5,7 +5,7 @@ import { GiBigDiamondRing } from 'react-icons/gi';
 import { TfiUnlink } from 'react-icons/tfi';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { MaritalData } from '@/types/PersonNodeData';
+import { MaritalNodeType } from '@/types/PersonNodeType';
 import { wholeNodesState } from '@/recoil/WholeNodesState';
 import { memo } from 'react';
 
@@ -39,7 +39,7 @@ const NodeInner = styled.div`
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 `;
 
-export const MaritalNode = memo((props: NodeProps<MaritalData>) => {
+export const MaritalNode = memo((props: NodeProps<MaritalNodeType['data']>) => {
   const { id, data } = props;
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const handleClick = (event: React.MouseEvent) => {
@@ -52,7 +52,7 @@ export const MaritalNode = memo((props: NodeProps<MaritalData>) => {
       return newNodes;
     });
   };
-  const isDivorced = data.isDivorced ?? false;
+  // const isDivorced = data.isDivorced ?? false;
 
   return (
     <NodeContainer onClick={handleClick}>
