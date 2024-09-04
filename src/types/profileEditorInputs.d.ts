@@ -5,6 +5,6 @@ export type ProfileEditorInputs = {
   birthYear?: number;
   birthMonth?: number;
   birthDate?: number;
-  profilePicture?: File;
   profilePictureURL?: string;
+  profilePictureFile?: File;
 };

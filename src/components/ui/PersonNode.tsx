@@ -13,6 +13,7 @@ import { Text } from '@chakra-ui/react';
 
 interface StyledBoxProps {
   isSelected: boolean;
+  gender?: string;
 }
 const variants: Variants = {
   initial: {
@@ -80,7 +81,7 @@ const StyledBox = styled.div.withConfig({
 `;
 
 const IconBox = styled.div.withConfig({
-  shouldForwardProp: (prop) => !['isSelected'].includes(prop),
+  shouldForwardProp: (prop) => !['isSelected', 'gender'].includes(prop),
 })<StyledBoxProps>`
   display: flex;
   align-items: center;
@@ -91,6 +92,9 @@ const IconBox = styled.div.withConfig({
   border-radius: 50%;
   position: relative;
   background-color: ${({ isSelected }) => (isSelected ? '#3182ce' : '#EB912E')};
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${({ gender }) => (gender === 'male' ? '#3182ce' : gender === 'female' ? '#E53E3E' : '#90cdf4')};
   transform: scale(1.1);
 `;
 
@@ -140,7 +144,7 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
           }}
           >
             <StyledBox isSelected={isSelected}>
-              <IconBox isSelected={isSelected}>
+              <IconBox isSelected={isSelected} gender={data.gender}>
                 <IconInner>
                   {profilePictureURL ? (
                     <CustomProfileIcon src={profilePictureURL} />

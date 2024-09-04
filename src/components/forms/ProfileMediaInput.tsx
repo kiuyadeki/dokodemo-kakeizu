@@ -1,58 +1,45 @@
-import { useProfilePictureUpload } from "@/hooks/useProfilePictureChange";
-import { PersonNodeType } from "@/types/PersonNodeType";
-import { ProfileEditorInputs } from "@/types/profileEditorInputs";
-import { putProfilePictureToS3 } from "@/utils/putProfilePictureToS3";
-import { Button, FormControl, FormLabel, Image, Input } from "@chakra-ui/react";
-import { FC, memo, useEffect, useRef, useState } from "react";
-import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { useProfilePictureUpload } from '@/hooks/useProfilePictureChange';
+import { PersonNodeType } from '@/types/PersonNodeType';
+import { ProfileEditorInputs } from '@/types/profileEditorInputs';
+import { Button, FormControl, FormLabel, Image, Input } from '@chakra-ui/react';
+import { FC, memo, useEffect, useRef, useState } from 'react';
+import { FieldValues, set, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
 interface MediaInputProps {
   mediaValue: string;
   setValue: UseFormSetValue<ProfileEditorInputs>;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<ProfileEditorInputs>;
   selectedNode: PersonNodeType | undefined;
 }
 
-export const ProfileMediaInput: FC<MediaInputProps> = memo(({register, setValue, mediaValue, selectedNode}) => {
-
+export const ProfileMediaInput: FC<MediaInputProps> = memo(({ register, setValue, mediaValue, selectedNode }) => {
   const { uploadedImage, handleImageChange } = useProfilePictureUpload();
   const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const existingProfilePictureURL = selectedNode?.data.profilePictureURL;
 
-  const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleImageChange(event);
-    const file = event.target.files ? event.target.files[0] : undefined;
-    if (file) {
-      const previewURL = URL.createObjectURL(file);
-      setPreviewImageURL(previewURL);
-    } else {
-      setPreviewImageURL(null);
+  useEffect(() => {
+    if (uploadedImage) {
+      setPreviewImageURL(uploadedImage);
+      setValue('profilePictureURL', uploadedImage);
     }
-    setValue('profilePicture', file);
+  }, [uploadedImage]);
+
+  const onFileInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    await handleImageChange(event);
   };
 
   const handleButtonClick = () => {
     inputRef.current?.click();
   };
 
-  useEffect(() => {
-    if (selectedNode) {
-      const { profilePicture } = selectedNode.data;
-      if (profilePicture && Object.keys(profilePicture).length > 0) {
-        setValue('profilePicture', profilePicture || '');
-        const previewURL = typeof profilePicture === 'string' ? profilePicture : URL.createObjectURL(profilePicture);
-        setPreviewImageURL(previewURL);
-      }
-    }
-  }, [selectedNode, setValue])
-
   return (
     <FormControl>
       <FormLabel mt={6}>写真</FormLabel>
       <Input
-      type="file"
+        type='file'
         accept='image/*'
-        {...register(mediaValue, {
+        {...register('profilePictureFile', {
           onChange: onFileInputChange,
         })}
         hidden
@@ -61,12 +48,8 @@ export const ProfileMediaInput: FC<MediaInputProps> = memo(({register, setValue,
       <Button type='button' onClick={handleButtonClick}>
         {previewImageURL ? '写真を変更' : '写真を選択'}
       </Button>
-      {previewImageURL && (
-          <Image mt={6} src={previewImageURL} alt="プレビュー画像" />
-      )}
-      {uploadedImage && !previewImageURL && (
-          <Image mt={6} src={uploadedImage} alt="アップロードされた画像" />
-      )}
+      {uploadedImage && <Image mt={6} src={uploadedImage} alt='アップロードされた画像' />}
+      {!uploadedImage && existingProfilePictureURL && <Image mt={6} src={existingProfilePictureURL} alt='アップロードされた画像' />}
     </FormControl>
   );
 });
