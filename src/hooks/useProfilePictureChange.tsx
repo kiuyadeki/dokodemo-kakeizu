@@ -16,14 +16,15 @@ export const useProfilePictureUpload = () => {
         event.target.value = '';
         return;
       } else {
-        putProfilePictureToS3(file).then((imageUrl) => {
-          setUploadedImage(imageUrl);
-          console.log('imageUrl', imageUrl);
-        })
-        .catch((error) => {
-          console.error(error);
-          setUploadedImage(undefined);
-        });
+        putProfilePictureToS3(file)
+          .then((imageUrl) => {
+            setUploadedImage(imageUrl);
+            console.log('imageUrl', imageUrl);
+          })
+          .catch((error) => {
+            console.error(error);
+            setUploadedImage(undefined);
+          });
 
         // const reader = new FileReader();
         // reader.onload = readEvent => {
@@ -37,6 +38,5 @@ export const useProfilePictureUpload = () => {
     }
   };
 
-  return { uploadedImage,
-handleImageChange };
+  return { uploadedImage, handleImageChange };
 };

@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import * as APITypes from "../API";
+import * as APITypes from '../API';
 type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryInput: InputType;
   __generatedQueryOutput: OutputType;
@@ -20,7 +20,4 @@ export const listFamilyTreeSummary = /* GraphQL */ `query listFamilyTrees(
     nextToken
   }
 }
-` as GeneratedQuery<
-  APITypes.ListFamilyTreesQueryVariables,
-  APITypes.ListFamilyTreesQuery
->;
+` as GeneratedQuery<APITypes.ListFamilyTreesQueryVariables, APITypes.ListFamilyTreesQuery>;

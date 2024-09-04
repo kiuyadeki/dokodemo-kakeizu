@@ -1,5 +1,5 @@
 import { getAddedNodeId } from './getAddedNodeId';
-import { PersonNodeType, MaritalNodeType} from '../types/PersonNodeType';
+import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
 import { Node } from 'reactflow';
 
 export const createMaritalNode = (position: MaritalNodeType['position']): MaritalNodeType => {
@@ -8,8 +8,7 @@ export const createMaritalNode = (position: MaritalNodeType['position']): Marita
     type: 'marital',
     id: maritalId,
     data: { isDivorced: false },
-    position: { x: position.x,
-y: position.y },
+    position: { x: position.x, y: position.y },
   };
 };
 

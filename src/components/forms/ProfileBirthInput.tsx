@@ -3,9 +3,9 @@ import { FC, memo } from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface BirthInputProps {
-  yearValue: string,
-  monthValue: string,
-  dateValue: string, 
+  yearValue: string;
+  monthValue: string;
+  dateValue: string;
   register: UseFormRegister<FieldValues>;
 }
 
@@ -20,7 +20,7 @@ export const ProfileBirthInput: FC<BirthInputProps> = memo(({ register, yearValu
       <FormLabel mt={6}>生年月日</FormLabel>
       <HStack>
         <FormControl>
-          <Select placeholder='年' {...register(yearValue)}>
+          <Select placeholder="年" {...register(yearValue)}>
             {years.map((year) => (
               <option key={year} value={year}>
                 {year}
@@ -29,7 +29,7 @@ export const ProfileBirthInput: FC<BirthInputProps> = memo(({ register, yearValu
           </Select>
         </FormControl>
         <FormControl>
-          <Select placeholder='月' {...register(monthValue)}>
+          <Select placeholder="月" {...register(monthValue)}>
             {months.map((month) => (
               <option key={month} value={month}>
                 {month}

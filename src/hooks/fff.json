@@ -1,658 +1,539 @@
 [
   {
-      "data": {
-          "profilePictureURL": "blob:http://localhost:3000/bde6879a-8614-4bbe-b363-ff972e030630",
-          "lastName": "",
-          "siblings": [
-              "3",
-              "4",
-              "5",
-              "6f1b0e81-499d-41bc-a9f8-decfac9d379a"
-          ],
-          "gender": "",
-          "label": "4",
-          "isVisible": true,
-          "descendants": 0,
-          "birthDate": 1,
-          "spouse": [
-              "c8a6f88f-414d-4709-ab24-ec840997d6d4"
-          ],
-          "descendantsWidth": 540,
-          "isDivorced": false,
-          "maritalPosition": "left",
-          "firstName": "",
-          "birthMonth": 1,
-          "profilePicture": {},
-          "children": [
-              "99350f7d-fa5c-4ac4-9272-032bb4477505"
-          ],
-          "birthYear": 2024,
-          "maritalNodeId": "d7374a42-551a-40aa-9e87-c60338b248c6",
-          "ancestors": 3,
-          "selected": false,
-          "parents": [
-              "0",
-              "2"
-          ]
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 0,
-          "y": 0
-      },
-      "id": "4",
-      "position": {
-          "x": 540,
-          "y": 250
-      },
-      "type": "person",
+    "data": {
+      "profilePictureURL": "blob:http://localhost:3000/bde6879a-8614-4bbe-b363-ff972e030630",
+      "lastName": "",
+      "siblings": ["3", "4", "5", "6f1b0e81-499d-41bc-a9f8-decfac9d379a"],
+      "gender": "",
+      "label": "4",
+      "isVisible": true,
+      "descendants": 0,
+      "birthDate": 1,
+      "spouse": ["c8a6f88f-414d-4709-ab24-ec840997d6d4"],
+      "descendantsWidth": 540,
+      "isDivorced": false,
+      "maritalPosition": "left",
+      "firstName": "",
+      "birthMonth": 1,
+      "profilePicture": {},
+      "children": ["99350f7d-fa5c-4ac4-9272-032bb4477505"],
+      "birthYear": 2024,
+      "maritalNodeId": "d7374a42-551a-40aa-9e87-c60338b248c6",
+      "ancestors": 3,
+      "selected": false,
+      "parents": ["0", "2"]
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 0,
+      "y": 0
+    },
+    "id": "4",
+    "position": {
+      "x": 540,
+      "y": 250
+    },
+    "type": "person",
+    "selected": true,
+    "height": 100
+  },
+  {
+    "data": {
+      "siblings": ["c8a6f88f-414d-4709-ab24-ec840997d6d4"],
+      "label": "c8a6f88f-414d-4709-ab24-ec840997d6d4",
+      "isVisible": true,
+      "descendants": 0,
+      "spouse": ["4"],
+      "descendantsWidth": 540,
+      "isDivorced": false,
+      "maritalPosition": "right",
+      "children": ["99350f7d-fa5c-4ac4-9272-032bb4477505"],
+      "maritalNodeId": "d7374a42-551a-40aa-9e87-c60338b248c6",
+      "ancestors": 1,
+      "selected": false,
+      "parents": []
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 260,
+      "y": 0
+    },
+    "id": "c8a6f88f-414d-4709-ab24-ec840997d6d4",
+    "position": {
+      "x": 800,
+      "y": 250
+    },
+    "type": "person",
+    "height": 100
+  },
+  {
+    "data": {
+      "siblings": ["3", "4", "5", "6f1b0e81-499d-41bc-a9f8-decfac9d379a"],
+      "label": "3",
+      "isVisible": true,
+      "descendants": 0,
+      "spouse": ["3d3ab920-99c5-4166-8172-7fde60dd570b"],
+      "descendantsWidth": 540,
+      "isDivorced": false,
+      "maritalPosition": "left",
+      "children": ["fd330b76-3cba-42b4-b0c0-5d3df80502ba"],
+      "maritalNodeId": "1036e20e-97eb-4864-85b8-42f52a58fe72",
+      "ancestors": 3,
+      "selected": false,
+      "parents": ["0", "2"]
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 540,
+      "y": 0
+    },
+    "id": "3",
+    "position": {
+      "x": 0,
+      "y": 250
+    },
+    "type": "person",
+    "height": 100
+  },
+  {
+    "data": {
+      "siblings": ["3d3ab920-99c5-4166-8172-7fde60dd570b"],
+      "label": "3d3ab920-99c5-4166-8172-7fde60dd570b",
+      "isVisible": true,
+      "descendants": 0,
+      "spouse": ["3"],
+      "descendantsWidth": 540,
+      "isDivorced": false,
+      "maritalPosition": "right",
+      "children": ["fd330b76-3cba-42b4-b0c0-5d3df80502ba"],
+      "maritalNodeId": "1036e20e-97eb-4864-85b8-42f52a58fe72",
+      "ancestors": 1,
+      "selected": false,
+      "parents": []
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 800,
+      "y": 0
+    },
+    "id": "3d3ab920-99c5-4166-8172-7fde60dd570b",
+    "position": {
+      "x": 260,
+      "y": 250
+    },
+    "type": "person",
+    "height": 100
+  },
+  {
+    "data": {
+      "isDivorced": false,
+      "siblings": ["fd330b76-3cba-42b4-b0c0-5d3df80502ba"],
+      "children": [],
+      "label": "fd330b76-3cba-42b4-b0c0-5d3df80502ba",
+      "isVisible": true,
+      "ancestors": 4,
+      "descendants": 0,
+      "spouse": [],
+      "descendantsWidth": 280,
+      "selected": false,
+      "parents": ["3", "3d3ab920-99c5-4166-8172-7fde60dd570b"]
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 540,
+      "y": 250
+    },
+    "id": "fd330b76-3cba-42b4-b0c0-5d3df80502ba",
+    "position": {
+      "x": 0,
+      "y": 500
+    },
+    "type": "person",
+    "height": 100
+  },
+  {
+    "data": {
+      "isDivorced": false
+    },
+    "width": 30,
+    "positionAbsolute": {
+      "x": 165,
+      "y": 35
+    },
+    "id": "d7374a42-551a-40aa-9e87-c60338b248c6",
+    "position": {
+      "x": 705,
+      "y": 285
+    },
+    "type": "marital",
+    "height": 30
+  },
+  {
+    "data": {
+      "isDivorced": false
+    },
+    "width": 30,
+    "positionAbsolute": {
+      "x": 705,
+      "y": 35
+    },
+    "id": "1036e20e-97eb-4864-85b8-42f52a58fe72",
+    "position": {
+      "x": 165,
+      "y": 285
+    },
+    "type": "marital",
+    "height": 30
+  },
+  {
+    "data": {
+      "profilePictureURL": "blob:http://localhost:3000/51725fb6-d079-46a8-967f-eb58c0a6a42b",
+      "lastName": "テスト",
+      "siblings": ["0"],
+      "gender": "female",
+      "label": "Node",
+      "isVisible": true,
+      "descendants": 0,
+      "birthDate": "5",
+      "spouse": ["2"],
+      "descendantsWidth": 1920,
+      "isDivorced": false,
+      "maritalPosition": "left",
+      "firstName": "名前",
+      "birthMonth": "4",
+      "profilePicture": {},
+      "children": ["3", "4", "5", "6f1b0e81-499d-41bc-a9f8-decfac9d379a"],
+      "birthYear": "2024",
+      "maritalNodeId": "1",
+      "ancestors": 2,
       "selected": true,
-      "height": 100
+      "parents": ["ce1072a1-4f03-42a9-99a6-c931f0fe4fb2", "21e72b0b-87c9-4f14-97e7-1f8fd449584d"]
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": -130,
+      "y": -250
+    },
+    "id": "0",
+    "position": {
+      "x": 690,
+      "y": 0
+    },
+    "type": "person",
+    "selected": true,
+    "height": 100
   },
   {
-      "data": {
-          "siblings": [
-              "c8a6f88f-414d-4709-ab24-ec840997d6d4"
-          ],
-          "label": "c8a6f88f-414d-4709-ab24-ec840997d6d4",
-          "isVisible": true,
-          "descendants": 0,
-          "spouse": [
-              "4"
-          ],
-          "descendantsWidth": 540,
-          "isDivorced": false,
-          "maritalPosition": "right",
-          "children": [
-              "99350f7d-fa5c-4ac4-9272-032bb4477505"
-          ],
-          "maritalNodeId": "d7374a42-551a-40aa-9e87-c60338b248c6",
-          "ancestors": 1,
-          "selected": false,
-          "parents": []
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 260,
-          "y": 0
-      },
-      "id": "c8a6f88f-414d-4709-ab24-ec840997d6d4",
-      "position": {
-          "x": 800,
-          "y": 250
-      },
-      "type": "person",
-      "height": 100
+    "data": {
+      "siblings": ["ce1072a1-4f03-42a9-99a6-c931f0fe4fb2"],
+      "label": "ce1072a1-4f03-42a9-99a6-c931f0fe4fb2",
+      "isVisible": true,
+      "descendants": 0,
+      "spouse": ["21e72b0b-87c9-4f14-97e7-1f8fd449584d"],
+      "descendantsWidth": 1920,
+      "isDivorced": false,
+      "maritalPosition": "left",
+      "children": ["0"],
+      "maritalNodeId": "5e6988ef-aaf2-4355-9975-860477190eb5",
+      "ancestors": 1,
+      "selected": false,
+      "parents": []
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": -390,
+      "y": -500
+    },
+    "id": "ce1072a1-4f03-42a9-99a6-c931f0fe4fb2",
+    "position": {
+      "x": 560,
+      "y": -250
+    },
+    "type": "person",
+    "height": 100
   },
   {
-      "data": {
-          "siblings": [
-              "3",
-              "4",
-              "5",
-              "6f1b0e81-499d-41bc-a9f8-decfac9d379a"
-          ],
-          "label": "3",
-          "isVisible": true,
-          "descendants": 0,
-          "spouse": [
-              "3d3ab920-99c5-4166-8172-7fde60dd570b"
-          ],
-          "descendantsWidth": 540,
-          "isDivorced": false,
-          "maritalPosition": "left",
-          "children": [
-              "fd330b76-3cba-42b4-b0c0-5d3df80502ba"
-          ],
-          "maritalNodeId": "1036e20e-97eb-4864-85b8-42f52a58fe72",
-          "ancestors": 3,
-          "selected": false,
-          "parents": [
-              "0",
-              "2"
-          ]
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 540,
-          "y": 0
-      },
-      "id": "3",
-      "position": {
-          "x": 0,
-          "y": 250
-      },
-      "type": "person",
-      "height": 100
+    "data": {
+      "isDivorced": false
+    },
+    "width": 30,
+    "positionAbsolute": {
+      "x": 35,
+      "y": -215
+    },
+    "id": "1",
+    "position": {
+      "x": 855,
+      "y": 35
+    },
+    "type": "marital",
+    "height": 30
   },
   {
-      "data": {
-          "siblings": [
-              "3d3ab920-99c5-4166-8172-7fde60dd570b"
-          ],
-          "label": "3d3ab920-99c5-4166-8172-7fde60dd570b",
-          "isVisible": true,
-          "descendants": 0,
-          "spouse": [
-              "3"
-          ],
-          "descendantsWidth": 540,
-          "isDivorced": false,
-          "maritalPosition": "right",
-          "children": [
-              "fd330b76-3cba-42b4-b0c0-5d3df80502ba"
-          ],
-          "maritalNodeId": "1036e20e-97eb-4864-85b8-42f52a58fe72",
-          "ancestors": 1,
-          "selected": false,
-          "parents": []
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 800,
-          "y": 0
-      },
-      "id": "3d3ab920-99c5-4166-8172-7fde60dd570b",
-      "position": {
-          "x": 260,
-          "y": 250
-      },
-      "type": "person",
-      "height": 100
+    "data": {
+      "isDivorced": false
+    },
+    "width": 30,
+    "positionAbsolute": {
+      "x": -225,
+      "y": -465
+    },
+    "id": "5e6988ef-aaf2-4355-9975-860477190eb5",
+    "position": {
+      "x": 725,
+      "y": -215
+    },
+    "type": "marital",
+    "height": 30
   },
   {
-      "data": {
-          "isDivorced": false,
-          "siblings": [
-              "fd330b76-3cba-42b4-b0c0-5d3df80502ba"
-          ],
-          "children": [],
-          "label": "fd330b76-3cba-42b4-b0c0-5d3df80502ba",
-          "isVisible": true,
-          "ancestors": 4,
-          "descendants": 0,
-          "spouse": [],
-          "descendantsWidth": 280,
-          "selected": false,
-          "parents": [
-              "3",
-              "3d3ab920-99c5-4166-8172-7fde60dd570b"
-          ]
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 540,
-          "y": 250
-      },
-      "id": "fd330b76-3cba-42b4-b0c0-5d3df80502ba",
-      "position": {
-          "x": 0,
-          "y": 500
-      },
-      "type": "person",
-      "height": 100
+    "data": {
+      "siblings": ["21e72b0b-87c9-4f14-97e7-1f8fd449584d"],
+      "label": "21e72b0b-87c9-4f14-97e7-1f8fd449584d",
+      "isVisible": true,
+      "descendants": 0,
+      "spouse": ["ce1072a1-4f03-42a9-99a6-c931f0fe4fb2"],
+      "descendantsWidth": 1920,
+      "isDivorced": false,
+      "maritalPosition": "right",
+      "children": ["0"],
+      "maritalNodeId": "5e6988ef-aaf2-4355-9975-860477190eb5",
+      "ancestors": 1,
+      "selected": false,
+      "parents": []
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": -130,
+      "y": -500
+    },
+    "id": "21e72b0b-87c9-4f14-97e7-1f8fd449584d",
+    "position": {
+      "x": 820,
+      "y": -250
+    },
+    "type": "person",
+    "height": 100
   },
   {
-      "data": {
-          "isDivorced": false
-      },
-      "width": 30,
-      "positionAbsolute": {
-          "x": 165,
-          "y": 35
-      },
-      "id": "d7374a42-551a-40aa-9e87-c60338b248c6",
-      "position": {
-          "x": 705,
-          "y": 285
-      },
-      "type": "marital",
-      "height": 30
+    "data": {
+      "siblings": ["2"],
+      "label": "2",
+      "isVisible": true,
+      "descendants": 0,
+      "spouse": ["0"],
+      "descendantsWidth": 1920,
+      "isDivorced": false,
+      "maritalPosition": "right",
+      "children": ["3", "4", "5", "6f1b0e81-499d-41bc-a9f8-decfac9d379a"],
+      "maritalNodeId": "1",
+      "ancestors": 1,
+      "selected": false,
+      "parents": [],
+      "lastName": "",
+      "firstName": "",
+      "gender": "",
+      "birthYear": 2024,
+      "birthMonth": 1,
+      "birthDate": 1,
+      "profilePicture": {},
+      "profilePictureURL": "blob:http://localhost:3000/bd99d5e9-19a0-473c-95be-f62000d7433f"
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 950,
+      "y": 0
+    },
+    "id": "2",
+    "position": {
+      "x": 950,
+      "y": 0
+    },
+    "type": "person",
+    "height": 100,
+    "selected": true
   },
   {
-      "data": {
-          "isDivorced": false
-      },
-      "width": 30,
-      "positionAbsolute": {
-          "x": 705,
-          "y": 35
-      },
-      "id": "1036e20e-97eb-4864-85b8-42f52a58fe72",
-      "position": {
-          "x": 165,
-          "y": 285
-      },
-      "type": "marital",
-      "height": 30
+    "data": {
+      "siblings": ["3", "4", "5", "6f1b0e81-499d-41bc-a9f8-decfac9d379a"],
+      "label": "5",
+      "isVisible": true,
+      "descendants": 0,
+      "spouse": ["5bbc9ef6-aaf4-449a-a844-e804b95e3aeb"],
+      "descendantsWidth": 560,
+      "isDivorced": false,
+      "maritalPosition": "left",
+      "children": ["63e57cdf-d634-42fb-8836-dbefb868b67a", "625f185e-0803-4220-96a2-23f258ff8314"],
+      "maritalNodeId": "f5148d65-4ef9-4f59-9c11-4a46c13ee062",
+      "ancestors": 3,
+      "selected": false,
+      "parents": ["0", "2"]
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 1090,
+      "y": 0
+    },
+    "id": "5",
+    "position": {
+      "x": 1090,
+      "y": 250
+    },
+    "type": "person",
+    "height": 100
   },
   {
-      "data": {
-          "profilePictureURL": "blob:http://localhost:3000/51725fb6-d079-46a8-967f-eb58c0a6a42b",
-          "lastName": "テスト",
-          "siblings": [
-              "0"
-          ],
-          "gender": "female",
-          "label": "Node",
-          "isVisible": true,
-          "descendants": 0,
-          "birthDate": "5",
-          "spouse": [
-              "2"
-          ],
-          "descendantsWidth": 1920,
-          "isDivorced": false,
-          "maritalPosition": "left",
-          "firstName": "名前",
-          "birthMonth": "4",
-          "profilePicture": {},
-          "children": [
-              "3",
-              "4",
-              "5",
-              "6f1b0e81-499d-41bc-a9f8-decfac9d379a"
-          ],
-          "birthYear": "2024",
-          "maritalNodeId": "1",
-          "ancestors": 2,
-          "selected": true,
-          "parents": [
-              "ce1072a1-4f03-42a9-99a6-c931f0fe4fb2",
-              "21e72b0b-87c9-4f14-97e7-1f8fd449584d"
-          ]
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": -130,
-          "y": -250
-      },
-      "id": "0",
-      "position": {
-          "x": 690,
-          "y": 0
-      },
-      "type": "person",
-      "selected": true,
-      "height": 100
+    "data": {
+      "siblings": ["5bbc9ef6-aaf4-449a-a844-e804b95e3aeb"],
+      "label": "5bbc9ef6-aaf4-449a-a844-e804b95e3aeb",
+      "isVisible": true,
+      "descendants": 0,
+      "spouse": ["5"],
+      "descendantsWidth": 560,
+      "isDivorced": false,
+      "maritalPosition": "right",
+      "children": ["63e57cdf-d634-42fb-8836-dbefb868b67a", "625f185e-0803-4220-96a2-23f258ff8314"],
+      "maritalNodeId": "f5148d65-4ef9-4f59-9c11-4a46c13ee062",
+      "ancestors": 1,
+      "selected": false,
+      "parents": []
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 1350,
+      "y": 0
+    },
+    "id": "5bbc9ef6-aaf4-449a-a844-e804b95e3aeb",
+    "position": {
+      "x": 1350,
+      "y": 250
+    },
+    "type": "person",
+    "height": 100
   },
   {
-      "data": {
-          "siblings": [
-              "ce1072a1-4f03-42a9-99a6-c931f0fe4fb2"
-          ],
-          "label": "ce1072a1-4f03-42a9-99a6-c931f0fe4fb2",
-          "isVisible": true,
-          "descendants": 0,
-          "spouse": [
-              "21e72b0b-87c9-4f14-97e7-1f8fd449584d"
-          ],
-          "descendantsWidth": 1920,
-          "isDivorced": false,
-          "maritalPosition": "left",
-          "children": [
-              "0"
-          ],
-          "maritalNodeId": "5e6988ef-aaf2-4355-9975-860477190eb5",
-          "ancestors": 1,
-          "selected": false,
-          "parents": []
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": -390,
-          "y": -500
-      },
-      "id": "ce1072a1-4f03-42a9-99a6-c931f0fe4fb2",
-      "position": {
-          "x": 560,
-          "y": -250
-      },
-      "type": "person",
-      "height": 100
+    "data": {
+      "isDivorced": false,
+      "siblings": ["63e57cdf-d634-42fb-8836-dbefb868b67a", "625f185e-0803-4220-96a2-23f258ff8314"],
+      "children": [],
+      "label": "63e57cdf-d634-42fb-8836-dbefb868b67a",
+      "isVisible": true,
+      "ancestors": 4,
+      "descendants": 0,
+      "spouse": [],
+      "descendantsWidth": 280,
+      "selected": false,
+      "parents": ["5", "5bbc9ef6-aaf4-449a-a844-e804b95e3aeb"]
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 1080,
+      "y": 250
+    },
+    "id": "63e57cdf-d634-42fb-8836-dbefb868b67a",
+    "position": {
+      "x": 1080,
+      "y": 500
+    },
+    "type": "person",
+    "height": 100
   },
   {
-      "data": {
-          "isDivorced": false
-      },
-      "width": 30,
-      "positionAbsolute": {
-          "x": 35,
-          "y": -215
-      },
-      "id": "1",
-      "position": {
-          "x": 855,
-          "y": 35
-      },
-      "type": "marital",
-      "height": 30
+    "data": {
+      "isDivorced": false
+    },
+    "width": 30,
+    "positionAbsolute": {
+      "x": 1255,
+      "y": 35
+    },
+    "id": "f5148d65-4ef9-4f59-9c11-4a46c13ee062",
+    "position": {
+      "x": 1255,
+      "y": 285
+    },
+    "type": "marital",
+    "height": 30
   },
   {
-      "data": {
-          "isDivorced": false
-      },
-      "width": 30,
-      "positionAbsolute": {
-          "x": -225,
-          "y": -465
-      },
-      "id": "5e6988ef-aaf2-4355-9975-860477190eb5",
-      "position": {
-          "x": 725,
-          "y": -215
-      },
-      "type": "marital",
-      "height": 30
+    "data": {
+      "isDivorced": false,
+      "siblings": ["63e57cdf-d634-42fb-8836-dbefb868b67a", "625f185e-0803-4220-96a2-23f258ff8314"],
+      "children": [],
+      "label": "625f185e-0803-4220-96a2-23f258ff8314",
+      "isVisible": true,
+      "ancestors": 4,
+      "descendants": 0,
+      "spouse": [],
+      "descendantsWidth": 280,
+      "selected": false,
+      "parents": ["5", "5bbc9ef6-aaf4-449a-a844-e804b95e3aeb"]
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 1360,
+      "y": 250
+    },
+    "id": "625f185e-0803-4220-96a2-23f258ff8314",
+    "position": {
+      "x": 1360,
+      "y": 500
+    },
+    "type": "person",
+    "height": 100
   },
   {
-      "data": {
-          "siblings": [
-              "21e72b0b-87c9-4f14-97e7-1f8fd449584d"
-          ],
-          "label": "21e72b0b-87c9-4f14-97e7-1f8fd449584d",
-          "isVisible": true,
-          "descendants": 0,
-          "spouse": [
-              "ce1072a1-4f03-42a9-99a6-c931f0fe4fb2"
-          ],
-          "descendantsWidth": 1920,
-          "isDivorced": false,
-          "maritalPosition": "right",
-          "children": [
-              "0"
-          ],
-          "maritalNodeId": "5e6988ef-aaf2-4355-9975-860477190eb5",
-          "ancestors": 1,
-          "selected": false,
-          "parents": []
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": -130,
-          "y": -500
-      },
-      "id": "21e72b0b-87c9-4f14-97e7-1f8fd449584d",
-      "position": {
-          "x": 820,
-          "y": -250
-      },
-      "type": "person",
-      "height": 100
+    "data": {
+      "isDivorced": false,
+      "siblings": ["3", "4", "5", "6f1b0e81-499d-41bc-a9f8-decfac9d379a"],
+      "children": [],
+      "label": "6f1b0e81-499d-41bc-a9f8-decfac9d379a",
+      "isVisible": true,
+      "ancestors": 3,
+      "descendants": 0,
+      "spouse": [],
+      "descendantsWidth": 280,
+      "selected": false,
+      "parents": ["0", "2"]
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 1640,
+      "y": 0
+    },
+    "id": "6f1b0e81-499d-41bc-a9f8-decfac9d379a",
+    "position": {
+      "x": 1640,
+      "y": 250
+    },
+    "type": "person",
+    "height": 100
   },
   {
-      "data": {
-          "siblings": [
-              "2"
-          ],
-          "label": "2",
-          "isVisible": true,
-          "descendants": 0,
-          "spouse": [
-              "0"
-          ],
-          "descendantsWidth": 1920,
-          "isDivorced": false,
-          "maritalPosition": "right",
-          "children": [
-              "3",
-              "4",
-              "5",
-              "6f1b0e81-499d-41bc-a9f8-decfac9d379a"
-          ],
-          "maritalNodeId": "1",
-          "ancestors": 1,
-          "selected": false,
-          "parents": [],
-          "lastName": "",
-          "firstName": "",
-          "gender": "",
-          "birthYear": 2024,
-          "birthMonth": 1,
-          "birthDate": 1,
-          "profilePicture": {},
-          "profilePictureURL": "blob:http://localhost:3000/bd99d5e9-19a0-473c-95be-f62000d7433f"
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 950,
-          "y": 0
-      },
-      "id": "2",
-      "position": {
-          "x": 950,
-          "y": 0
-      },
-      "type": "person",
-      "height": 100,
-      "selected": true
-  },
-  {
-      "data": {
-          "siblings": [
-              "3",
-              "4",
-              "5",
-              "6f1b0e81-499d-41bc-a9f8-decfac9d379a"
-          ],
-          "label": "5",
-          "isVisible": true,
-          "descendants": 0,
-          "spouse": [
-              "5bbc9ef6-aaf4-449a-a844-e804b95e3aeb"
-          ],
-          "descendantsWidth": 560,
-          "isDivorced": false,
-          "maritalPosition": "left",
-          "children": [
-              "63e57cdf-d634-42fb-8836-dbefb868b67a",
-              "625f185e-0803-4220-96a2-23f258ff8314"
-          ],
-          "maritalNodeId": "f5148d65-4ef9-4f59-9c11-4a46c13ee062",
-          "ancestors": 3,
-          "selected": false,
-          "parents": [
-              "0",
-              "2"
-          ]
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 1090,
-          "y": 0
-      },
-      "id": "5",
-      "position": {
-          "x": 1090,
-          "y": 250
-      },
-      "type": "person",
-      "height": 100
-  },
-  {
-      "data": {
-          "siblings": [
-              "5bbc9ef6-aaf4-449a-a844-e804b95e3aeb"
-          ],
-          "label": "5bbc9ef6-aaf4-449a-a844-e804b95e3aeb",
-          "isVisible": true,
-          "descendants": 0,
-          "spouse": [
-              "5"
-          ],
-          "descendantsWidth": 560,
-          "isDivorced": false,
-          "maritalPosition": "right",
-          "children": [
-              "63e57cdf-d634-42fb-8836-dbefb868b67a",
-              "625f185e-0803-4220-96a2-23f258ff8314"
-          ],
-          "maritalNodeId": "f5148d65-4ef9-4f59-9c11-4a46c13ee062",
-          "ancestors": 1,
-          "selected": false,
-          "parents": []
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 1350,
-          "y": 0
-      },
-      "id": "5bbc9ef6-aaf4-449a-a844-e804b95e3aeb",
-      "position": {
-          "x": 1350,
-          "y": 250
-      },
-      "type": "person",
-      "height": 100
-  },
-  {
-      "data": {
-          "isDivorced": false,
-          "siblings": [
-              "63e57cdf-d634-42fb-8836-dbefb868b67a",
-              "625f185e-0803-4220-96a2-23f258ff8314"
-          ],
-          "children": [],
-          "label": "63e57cdf-d634-42fb-8836-dbefb868b67a",
-          "isVisible": true,
-          "ancestors": 4,
-          "descendants": 0,
-          "spouse": [],
-          "descendantsWidth": 280,
-          "selected": false,
-          "parents": [
-              "5",
-              "5bbc9ef6-aaf4-449a-a844-e804b95e3aeb"
-          ]
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 1080,
-          "y": 250
-      },
-      "id": "63e57cdf-d634-42fb-8836-dbefb868b67a",
-      "position": {
-          "x": 1080,
-          "y": 500
-      },
-      "type": "person",
-      "height": 100
-  },
-  {
-      "data": {
-          "isDivorced": false
-      },
-      "width": 30,
-      "positionAbsolute": {
-          "x": 1255,
-          "y": 35
-      },
-      "id": "f5148d65-4ef9-4f59-9c11-4a46c13ee062",
-      "position": {
-          "x": 1255,
-          "y": 285
-      },
-      "type": "marital",
-      "height": 30
-  },
-  {
-      "data": {
-          "isDivorced": false,
-          "siblings": [
-              "63e57cdf-d634-42fb-8836-dbefb868b67a",
-              "625f185e-0803-4220-96a2-23f258ff8314"
-          ],
-          "children": [],
-          "label": "625f185e-0803-4220-96a2-23f258ff8314",
-          "isVisible": true,
-          "ancestors": 4,
-          "descendants": 0,
-          "spouse": [],
-          "descendantsWidth": 280,
-          "selected": false,
-          "parents": [
-              "5",
-              "5bbc9ef6-aaf4-449a-a844-e804b95e3aeb"
-          ]
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 1360,
-          "y": 250
-      },
-      "id": "625f185e-0803-4220-96a2-23f258ff8314",
-      "position": {
-          "x": 1360,
-          "y": 500
-      },
-      "type": "person",
-      "height": 100
-  },
-  {
-      "data": {
-          "isDivorced": false,
-          "siblings": [
-              "3",
-              "4",
-              "5",
-              "6f1b0e81-499d-41bc-a9f8-decfac9d379a"
-          ],
-          "children": [],
-          "label": "6f1b0e81-499d-41bc-a9f8-decfac9d379a",
-          "isVisible": true,
-          "ancestors": 3,
-          "descendants": 0,
-          "spouse": [],
-          "descendantsWidth": 280,
-          "selected": false,
-          "parents": [
-              "0",
-              "2"
-          ]
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 1640,
-          "y": 0
-      },
-      "id": "6f1b0e81-499d-41bc-a9f8-decfac9d379a",
-      "position": {
-          "x": 1640,
-          "y": 250
-      },
-      "type": "person",
-      "height": 100
-  },
-  {
-      "data": {
-          "isDivorced": false,
-          "siblings": [
-              "99350f7d-fa5c-4ac4-9272-032bb4477505"
-          ],
-          "children": [],
-          "label": "99350f7d-fa5c-4ac4-9272-032bb4477505",
-          "isVisible": true,
-          "ancestors": 4,
-          "descendants": 0,
-          "spouse": [],
-          "descendantsWidth": 280,
-          "selected": false,
-          "parents": [
-              "4",
-              "c8a6f88f-414d-4709-ab24-ec840997d6d4"
-          ]
-      },
-      "width": 100,
-      "positionAbsolute": {
-          "x": 0,
-          "y": 250
-      },
-      "id": "99350f7d-fa5c-4ac4-9272-032bb4477505",
-      "position": {
-          "x": 540,
-          "y": 500
-      },
-      "type": "person",
-      "height": 100
+    "data": {
+      "isDivorced": false,
+      "siblings": ["99350f7d-fa5c-4ac4-9272-032bb4477505"],
+      "children": [],
+      "label": "99350f7d-fa5c-4ac4-9272-032bb4477505",
+      "isVisible": true,
+      "ancestors": 4,
+      "descendants": 0,
+      "spouse": [],
+      "descendantsWidth": 280,
+      "selected": false,
+      "parents": ["4", "c8a6f88f-414d-4709-ab24-ec840997d6d4"]
+    },
+    "width": 100,
+    "positionAbsolute": {
+      "x": 0,
+      "y": 250
+    },
+    "id": "99350f7d-fa5c-4ac4-9272-032bb4477505",
+    "position": {
+      "x": 540,
+      "y": 500
+    },
+    "type": "person",
+    "height": 100
   }
 ]

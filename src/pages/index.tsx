@@ -1,5 +1,16 @@
 import { WithAuthenticatorProps } from '@aws-amplify/ui-react';
-import { Box, Button, Center, ChakraBaseProvider, ChakraProvider, Container, Flex, Heading, Text, extendTheme } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Center,
+  ChakraBaseProvider,
+  ChakraProvider,
+  Container,
+  Flex,
+  Heading,
+  Text,
+  extendTheme,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { CreateNewProject } from '@/components/CreateNewProject';
@@ -32,14 +43,14 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
 
   return (
     <ChakraProvider theme={theme}>
-      <Center minHeight='100dvh' p={10}>
-        <Container maxW='3xl' bg='white' p={10} borderRadius='md' shadow='md' position='relative'>
+      <Center minHeight="100dvh" p={10}>
+        <Container maxW="3xl" bg="white" p={10} borderRadius="md" shadow="md" position="relative">
           <Box>
-            <Heading as='h2' size='md' mb={5}>
+            <Heading as="h2" size="md" mb={5}>
               編集する家系図を選択してください。
             </Heading>
 
-            <Flex columnGap={6} rowGap={4} wrap='wrap'>
+            <Flex columnGap={6} rowGap={4} wrap="wrap">
               {familyTreeSummary.map((tree: { id: string; name: string }) => (
                 <Link key={tree.id} href={`/app/${tree.id}`} passHref>
                   <Button>{tree.name}</Button>
@@ -49,7 +60,7 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
           </Box>
 
           <Text py={12}>または</Text>
-          <Heading as='h2' size='md' mb={5}>
+          <Heading as="h2" size="md" mb={5}>
             新しく家系図を作る
           </Heading>
           <CreateNewProject />

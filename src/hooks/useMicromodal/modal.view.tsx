@@ -59,7 +59,9 @@ const StyledDialog = styled.div`
   overflow-y: auto;
   max-height: 100vh;
   border-radius: 0.375rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 `;
 
 export const ModalComponent: FC<Props> = ({ children, id }) => {
@@ -69,14 +71,16 @@ export const ModalComponent: FC<Props> = ({ children, id }) => {
     return () => setMounted(false);
   }, []);
 
-  return mounted ? createPortal(
-    <StyledWrap id={id} aria-hidden='true'>
-      <StyledOverlay tabIndex={-1} data-micromodal-close>
-        <StyledDialog role='dialog' aria-modal='true'>
-          {children}
-        </StyledDialog>
-      </StyledOverlay>
-    </StyledWrap>,
-    document.body
-  ) : null;
+  return mounted
+    ? createPortal(
+        <StyledWrap id={id} aria-hidden="true">
+          <StyledOverlay tabIndex={-1} data-micromodal-close>
+            <StyledDialog role="dialog" aria-modal="true">
+              {children}
+            </StyledDialog>
+          </StyledOverlay>
+        </StyledWrap>,
+        document.body
+      )
+    : null;
 };

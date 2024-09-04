@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export const useGetProjectId = () => {
   const router = useRouter();
@@ -14,5 +14,5 @@ export const useGetProjectId = () => {
     }
   }, [router.query]);
 
-  return {projectId, isLoading: isLoading};
+  return { projectId, isLoading: isLoading };
 };

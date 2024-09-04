@@ -1,5 +1,5 @@
-import { PersonNodeType } from "@/types/PersonNodeType";
-import { ProfileEditorInputs } from "@/types/profileEditorInputs";
+import { PersonNodeType } from '@/types/PersonNodeType';
+import { ProfileEditorInputs } from '@/types/profileEditorInputs';
 
 export const updateNodeData = (data: ProfileEditorInputs, node: PersonNodeType): Promise<PersonNodeType> => {
   const updatedNode = {

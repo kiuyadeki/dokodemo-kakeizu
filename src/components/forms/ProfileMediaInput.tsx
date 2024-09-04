@@ -37,19 +37,21 @@ export const ProfileMediaInput: FC<MediaInputProps> = memo(({ register, setValue
     <FormControl>
       <FormLabel mt={6}>写真</FormLabel>
       <Input
-        type='file'
-        accept='image/*'
+        type="file"
+        accept="image/*"
         {...register('profilePictureFile', {
           onChange: onFileInputChange,
         })}
         hidden
         ref={inputRef}
       />
-      <Button type='button' onClick={handleButtonClick}>
+      <Button type="button" onClick={handleButtonClick}>
         {previewImageURL ? '写真を変更' : '写真を選択'}
       </Button>
-      {uploadedImage && <Image mt={6} src={uploadedImage} alt='アップロードされた画像' />}
-      {!uploadedImage && existingProfilePictureURL && <Image mt={6} src={existingProfilePictureURL} alt='アップロードされた画像' />}
+      {uploadedImage && <Image mt={6} src={uploadedImage} alt="アップロードされた画像" />}
+      {!uploadedImage && existingProfilePictureURL && (
+        <Image mt={6} src={existingProfilePictureURL} alt="アップロードされた画像" />
+      )}
     </FormControl>
   );
 });

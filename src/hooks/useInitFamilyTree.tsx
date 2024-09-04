@@ -21,35 +21,41 @@ export const useInitFamilyTree = () => {
   const selectedNode = useRecoilValue(selectedNodeState);
   const { zoom } = useViewport();
   const reactFlowInstance = useReactFlow();
-  const {familyTreeData } = useFetchFamilyTreeData(projectId);
-  
+  const { familyTreeData } = useFetchFamilyTreeData(projectId);
+
   const formatedFamilyTreeData = useMemo(() => {
-    if (!familyTreeData) return {nodes: [{
-      id: '0',
-      type: 'person',
-      data: {
-        label: 'data not loaded',
-        birthYear: undefined,
-        birthMonth: undefined,
-        birthDate: undefined,
-        gender: undefined,
-        // profilePicture: undefined,
-        profilePictureURL: '',
-        parents: [],
-        children: [],
-        spouse: [],
-        siblings: ['0'],
-        descendants: 0,
-        descendantsWidth: 0,
-        maritalPosition: undefined,
-        ancestors: 0,
-        selected: true,
-        isDivorced: false,
-        isVisible: true,
-      },
-      position: { x: 0,
-    y: 0 },
-    }], edges: [], viewport: {x: 0, y: 0, zoom: 1}};
+    if (!familyTreeData)
+      return {
+        nodes: [
+          {
+            id: '0',
+            type: 'person',
+            data: {
+              label: 'data not loaded',
+              birthYear: undefined,
+              birthMonth: undefined,
+              birthDate: undefined,
+              gender: undefined,
+              // profilePicture: undefined,
+              profilePictureURL: '',
+              parents: [],
+              children: [],
+              spouse: [],
+              siblings: ['0'],
+              descendants: 0,
+              descendantsWidth: 0,
+              maritalPosition: undefined,
+              ancestors: 0,
+              selected: true,
+              isDivorced: false,
+              isVisible: true,
+            },
+            position: { x: 0, y: 0 },
+          },
+        ],
+        edges: [],
+        viewport: { x: 0, y: 0, zoom: 1 },
+      };
     return JSON.parse(familyTreeData);
   }, [familyTreeData]);
   const [nodes, setNodes, onNodesChange] = useNodesState(wholeNodes);
@@ -70,15 +76,23 @@ export const useInitFamilyTree = () => {
     setWholeNodes(calculatedWholeNodes);
     console.log('calculatedWholeNodes', calculatedWholeNodes);
     setWholeEdges(edges);
-    const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(calculatedWholeNodes, edges, selectedNode);
+    const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(
+      calculatedWholeNodes,
+      edges,
+      selectedNode
+    );
     setNodes(directLineageNodes);
     setEdges(directLineageEdges);
     const [selectedNodePositionX, selectedNodePositionY] = getSelectedNodePosition(calculatedWholeNodes, selectedNode);
-    reactFlowInstance.setCenter(selectedNodePositionX + BASE_PERSON_NODE_WIDTH / 2, selectedNodePositionY + BASE_PERSON_NODE_HEIGHT / 2, {
-      zoom,
-      duration: 1000,
-    });
-  }
+    reactFlowInstance.setCenter(
+      selectedNodePositionX + BASE_PERSON_NODE_WIDTH / 2,
+      selectedNodePositionY + BASE_PERSON_NODE_HEIGHT / 2,
+      {
+        zoom,
+        duration: 1000,
+      }
+    );
+  };
 
   useEffect(() => {
     if (!isLoadingId && formatedFamilyTreeData.nodes.length) {
@@ -89,5 +103,14 @@ export const useInitFamilyTree = () => {
     }
   }, [familyTreeData]);
 
-  return { isLoading, projectId, nodes, edges, onNodesChange, onEdgesChange, onUpdate, updateFamilyTree };
+  return {
+    isLoading,
+    projectId,
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    onUpdate,
+    updateFamilyTree,
+  };
 };

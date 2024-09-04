@@ -26,15 +26,17 @@ interface GenderInputProps {
   register: UseFormRegister<FieldValues>;
 }
 
-export const ProfileGenderInput: FC<GenderInputProps> = memo(({register, genderValue}) => {
+export const ProfileGenderInput: FC<GenderInputProps> = memo(({ register, genderValue }) => {
   return (
     <>
       <FormLabel mt={6}>性別</FormLabel>
       <HStack>
         <RadioGroup>
-          <Stack direction='row' spacing={6}>
+          <Stack direction="row" spacing={6}>
             {genders.map((gender) => (
-              <Radio key={gender.value} value={gender.value} {...register(genderValue)}>{gender.label}</Radio>
+              <Radio key={gender.value} value={gender.value} {...register(genderValue)}>
+                {gender.label}
+              </Radio>
             ))}
           </Stack>
         </RadioGroup>
