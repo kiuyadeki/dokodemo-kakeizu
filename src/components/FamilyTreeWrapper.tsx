@@ -53,7 +53,7 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
 
   return (
     <Box w='100vw' h='100vh' className='wrapper' ref={reactFlowWrapper}>
-      <Button onClick={handleSaveButtonClick} position="absolute" right={4} top={4} zIndex={10}>Update</Button>
+      <Button onClick={handleSaveButtonClick} position="absolute" right={4} top={4} zIndex={10}>保存する</Button>
       <ReactFlow
         nodes={nodes}
         edges={edges}
