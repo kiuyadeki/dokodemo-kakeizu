@@ -93,7 +93,7 @@ const IconBox = styled.div.withConfig({
   overflow: hidden;
   border-radius: 50%;
   position: relative;
-  background-color: ${({ isSelected }) => (isSelected ? '#3182ce' : '#EB912E')};
+  background-color: ${({ isSelected }) => (isSelected ? '#3182ce' : '#ccc')};
   border-width: 1px;
   border-style: solid;
   border-color: ${({ gender }) => (gender === 'male' ? '#3182ce' : gender === 'female' ? '#E53E3E' : '#90cdf4')};

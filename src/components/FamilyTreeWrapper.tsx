@@ -20,7 +20,7 @@ import {
 import { PersonNodeType, MaritalNodeType, MaritalData } from '../types/PersonNodeType';
 import { ParentChildEdge } from './ui/ParentChildEdge';
 import { useHandlePersonNodeClick } from '@/hooks/useHandlePersonNodeClick';
-import { Box, Button } from '@chakra-ui/react';
+import { background, Box, Button } from '@chakra-ui/react';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 
 interface FamilyTreeWrapperProps {
@@ -63,6 +63,11 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
     updateFamilyTree(wholeNodes, wholeEdges);
   }, [selectedNode]);
 
+  const styles = {
+    background: '#E7E1C5',
+    backgroundImage: 'url(/bg_noise.png)',
+  }
+
   return (
     <Box w="100vw" h="100vh" className="wrapper" ref={reactFlowWrapper}>
       <Button onClick={handleSaveButtonClick} position="absolute" right={4} top={4} zIndex={10}>
@@ -82,9 +87,9 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
         nodesDraggable={false}
         fitView
         fitViewOptions={{ padding: 20 }}
+        style={styles}
         proOptions={{ hideAttribution: true }}
       >
-        <Background color="#ddd" variant={BackgroundVariant.Lines} gap={[340, 250]} />
       </ReactFlow>
     </Box>
   );
