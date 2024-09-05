@@ -1,6 +1,6 @@
 import { selectedNodeState } from '@/recoil/selectedNodeState';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
-import { wholeNodesState } from '@/recoil/WholeNodesState';
+import { initialNode, wholeNodesState } from '@/recoil/WholeNodesState';
 import { updateFamilyTreeData } from '@/services/updateFamilyTreeData';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 import { calculateNodesPosition } from '@/utils/calculateNodesPosition';
@@ -26,33 +26,7 @@ export const useInitFamilyTree = () => {
   const formatedFamilyTreeData = useMemo(() => {
     if (!familyTreeData)
       return {
-        nodes: [
-          {
-            id: '0',
-            type: 'person',
-            data: {
-              label: 'data not loaded',
-              birthYear: undefined,
-              birthMonth: undefined,
-              birthDate: undefined,
-              gender: undefined,
-              // profilePicture: undefined,
-              profilePictureURL: '',
-              parents: [],
-              children: [],
-              spouse: [],
-              siblings: ['0'],
-              descendants: 0,
-              descendantsWidth: 0,
-              maritalPosition: undefined,
-              ancestors: 0,
-              selected: true,
-              isDivorced: false,
-              isVisible: true,
-            },
-            position: { x: 0, y: 0 },
-          },
-        ],
+        nodes: [initialNode],
         edges: [],
         viewport: { x: 0, y: 0, zoom: 1 },
       };
@@ -97,8 +71,16 @@ export const useInitFamilyTree = () => {
   useEffect(() => {
     if (!isLoadingId && formatedFamilyTreeData.nodes.length) {
       setNodes(formatedFamilyTreeData.nodes);
+      setWholeNodes(formatedFamilyTreeData.nodes)
       setEdges(formatedFamilyTreeData.edges);
+      setWholeEdges(formatedFamilyTreeData.edges);
       reactFlowInstance.setViewport(formatedFamilyTreeData.viewport);
+      setIsLoading(false);
+    } else if (!isLoadingId && !formatedFamilyTreeData.nodes.length) {
+      setNodes([initialNode]);
+      setWholeNodes([initialNode])
+      setEdges([]);
+      setWholeEdges([]);
       setIsLoading(false);
     }
   }, [familyTreeData]);

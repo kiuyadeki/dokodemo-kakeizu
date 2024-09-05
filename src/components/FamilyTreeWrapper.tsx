@@ -71,8 +71,6 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        // nodes={formatedFamilyTreeData.nodes}
-        // edges={formatedFamilyTreeData.edges}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
