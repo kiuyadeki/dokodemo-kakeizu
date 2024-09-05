@@ -56,7 +56,7 @@ const selectedStyle = css`
 `;
 
 const StyledBox = styled.div.withConfig({
-  shouldForwardProp: (prop) => !['isSelected'].includes(prop),
+  shouldForwardProp: (prop) => !['isSelected', 'gender'].includes(prop),
 })<StyledBoxProps>`
   position: relative;
   width: ${BASE_PERSON_NODE_WIDTH}px;
@@ -83,7 +83,7 @@ const StyledBox = styled.div.withConfig({
 `;
 
 const IconBox = styled.div.withConfig({
-  shouldForwardProp: (prop) => !['isSelected', 'gender'].includes(prop),
+  shouldForwardProp: (prop) => !['isSelected'].includes(prop),
 })<StyledBoxProps>`
   display: flex;
   align-items: center;
@@ -94,9 +94,9 @@ const IconBox = styled.div.withConfig({
   border-radius: 50%;
   position: relative;
   background-color: ${({ isSelected }) => (isSelected ? '#3182ce' : '#ccc')};
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
-  border-color: ${({ gender }) => (gender === 'male' ? '#3182ce' : gender === 'female' ? '#E53E3E' : '#90cdf4')};
+  border-color: ${({ gender }) => (gender === 'male' ? '#3182ce' : gender === 'female' ? '#E53E3E' : '#ccc')};
   transform: scale(1.1);
 `;
 
