@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
 
-export const initialNode: (PersonNodeType | MaritalNodeType) = {
+export const initialNode: PersonNodeType | MaritalNodeType = {
   id: '0',
   type: 'person',
   data: {
@@ -23,8 +23,7 @@ export const initialNode: (PersonNodeType | MaritalNodeType) = {
     isDivorced: false,
     isVisible: true,
   },
-  position: { x: 0,
-y: 0 },
+  position: { x: 0, y: 0 },
 };
 
 export const wholeNodesState = atom<(PersonNodeType | MaritalNodeType)[]>({

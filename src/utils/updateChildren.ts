@@ -1,4 +1,4 @@
-import { PersonNodeType } from "@/types/PersonNodeType";
+import { PersonNodeType } from '@/types/PersonNodeType';
 
 export const updateChildren = (node: PersonNodeType, childId: string): PersonNodeType => ({
   ...node,

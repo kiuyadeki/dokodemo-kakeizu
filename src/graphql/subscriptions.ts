@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../API";
+import * as APITypes from '../API';
 type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionInput: InputType;
   __generatedSubscriptionOutput: OutputType;
@@ -22,10 +22,7 @@ export const onCreateFamilyTree = /* GraphQL */ `subscription OnCreateFamilyTree
     __typename
   }
 }
-` as GeneratedSubscription<
-  APITypes.OnCreateFamilyTreeSubscriptionVariables,
-  APITypes.OnCreateFamilyTreeSubscription
->;
+` as GeneratedSubscription<APITypes.OnCreateFamilyTreeSubscriptionVariables, APITypes.OnCreateFamilyTreeSubscription>;
 export const onUpdateFamilyTree = /* GraphQL */ `subscription OnUpdateFamilyTree(
   $filter: ModelSubscriptionFamilyTreeFilterInput
   $owner: String
@@ -40,10 +37,7 @@ export const onUpdateFamilyTree = /* GraphQL */ `subscription OnUpdateFamilyTree
     __typename
   }
 }
-` as GeneratedSubscription<
-  APITypes.OnUpdateFamilyTreeSubscriptionVariables,
-  APITypes.OnUpdateFamilyTreeSubscription
->;
+` as GeneratedSubscription<APITypes.OnUpdateFamilyTreeSubscriptionVariables, APITypes.OnUpdateFamilyTreeSubscription>;
 export const onDeleteFamilyTree = /* GraphQL */ `subscription OnDeleteFamilyTree(
   $filter: ModelSubscriptionFamilyTreeFilterInput
   $owner: String
@@ -58,7 +52,4 @@ export const onDeleteFamilyTree = /* GraphQL */ `subscription OnDeleteFamilyTree
     __typename
   }
 }
-` as GeneratedSubscription<
-  APITypes.OnDeleteFamilyTreeSubscriptionVariables,
-  APITypes.OnDeleteFamilyTreeSubscription
->;
+` as GeneratedSubscription<APITypes.OnDeleteFamilyTreeSubscriptionVariables, APITypes.OnDeleteFamilyTreeSubscription>;

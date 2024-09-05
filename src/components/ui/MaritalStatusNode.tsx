@@ -36,7 +36,9 @@ const NodeInner = styled.div`
   width: ${BASE_MARITAL_NODE_WIDTH}px;
   height: ${BASE_MARITAL_NODE_HEIGHT}px;
   border-radius: 50px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 `;
 
 export const MaritalNode = memo((props: NodeProps<MaritalNodeType['data']>) => {
@@ -57,9 +59,9 @@ export const MaritalNode = memo((props: NodeProps<MaritalNodeType['data']>) => {
   return (
     <NodeContainer onClick={handleClick}>
       <NodeInner>{!data.isDivorced ? <GiBigDiamondRing /> : <TfiUnlink />}</NodeInner>
-      <StyledHandle type='target' position={Position.Right} id='maritalTargetRight' />
-      <StyledHandle type='target' position={Position.Left} id='maritalTargetLeft' />
-      <StyledHandle type='target' position={Position.Bottom} id='maritalTargetBottom' />
+      <StyledHandle type="target" position={Position.Right} id="maritalTargetRight" />
+      <StyledHandle type="target" position={Position.Left} id="maritalTargetLeft" />
+      <StyledHandle type="target" position={Position.Bottom} id="maritalTargetBottom" />
     </NodeContainer>
   );
 });

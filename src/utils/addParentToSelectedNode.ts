@@ -1,10 +1,21 @@
 import { Edge } from 'reactflow';
 import { createMaritalNode, createPersonNode } from '../utils/nodeUtils';
 import { createEdge } from '../utils/edgeUtils';
-import { BASE_GENERATIONS_SPACING, BASE_MARITAL_NODE_HEIGHT, BASE_MARITAL_NODE_WIDTH, BASE_MARITAL_SPACING, BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '../utils/constants';
+import {
+  BASE_GENERATIONS_SPACING,
+  BASE_MARITAL_NODE_HEIGHT,
+  BASE_MARITAL_NODE_WIDTH,
+  BASE_MARITAL_SPACING,
+  BASE_PERSON_NODE_HEIGHT,
+  BASE_PERSON_NODE_WIDTH,
+} from '../utils/constants';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 
-export const addParentToSelectedNode = (nodeList: (PersonNodeType | MaritalNodeType)[], edgeList: Edge[], selectedNode: PersonNodeType | undefined) => {
+export const addParentToSelectedNode = (
+  nodeList: (PersonNodeType | MaritalNodeType)[],
+  edgeList: Edge[],
+  selectedNode: PersonNodeType | undefined
+) => {
   const nodesCopy = [...nodeList];
   const edgesCopy = [...edgeList];
 
@@ -15,11 +26,21 @@ export const addParentToSelectedNode = (nodeList: (PersonNodeType | MaritalNodeT
     y: selectedNode.position.y - BASE_GENERATIONS_SPACING + (BASE_PERSON_NODE_HEIGHT - BASE_MARITAL_NODE_HEIGHT) / 2,
   });
   const leftParentNode = createPersonNode(
-    { x: selectedNode.position.x - BASE_MARITAL_SPACING, y: selectedNode.position.y - BASE_GENERATIONS_SPACING },
-    { children: [selectedNode.id], maritalNodeId: maritalNode.id, maritalPosition: 'left' }
+    {
+      x: selectedNode.position.x - BASE_MARITAL_SPACING,
+      y: selectedNode.position.y - BASE_GENERATIONS_SPACING,
+    },
+    {
+      children: [selectedNode.id],
+      maritalNodeId: maritalNode.id,
+      maritalPosition: 'left',
+    }
   );
   const rightParentNode = createPersonNode(
-    { x: selectedNode.position.x + BASE_MARITAL_SPACING, y: selectedNode.position.y - BASE_GENERATIONS_SPACING },
+    {
+      x: selectedNode.position.x + BASE_MARITAL_SPACING,
+      y: selectedNode.position.y - BASE_GENERATIONS_SPACING,
+    },
     {
       children: [selectedNode.id],
       spouse: [leftParentNode.id],
@@ -43,7 +64,9 @@ export const addParentToSelectedNode = (nodeList: (PersonNodeType | MaritalNodeT
     },
   };
 
-  const updatedNodesCopy = nodesCopy.map((node) => (node.id === selectedNode.id ? updatedNode : node)).concat([maritalNode, leftParentNode, rightParentNode]);
+  const updatedNodesCopy = nodesCopy
+    .map((node) => (node.id === selectedNode.id ? updatedNode : node))
+    .concat([maritalNode, leftParentNode, rightParentNode]);
   const updatedEdgesCopy = [...edgesCopy, ...edgesToAdd];
 
   return { nodesCopy: updatedNodesCopy, edgesCopy: updatedEdgesCopy };

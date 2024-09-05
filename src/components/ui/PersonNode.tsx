@@ -63,7 +63,9 @@ const StyledBox = styled.div.withConfig({
   ${({ isSelected }) => isSelected && selectedStyle};
   border-radius: 50%;
   aspect-ratio: 1;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   background-color: #fff;
   &::before {
     display: block;
@@ -132,16 +134,22 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
 
   return (
     <>
-      <StyledHandle type='source' position={Position.Right} id='personSourceRight' />
-      <StyledHandle type='source' position={Position.Left} id='personSourceLeft' />
-      <StyledHandle type='source' position={Position.Top} id='personSourceTop' />
+      <StyledHandle type="source" position={Position.Right} id="personSourceRight" />
+      <StyledHandle type="source" position={Position.Left} id="personSourceLeft" />
+      <StyledHandle type="source" position={Position.Top} id="personSourceTop" />
       <AnimatePresence>
         {data.isVisible && (
-          <motion.div key={data.label} variants={variants} initial='initial' animate='animate' exit='exit' transition={{ duration: 0.8, ease: 'easeOut' }}
-          onAnimationComplete={(definition) => {
-            if (definition === 'exit') {
-            }
-          }}
+          <motion.div
+            key={data.label}
+            variants={variants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            onAnimationComplete={(definition) => {
+              if (definition === 'exit') {
+              }
+            }}
           >
             <StyledBox isSelected={isSelected}>
               <IconBox isSelected={isSelected} gender={data.gender}>
@@ -150,7 +158,7 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
                     <CustomProfileIcon src={profilePictureURL} />
                   ) : (
                     <DefaultProfileIcon>
-                      <BiSolidUser size={100} color='#ffffff' />
+                      <BiSolidUser size={100} color="#ffffff" />
                     </DefaultProfileIcon>
                   )}
                 </IconInner>

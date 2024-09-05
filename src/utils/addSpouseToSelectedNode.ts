@@ -8,7 +8,11 @@ import { selectedNodeState } from '../recoil/selectedNodeState';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 
-export const addSpouseToSelectedNode = (nodeList: (PersonNodeType | MaritalNodeType)[], edgeList: Edge[], selectedNode: PersonNodeType | undefined) => {
+export const addSpouseToSelectedNode = (
+  nodeList: (PersonNodeType | MaritalNodeType)[],
+  edgeList: Edge[],
+  selectedNode: PersonNodeType | undefined
+) => {
   const nodesCopy = [...nodeList];
   const edgesCopy = [...edgeList];
 
@@ -24,10 +28,19 @@ export const addSpouseToSelectedNode = (nodeList: (PersonNodeType | MaritalNodeT
     y: selectedNode.position.y,
   });
 
-  const selectedToMaritalEdge = createEdge(selectedNode.id, maritalNode.id, 'smoothstep', 'personSourceRight', 'maritalTargetLeft');
+  const selectedToMaritalEdge = createEdge(
+    selectedNode.id,
+    maritalNode.id,
+    'smoothstep',
+    'personSourceRight',
+    'maritalTargetLeft'
+  );
 
   const SpouseNode = createPersonNode(
-    { x: selectedNode.position.x + BASE_MARITAL_SPACING * 2, y: selectedNode.position.y },
+    {
+      x: selectedNode.position.x + BASE_MARITAL_SPACING * 2,
+      y: selectedNode.position.y,
+    },
     {
       spouse: [selectedNode.id],
       maritalNodeId: maritalNode.id,
@@ -35,7 +48,13 @@ export const addSpouseToSelectedNode = (nodeList: (PersonNodeType | MaritalNodeT
     }
   );
 
-  const spouseToMaritalEdge = createEdge(SpouseNode.id, maritalNode.id, 'smoothstep', 'personSourceLeft', 'maritalTargetRight');
+  const spouseToMaritalEdge = createEdge(
+    SpouseNode.id,
+    maritalNode.id,
+    'smoothstep',
+    'personSourceLeft',
+    'maritalTargetRight'
+  );
 
   const updatedNode = {
     ...selectedNode,
@@ -47,7 +66,9 @@ export const addSpouseToSelectedNode = (nodeList: (PersonNodeType | MaritalNodeT
     },
   };
 
-  const updatedNodesCopy = nodesCopy.map((node) => (node.id === selectedNode.id ? updatedNode : node)).concat([maritalNode, SpouseNode]);
+  const updatedNodesCopy = nodesCopy
+    .map((node) => (node.id === selectedNode.id ? updatedNode : node))
+    .concat([maritalNode, SpouseNode]);
   const updatedEdgesCopy = [...edgesCopy, selectedToMaritalEdge, spouseToMaritalEdge];
 
   return { nodesCopy: updatedNodesCopy, edgesCopy: updatedEdgesCopy };

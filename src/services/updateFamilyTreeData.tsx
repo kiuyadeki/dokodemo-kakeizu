@@ -1,5 +1,5 @@
-import { updateFamilyTree } from "@/graphql/mutations";
-import { generateClient } from "aws-amplify/api";
+import { updateFamilyTree } from '@/graphql/mutations';
+import { generateClient } from 'aws-amplify/api';
 
 export const updateFamilyTreeData = async (familyTreeData: string, projectId: string) => {
   const client = generateClient();
@@ -19,4 +19,4 @@ export const updateFamilyTreeData = async (familyTreeData: string, projectId: st
   } catch (error) {
     console.error('Error updating family tree: ', error);
   }
-}
+};

@@ -100,21 +100,33 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const updateNodesAndEdges = (AddedNode: 'parent' | 'child' | 'spouse') => {
     switch (AddedNode) {
       case 'parent':
-        const { nodesCopy: nodesCopyParent, edgesCopy: edgesCopyParent } = addParentToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+        const { nodesCopy: nodesCopyParent, edgesCopy: edgesCopyParent } = addParentToSelectedNode(
+          wholeNodes,
+          wholeEdges,
+          selectedNode
+        );
         updateFamilyTree(nodesCopyParent, edgesCopyParent);
         break;
       case 'child':
-        const {nodesCopy: nodesCopyChild, edgesCopy: edgesCopyChild} = addChildNodeToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+        const { nodesCopy: nodesCopyChild, edgesCopy: edgesCopyChild } = addChildNodeToSelectedNode(
+          wholeNodes,
+          wholeEdges,
+          selectedNode
+        );
         updateFamilyTree(nodesCopyChild, edgesCopyChild);
         break;
       case 'spouse':
-        const { nodesCopy: nodesCopySpouse, edgesCopy: edgesCopySpouse } = addSpouseToSelectedNode(wholeNodes, wholeEdges, selectedNode);
+        const { nodesCopy: nodesCopySpouse, edgesCopy: edgesCopySpouse } = addSpouseToSelectedNode(
+          wholeNodes,
+          wholeEdges,
+          selectedNode
+        );
         updateFamilyTree(nodesCopySpouse, edgesCopySpouse);
         break;
       default:
         break;
     }
-  }
+  };
 
   // 情報を編集
   const displayProfileEditor = () => {
@@ -139,13 +151,13 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
     <>
       <ModalBody>
         <CloseButton onClick={closeAndInitModal}>
-          <IoCloseOutline size={25} color='currentColor' />
+          <IoCloseOutline size={25} color="currentColor" />
         </CloseButton>
         {showProfileEditor ? (
           <ProfileEditor onClose={closeAndInitModal} updateFamilyTree={updateFamilyTree} />
         ) : (
           <>
-            <Grid templateColumns='repeat(2, 1fr)' gap={5}>
+            <Grid templateColumns="repeat(2, 1fr)" gap={5}>
               <Button
                 isDisabled={hasParents}
                 onClick={() => {

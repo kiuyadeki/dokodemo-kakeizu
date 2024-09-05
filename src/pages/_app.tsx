@@ -7,12 +7,12 @@ import { RecoilRoot } from 'recoil';
 
 Amplify.configure(amplifyconfig);
 
-const Myapp = ( { Component, pageProps, signOut, user}: AppProps & WithAuthenticatorProps) => {
+const Myapp = ({ Component, pageProps, signOut, user }: AppProps & WithAuthenticatorProps) => {
   return (
     <RecoilRoot>
       <Component {...pageProps} signOut={signOut} user={user} />
     </RecoilRoot>
-  )
-}
+  );
+};
 
 export default withAuthenticator(Myapp);

@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     transition: transform 0.4s ease-in-out;
   }
   `;
-  
+
 function AppPage() {
   return (
     <>

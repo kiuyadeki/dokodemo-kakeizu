@@ -1,11 +1,14 @@
-
 import { createNewFamilyTree } from '@/services/createNewFamilyTree';
 import { Box, Button, Flex, FormControl, FormErrorMessage, Input } from '@chakra-ui/react';
 import { FC, memo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ReactFlowJsonObject } from 'reactflow';
 
-const initialFamilyTree: ReactFlowJsonObject = { nodes: [], edges: [], viewport: { x: 1, y: 1, zoom: 1 } };
+const initialFamilyTree: ReactFlowJsonObject = {
+  nodes: [],
+  edges: [],
+  viewport: { x: 1, y: 1, zoom: 1 },
+};
 // const demoNodes = [
 //   {
 //       "id": "0",
@@ -527,8 +530,8 @@ export const CreateNewProject: FC = memo(function CreateNewProjectComponent() {
       <form onSubmit={onSubmit}>
         <FormControl mb={6} isInvalid={!!errors.projectName}>
           <Input
-            size='md'
-            placeholder='〇〇家'
+            size="md"
+            placeholder="〇〇家"
             {...register('projectName', {
               required: '家系図名を入力してください',
               maxLength: { value: 20, message: '20文字以内で入力してください' },
@@ -536,8 +539,8 @@ export const CreateNewProject: FC = memo(function CreateNewProjectComponent() {
           />
           {errors.projectName && <FormErrorMessage>{errors.projectName.message}</FormErrorMessage>}
         </FormControl>
-        <Flex justify='flex-start'>
-          <Button paddingInline="40px" type='submit' colorScheme='blue' isLoading={isSubmitting}>
+        <Flex justify="flex-start">
+          <Button paddingInline="40px" type="submit" colorScheme="blue" isLoading={isSubmitting}>
             作成
           </Button>
         </Flex>

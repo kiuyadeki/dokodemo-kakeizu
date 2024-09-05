@@ -15,6 +15,5 @@ export const useHook = (id: string, onCloseFunction: () => void) => {
     MicroModal.close(id);
   }, [id]);
 
-  return { open,
-close };
+  return { open, close };
 };

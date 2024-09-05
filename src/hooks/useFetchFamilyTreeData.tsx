@@ -15,5 +15,5 @@ export const useFetchFamilyTreeData = (id: string | undefined) => {
     }
   }, [id]);
 
-  return {familyTreeData, id};
+  return { familyTreeData, id };
 };

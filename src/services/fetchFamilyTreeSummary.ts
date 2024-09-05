@@ -1,11 +1,10 @@
-import { listFamilyTreeSummary } from "@/graphql/customQueries";
-import { generateClient } from "aws-amplify/api"
+import { listFamilyTreeSummary } from '@/graphql/customQueries';
+import { generateClient } from 'aws-amplify/api';
 
 export const fetchFamilyTreeSummary = async () => {
   const client = generateClient();
 
   try {
-
     const familfyTreeSummaryData = await client.graphql({
       query: listFamilyTreeSummary,
     });
@@ -14,4 +13,4 @@ export const fetchFamilyTreeSummary = async () => {
   } catch (error) {
     console.error('Error fetching summary data: ', error);
   }
-}
+};

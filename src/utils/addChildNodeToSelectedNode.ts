@@ -9,7 +9,11 @@ import { updateSpouseAndChildren } from './updateSpouseAndChildren';
 import { updateSiblings } from './updateSiblings';
 import { updateChildren } from './updateChildren';
 
-export const addChildNodeToSelectedNode = (nodeList: (PersonNodeType | MaritalNodeType)[], edgeList: Edge[], selectedNode: PersonNodeType | undefined) => {
+export const addChildNodeToSelectedNode = (
+  nodeList: (PersonNodeType | MaritalNodeType)[],
+  edgeList: Edge[],
+  selectedNode: PersonNodeType | undefined
+) => {
   const nodesCopy = [...nodeList];
   const edgesCopy = [...edgeList];
   const outgoingEdges = extractEdgesFromNode(edgesCopy, selectedNode);
@@ -29,7 +33,10 @@ export const addChildNodeToSelectedNode = (nodeList: (PersonNodeType | MaritalNo
     });
     maritalNodeId = maritalNode.id;
     const spouseNode = createPersonNode(
-      { x: selectedNode.position.x + BASE_MARITAL_SPACING * 2, y: selectedNode.position.y },
+      {
+        x: selectedNode.position.x + BASE_MARITAL_SPACING * 2,
+        y: selectedNode.position.y,
+      },
       {
         spouse: [selectedNode.id],
         maritalNodeId: maritalNodeId,
@@ -43,12 +50,21 @@ export const addChildNodeToSelectedNode = (nodeList: (PersonNodeType | MaritalNo
       createEdge(spouseID, maritalNodeId, 'smoothstep', 'personSourceLeft', 'maritalTargetRight')
     );
   } else {
-    maritalNodeId = outgoingEdges.find((edge) => edge.sourceHandle === 'personSourceRight' || edge.sourceHandle === 'personSourceLeft')?.target || '';
+    maritalNodeId =
+      outgoingEdges.find(
+        (edge) => edge.sourceHandle === 'personSourceRight' || edge.sourceHandle === 'personSourceLeft'
+      )?.target || '';
   }
 
   const childNode = createPersonNode(
-    { x: selectedNode.position.x + BASE_MARITAL_SPACING, y: selectedNode.position.y + BASE_GENERATIONS_SPACING },
-    { parents: [selectedNode.id, spouseID], siblings: [...selectedNode.data.children] }
+    {
+      x: selectedNode.position.x + BASE_MARITAL_SPACING,
+      y: selectedNode.position.y + BASE_GENERATIONS_SPACING,
+    },
+    {
+      parents: [selectedNode.id, spouseID],
+      siblings: [...selectedNode.data.children],
+    }
   );
   childNode.data.siblings?.push(childNode.id);
 
@@ -64,7 +80,8 @@ export const addChildNodeToSelectedNode = (nodeList: (PersonNodeType | MaritalNo
         }
       }
       return node;
-    }).concat(childNode);
+    })
+    .concat(childNode);
 
   edgesCopy.push(createEdge(childNode.id, maritalNodeId, 'parentChild', 'personSourceTop', 'maritalTargetBottom'));
 

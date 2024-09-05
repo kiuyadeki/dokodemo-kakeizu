@@ -2,7 +2,10 @@ import { FC, ReactNode, useCallback } from 'react';
 import { useHook } from './modal.hook';
 import { ModalComponent } from './modal.view';
 
-export type MicroModalTypes = (id: string, onCloseFunction: () => void) => {
+export type MicroModalTypes = (
+  id: string,
+  onCloseFunction: () => void
+) => {
   Modal: FC<{ children: ReactNode }>;
   open: () => void;
   close: () => void;
