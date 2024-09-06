@@ -16,7 +16,9 @@ export const updateFamilyTreeData = async (familyTreeData: string, projectId: st
     });
 
     console.log(updatedData);
+    return { success: true };
   } catch (error) {
     console.error('Error updating family tree: ', error);
+    return { success: false };
   }
 };

@@ -20,8 +20,9 @@ import {
 import { PersonNodeType, MaritalNodeType, MaritalData } from '../types/PersonNodeType';
 import { ParentChildEdge } from './ui/ParentChildEdge';
 import { useHandlePersonNodeClick } from '@/hooks/useHandlePersonNodeClick';
-import { background, Box, Button } from '@chakra-ui/react';
+import { background, Box, Button, useToast } from '@chakra-ui/react';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
+import { on } from 'events';
 
 interface FamilyTreeWrapperProps {
   openModal: () => void;
@@ -31,7 +32,7 @@ interface FamilyTreeWrapperProps {
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void;
-  onUpdate: (id: string) => void;
+  onUpdate: (id: string) => Promise<boolean | undefined>;
 }
 
 export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
@@ -44,6 +45,7 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
   const nodeTypes = useMemo(() => ({ person: PersonNode, marital: MaritalNode }), []);
   const edgeTypes = useMemo(() => ({ parentChild: ParentChildEdge }), []);
   const handleNodeClick = useHandlePersonNodeClick(openModal, updateFamilyTree);
+  const toast = useToast();
   useEffect(() => {
     if (!nodes.length) return;
     setWholeNodes(nodes as (PersonNodeType | MaritalNodeType)[]);
@@ -51,9 +53,27 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
     setSelectedNode(wholeNodes[0] as PersonNodeType);
   }, []);
 
-  const handleSaveButtonClick = () => {
+  const handleSaveButtonClick = async () => {
     if (projectId) {
-      onUpdate(projectId);
+      const result = await onUpdate(projectId);
+      if (result) {
+        toast({
+          title: "保存が成功しました",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        })
+      } else  {
+        toast({
+          title: "保存が失敗しました",
+          description: "家系図の更新中にエラーが発生しました。もう一度お試しください。",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      }
     } else {
       openModal();
     }
