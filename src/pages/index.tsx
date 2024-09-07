@@ -5,11 +5,13 @@ import {
   Center,
   ChakraBaseProvider,
   ChakraProvider,
+  CircularProgress,
   Container,
   Flex,
   Heading,
   Spinner,
   Text,
+  VStack,
   extendTheme,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
@@ -58,7 +60,10 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
     <ChakraProvider theme={theme}>
       <Center minHeight="100dvh" p={10}>
         {loading ? (
-          <Spinner size="lg" />
+          <VStack>
+            <CircularProgress isIndeterminate color="blue.600" />
+            <Text mt={3}>家系図を読み込んでいます。</Text>
+          </VStack>
         ) : (
         <Container maxW="3xl" bg="white" p={10} borderRadius="md" shadow="md" position="relative">
           <Box>
