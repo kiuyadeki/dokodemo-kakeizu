@@ -10,6 +10,7 @@ import { formatFullName } from '../../helpers/formatFullName';
 import { memo, useEffect, useState } from 'react';
 import { PersonNodeType } from '@/types/PersonNodeType';
 import { Text } from '@chakra-ui/react';
+import { getS3ImageUrl } from '@/utils/getS3ImageUrl';
 
 interface StyledBoxProps {
   isSelected: boolean;
@@ -131,6 +132,17 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
   const isSelected = id === selectedNode?.id;
   const fullName = formatFullName({ firstName, lastName });
   const formattedBirthDay = birthDay ? new Date(birthDay).toLocaleDateString("ja-JP", {year: 'numeric', month: '2-digit', day: '2-digit'}) : '';
+  const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (profilePictureURL) {
+      getS3ImageUrl(profilePictureURL).then((sourceUrl) => {
+        console.log('existingSourceUrl', sourceUrl);
+        setImageUrl(sourceUrl);
+      });
+    } else {
+      console.log('no profilePictureURL');
+    }
+  }, [profilePictureURL]);
 
   return (
     <>
@@ -154,8 +166,8 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
             <StyledBox isSelected={isSelected}>
               <IconBox isSelected={isSelected} gender={data.gender}>
                 <IconInner>
-                  {profilePictureURL ? (
-                    <CustomProfileIcon src={profilePictureURL} />
+                  {imageUrl ? (
+                    <CustomProfileIcon src={imageUrl} />
                   ) : (
                     <DefaultProfileIcon>
                       <BiSolidUser size={100} color="#ffffff" />

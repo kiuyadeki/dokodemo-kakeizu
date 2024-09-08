@@ -1,8 +1,9 @@
 import { putProfilePictureToS3 } from '@/utils/putProfilePictureToS3';
+import { getUrl } from '@aws-amplify/storage';
 import { ChangeEvent, useState } from 'react';
 
 export const useProfilePictureUpload = () => {
-  const [uploadedImage, setUploadedImage] = useState<string | undefined>(undefined);
+  const [s3ImagePath, setS3ImagePath] = useState<string | undefined>(undefined);
 
   const handleImageChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -17,26 +18,16 @@ export const useProfilePictureUpload = () => {
         return;
       } else {
         putProfilePictureToS3(file)
-          .then((imageUrl) => {
-            setUploadedImage(imageUrl);
-            console.log('imageUrl', imageUrl);
+          .then((imagePath) => {
+            setS3ImagePath(imagePath);
           })
           .catch((error) => {
             console.error(error);
-            setUploadedImage(undefined);
+            setS3ImagePath(undefined);
           });
-
-        // const reader = new FileReader();
-        // reader.onload = readEvent => {
-        //   const result = readEvent.target?.result;
-        //   if (typeof result === 'string') {
-        //     setUploadedImage(result);
-        //   }
-        // };
-        // reader.readAsDataURL(file);
       }
     }
   };
 
-  return { uploadedImage, handleImageChange };
+  return { s3ImagePath, handleImageChange };
 };
