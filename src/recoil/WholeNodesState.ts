@@ -6,9 +6,7 @@ export const initialNode: PersonNodeType | MaritalNodeType = {
   type: 'person',
   data: {
     label: 'Node',
-    birthYear: undefined,
-    birthMonth: undefined,
-    birthDate: undefined,
+    birthDay: new Date(),
     gender: undefined,
     profilePictureURL: undefined,
     parents: [],

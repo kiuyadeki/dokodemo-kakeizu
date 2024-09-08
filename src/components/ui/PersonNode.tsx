@@ -126,11 +126,11 @@ const InformationBox = styled.div`
 
 export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
   const { id, data } = props;
-  const { birthYear, birthMonth, birthDate, firstName, lastName, profilePictureURL } = data;
+  const { birthDay, firstName, lastName, profilePictureURL } = data;
   const selectedNode = useRecoilValue(selectedNodeState);
   const isSelected = id === selectedNode?.id;
   const fullName = formatFullName({ firstName, lastName });
-  const birthDay = formatBirthDay({ birthYear, birthMonth, birthDate });
+  const formattedBirthDay = birthDay ? new Date(birthDay).toLocaleDateString("ja-JP", {year: 'numeric', month: '2-digit', day: '2-digit'}) : '';
 
   return (
     <>
@@ -167,7 +167,7 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
               <InformationBox>
                 <Text>{id}</Text>
                 <Text>{fullName}</Text>
-                <Text>{birthDay}</Text>
+                <Text>{formattedBirthDay}</Text>
                 <Text>{data.gender}</Text>
               </InformationBox>
             </StyledBox>

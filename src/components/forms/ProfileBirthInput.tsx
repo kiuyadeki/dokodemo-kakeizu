@@ -1,51 +1,45 @@
-import { FormControl, FormLabel, HStack, Select } from '@chakra-ui/react';
-import { FC, memo } from 'react';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { FormControl, FormLabel, HStack, Select, Input } from '@chakra-ui/react';
+import { FC, memo, useState } from 'react';
+import { Control, Controller, FieldValues, UseFormRegister } from 'react-hook-form';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import ja from 'date-fns/locale/ja';
+import { ProfileEditorInputs } from '@/types/profileEditorInputs';
 
 interface BirthInputProps {
-  yearValue: string;
-  monthValue: string;
-  dateValue: string;
+  birthValue: string;
   register: UseFormRegister<FieldValues>;
+  control: Control<ProfileEditorInputs>;
 }
 
-export const ProfileBirthInput: FC<BirthInputProps> = memo(({ register, yearValue, monthValue, dateValue }) => {
+export const ProfileBirthInput: FC<BirthInputProps> = memo(({ register, birthValue, control }) => {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => 1900 + i);
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
   const dates = Array.from({ length: 31 }, (_, i) => i + 1);
 
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  registerLocale('ja', ja as any);
+
   return (
     <>
       <FormLabel mt={6}>生年月日</FormLabel>
       <HStack>
-        <FormControl>
-          <Select placeholder="年" {...register(yearValue)}>
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <Select placeholder="月" {...register(monthValue)}>
-            {months.map((month) => (
-              <option key={month} value={month}>
-                {month}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <Select placeholder="日" {...register(dateValue)}>
-            {dates.map((date) => (
-              <option key={date} value={date}>
-                {date}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
+        <Controller 
+          control={control} 
+          name='birthDay'
+          render={({ field }) => (
+            <DatePicker 
+              locale='ja'
+              selected={field.value}
+              onChange={(date) => field.onChange(date)} 
+              dateFormat={'yyyy/MM/dd'}
+              calendarStartDay={1}
+              customInput={<Input />}
+            />
+          )}
+        />
+
       </HStack>
     </>
   );
