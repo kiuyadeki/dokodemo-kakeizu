@@ -10,6 +10,7 @@ import { formatFullName } from '../../helpers/formatFullName';
 import { memo, useEffect, useState } from 'react';
 import { PersonNodeType } from '@/types/PersonNodeType';
 import { Text } from '@chakra-ui/react';
+import { getS3ImageUrl } from '@/utils/getS3ImageUrl';
 
 interface StyledBoxProps {
   isSelected: boolean;
@@ -126,11 +127,22 @@ const InformationBox = styled.div`
 
 export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
   const { id, data } = props;
-  const { birthYear, birthMonth, birthDate, firstName, lastName, profilePictureURL } = data;
+  const { birthDay, firstName, lastName, profilePictureURL } = data;
   const selectedNode = useRecoilValue(selectedNodeState);
   const isSelected = id === selectedNode?.id;
   const fullName = formatFullName({ firstName, lastName });
-  const birthDay = formatBirthDay({ birthYear, birthMonth, birthDate });
+  const formattedBirthDay = birthDay ? new Date(birthDay).toLocaleDateString("ja-JP", {year: 'numeric', month: '2-digit', day: '2-digit'}) : '';
+  const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (profilePictureURL) {
+      getS3ImageUrl(profilePictureURL).then((sourceUrl) => {
+        console.log('existingSourceUrl', sourceUrl);
+        setImageUrl(sourceUrl);
+      });
+    } else {
+      console.log('no profilePictureURL');
+    }
+  }, [profilePictureURL]);
 
   return (
     <>
@@ -154,8 +166,8 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
             <StyledBox isSelected={isSelected}>
               <IconBox isSelected={isSelected} gender={data.gender}>
                 <IconInner>
-                  {profilePictureURL ? (
-                    <CustomProfileIcon src={profilePictureURL} />
+                  {imageUrl ? (
+                    <CustomProfileIcon src={imageUrl} />
                   ) : (
                     <DefaultProfileIcon>
                       <BiSolidUser size={100} color="#ffffff" />
@@ -167,7 +179,7 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
               <InformationBox>
                 <Text>{id}</Text>
                 <Text>{fullName}</Text>
-                <Text>{birthDay}</Text>
+                <Text>{formattedBirthDay}</Text>
                 <Text>{data.gender}</Text>
               </InformationBox>
             </StyledBox>

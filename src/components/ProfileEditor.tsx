@@ -28,6 +28,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
     register,
     formState: { errors, isSubmitting },
     setValue,
+    control,
   } = useForm<ProfileEditorInputs>();
   const wholeNodes = useRecoilValue(wholeNodesState);
   const wholeEdges = useRecoilValue(wholeEdgesState);
@@ -48,12 +49,10 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
 
   useEffect(() => {
     if (isPersonNodeType(selectedNode)) {
-      const { lastName, firstName, birthYear, birthMonth, birthDate, gender, profilePictureURL } = selectedNode.data;
+      const { lastName, firstName, birthDay, gender, profilePictureURL } = selectedNode.data;
       setValue('lastName', lastName || '');
       setValue('firstName', firstName || '');
-      setValue('birthYear', birthYear || new Date().getFullYear());
-      setValue('birthMonth', birthMonth || 1);
-      setValue('birthDate', birthDate || 1);
+      setValue('birthDay', birthDay || new Date());
       setValue('gender', gender || '');
       setValue('profilePictureURL', profilePictureURL || '');
     }
@@ -71,7 +70,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
         />
       </HStack>
       <ProfileGenderInput register={register} genderValue="gender" />
-      <ProfileBirthInput register={register} yearValue="birthYear" monthValue="birthMonth" dateValue="birthDate" />
+      <ProfileBirthInput register={register} birthValue="birthDay" control={control} />
       <ProfileMediaInput
         register={register}
         setValue={setValue}

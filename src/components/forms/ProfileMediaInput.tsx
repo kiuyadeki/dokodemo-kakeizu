@@ -1,6 +1,7 @@
 import { useProfilePictureUpload } from '@/hooks/useProfilePictureChange';
 import { PersonNodeType } from '@/types/PersonNodeType';
 import { ProfileEditorInputs } from '@/types/profileEditorInputs';
+import { getS3ImageUrl } from '@/utils/getS3ImageUrl';
 import { Button, FormControl, FormLabel, Image, Input } from '@chakra-ui/react';
 import { FC, memo, useEffect, useRef, useState } from 'react';
 import { FieldValues, set, UseFormRegister, UseFormSetValue } from 'react-hook-form';
@@ -13,17 +14,31 @@ interface MediaInputProps {
 }
 
 export const ProfileMediaInput: FC<MediaInputProps> = memo(({ register, setValue, mediaValue, selectedNode }) => {
-  const { uploadedImage, handleImageChange } = useProfilePictureUpload();
-  const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
+  const { s3ImagePath, handleImageChange } = useProfilePictureUpload();
+  const [ imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   const inputRef = useRef<HTMLInputElement>(null);
   const existingProfilePictureURL = selectedNode?.data.profilePictureURL;
+  const [ existingImageUrl, setExistingImageUrl ] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if (uploadedImage) {
-      setPreviewImageURL(uploadedImage);
-      setValue('profilePictureURL', uploadedImage);
+    if (s3ImagePath) {
+      setValue('profilePictureURL', s3ImagePath);
+      getS3ImageUrl(s3ImagePath).then((sourceUrl) => {
+        console.log('sourceUrl', sourceUrl);
+        setImageUrl(sourceUrl);
+      });
     }
-  }, [uploadedImage]);
+  }, [s3ImagePath]);
+
+  useEffect(() => {
+    if (existingProfilePictureURL) {
+      console.log('existingProfilePictureURL', existingProfilePictureURL);
+      getS3ImageUrl(existingProfilePictureURL).then((sourceUrl) => {
+        console.log('existingSourceUrl', sourceUrl);
+        setExistingImageUrl(sourceUrl);
+      });
+    }
+  }, []);
 
   const onFileInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     await handleImageChange(event);
@@ -45,12 +60,10 @@ export const ProfileMediaInput: FC<MediaInputProps> = memo(({ register, setValue
         hidden
         ref={inputRef}
       />
-      <Button type="button" onClick={handleButtonClick}>
-        {previewImageURL ? '写真を変更' : '写真を選択'}
-      </Button>
-      {uploadedImage && <Image mt={6} src={uploadedImage} alt="アップロードされた画像" />}
-      {!uploadedImage && existingProfilePictureURL && (
-        <Image mt={6} src={existingProfilePictureURL} alt="アップロードされた画像" />
+      <Button type="button" onClick={handleButtonClick}>写真を選択</Button>
+      {imageUrl && <Image mt={6} src={imageUrl} alt="アップロードされた画像" />}
+      {!imageUrl && existingImageUrl && (
+        <Image mt={6} src={existingImageUrl} alt="アップロードされた画像" />
       )}
     </FormControl>
   );

@@ -7,10 +7,10 @@ export interface BirthInfo {
 }
 
 export interface FamilyInfo {
+  birthDay: Date;
   firstName?: string;
   lastName?: string;
   gender?: string;
-  // profilePicture?: File;
   profilePictureURL?: string;
   label: string;
   selected: boolean;

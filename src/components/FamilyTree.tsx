@@ -8,7 +8,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ProfileEditorState } from '@/recoil/profileEditorState';
 import { useInitFamilyTree } from '@/hooks/useInitFamilyTree';
 import { useGetProjectId } from '@/hooks/useGetProjectId';
-import { Center, Spinner } from '@chakra-ui/react';
+import { Center, CircularProgress, CircularProgressLabel, HStack, Spinner, Text, VStack } from '@chakra-ui/react';
 
 export const FamilyTree: FC = memo(function FamilyTreeComponent() {
   const setShowProfileEditor = useSetRecoilState(ProfileEditorState);
@@ -22,7 +22,10 @@ export const FamilyTree: FC = memo(function FamilyTreeComponent() {
     <>
       {isLoading ? (
         <Center minHeight="100vh">
-          <Spinner size="lg" />
+          <VStack>
+            <CircularProgress isIndeterminate color="blue.600" />
+            <Text mt={3}>家系図を描画しています。</Text>
+          </VStack>
         </Center>
       ) : (
         <FamilyTreeWrapper

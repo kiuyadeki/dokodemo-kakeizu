@@ -35,10 +35,11 @@ export const useInitFamilyTree = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(wholeNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(wholeEdges);
 
-  const onUpdate = (id: string) => {
+  const onUpdate = async (id: string) => {
     if (reactFlowInstance) {
       const tree = reactFlowInstance.toObject();
-      updateFamilyTreeData(JSON.stringify(tree), id);
+      const result = await updateFamilyTreeData(JSON.stringify(tree), id);
+      return result.success;
     }
   };
 
