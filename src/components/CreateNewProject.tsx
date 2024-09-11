@@ -27,14 +27,14 @@ export const CreateNewProject: FC = memo(function CreateNewProjectComponent() {
   const projectName = watch('projectName');
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const onSubmit = handleSubmit( async (data) => {
+  const onSubmit = handleSubmit(async (data) => {
     setIsLoading(true);
     try {
       const res = await createNewFamilyTree(initialFamilyTree, data.projectName);
       if (res) {
         console.log('create family tree', res.id);
         await router.push(`/app/${res.id}`);
-      } 
+      }
     } finally {
       setIsLoading(false);
     }
@@ -55,7 +55,14 @@ export const CreateNewProject: FC = memo(function CreateNewProjectComponent() {
           {errors.projectName && <FormErrorMessage>{errors.projectName.message}</FormErrorMessage>}
         </FormControl>
         <Flex justify="flex-start">
-          <Button paddingInline="40px" type="submit" colorScheme="blue" isLoading={isLoading} isDisabled={!projectName} loadingText='作成しています'>
+          <Button
+            paddingInline="40px"
+            type="submit"
+            colorScheme="blue"
+            isLoading={isLoading}
+            isDisabled={!projectName}
+            loadingText="作成しています"
+          >
             作成する
           </Button>
         </Flex>

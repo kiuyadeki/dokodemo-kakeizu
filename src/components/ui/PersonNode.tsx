@@ -131,7 +131,9 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
   const selectedNode = useRecoilValue(selectedNodeState);
   const isSelected = id === selectedNode?.id;
   const fullName = formatFullName({ firstName, lastName });
-  const formattedBirthDay = birthDay ? new Date(birthDay).toLocaleDateString("ja-JP", {year: 'numeric', month: '2-digit', day: '2-digit'}) : '';
+  const formattedBirthDay = birthDay
+    ? new Date(birthDay).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    : '';
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   useEffect(() => {
     if (profilePictureURL) {
