@@ -85,7 +85,8 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
 
   const styles = {
     background: '#E7E1C5',
-    backgroundImage: 'url(/bg_noise.png)',
+    backgroundImage: 'url(/bg_noise.jpg)',
+    backgroundSize: '400px 300px',
   };
 
   return (

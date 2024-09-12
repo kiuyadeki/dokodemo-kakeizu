@@ -49,9 +49,9 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
 
   useEffect(() => {
     if (isPersonNodeType(selectedNode)) {
-      const { lastName, firstName, birthDay, gender, profilePictureURL } = selectedNode.data;
-      setValue('lastName', lastName || '');
-      setValue('firstName', firstName || '');
+      const { familyName, givenName, birthDay, gender, profilePictureURL } = selectedNode.data;
+      setValue('familyName', familyName || '');
+      setValue('givenName', givenName || '');
       setValue('birthDay', birthDay || new Date());
       setValue('gender', gender || '');
       setValue('profilePictureURL', profilePictureURL || '');
@@ -61,15 +61,20 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <HStack>
-        <ProfileTextInput textValue="lastName" label="姓" register={register} errorMessage={errors.lastName?.message} />
         <ProfileTextInput
-          textValue="firstName"
+          textValue="familyName"
+          label="姓"
+          register={register}
+          errorMessage={errors.familyName?.message}
+        />
+        <ProfileTextInput
+          textValue="givenName"
           label="名"
           register={register}
-          errorMessage={errors.firstName?.message}
+          errorMessage={errors.givenName?.message}
         />
       </HStack>
-      <ProfileGenderInput register={register} genderValue="gender" />
+      <ProfileGenderInput control={control} genderValue="gender" defaultGender={selectedNode?.data?.gender || ''} />
       <ProfileBirthInput register={register} birthValue="birthDay" control={control} />
       <ProfileMediaInput
         register={register}

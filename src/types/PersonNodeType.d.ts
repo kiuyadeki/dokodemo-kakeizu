@@ -8,8 +8,8 @@ export interface BirthInfo {
 
 export interface FamilyInfo {
   birthDay: Date;
-  firstName?: string;
-  lastName?: string;
+  givenName?: string;
+  familyName?: string;
   gender?: string;
   profilePictureURL?: string;
   label: string;
