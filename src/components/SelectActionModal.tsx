@@ -13,6 +13,7 @@ import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 import { Edge } from 'reactflow';
 import { addParentToSelectedNode } from '@/utils/addParentToSelectedNode';
 import { addSpouseToSelectedNode } from '@/utils/addSpouseToSelectedNode';
+import { deleteNode } from '@/utils/deleteNode';
 
 type SelectActionModalProps = {
   closeModal: () => void;
@@ -183,6 +184,19 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
                 }}
               >
                 配偶者を追加
+              </Button>
+              <Button
+                isDisabled={hasSpouse}
+                onClick={() => {
+                  deleteNode(
+                    wholeNodes,
+                    wholeEdges,
+                    selectedNode
+                  );
+                  closeModal();
+                }}
+              >
+                削除
               </Button>
               <Button
                 onClick={() => {
