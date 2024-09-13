@@ -1,6 +1,6 @@
 export type ProfileEditorInputs = {
-  firstName?: string;
-  lastName?: string;
+  givenName?: string;
+  familyName?: string;
   gender?: string;
   birthDay?: Date;
   profilePictureURL?: string;

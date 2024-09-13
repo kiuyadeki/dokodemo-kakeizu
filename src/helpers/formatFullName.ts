@@ -1,12 +1,12 @@
 interface NameData {
-  firstName?: string;
-  lastName?: string;
+  familyName?: string;
+  givenName?: string;
 }
 
 export function formatFullName(data: NameData): string {
-  const { firstName, lastName } = data;
-  if (!firstName && !lastName) return '';
-  if (!firstName) return `${lastName}`;
-  if (!lastName) return `${firstName}`;
-  return `${firstName} ${lastName}`;
+  const { familyName, givenName } = data;
+  if (!familyName && !givenName) return '';
+  if (!familyName) return `${givenName}`;
+  if (!givenName) return `${familyName}`;
+  return `${familyName} ${givenName}`;
 }

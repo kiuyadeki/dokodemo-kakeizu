@@ -58,20 +58,20 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
       const result = await onUpdate(projectId);
       if (result) {
         toast({
-          title: "保存が成功しました",
-          status: "success",
+          title: '保存が成功しました',
+          status: 'success',
           duration: 3000,
           isClosable: true,
-          position: "top",
-        })
-      } else  {
+          position: 'top',
+        });
+      } else {
         toast({
-          title: "保存が失敗しました",
-          description: "家系図の更新中にエラーが発生しました。もう一度お試しください。",
-          status: "error",
+          title: '保存が失敗しました',
+          description: '家系図の更新中にエラーが発生しました。もう一度お試しください。',
+          status: 'error',
           duration: 3000,
           isClosable: true,
-          position: "top",
+          position: 'top',
         });
       }
     } else {
@@ -85,8 +85,9 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
 
   const styles = {
     background: '#E7E1C5',
-    backgroundImage: 'url(/bg_noise.png)',
-  }
+    backgroundImage: 'url(/bg_noise.jpg)',
+    backgroundSize: '400px 300px',
+  };
 
   return (
     <Box w="100vw" h="100vh" className="wrapper" ref={reactFlowWrapper}>
@@ -109,8 +110,7 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
         fitViewOptions={{ padding: 20 }}
         style={styles}
         proOptions={{ hideAttribution: true }}
-      >
-      </ReactFlow>
+      ></ReactFlow>
     </Box>
   );
 };

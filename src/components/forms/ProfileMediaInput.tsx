@@ -15,10 +15,10 @@ interface MediaInputProps {
 
 export const ProfileMediaInput: FC<MediaInputProps> = memo(({ register, setValue, mediaValue, selectedNode }) => {
   const { s3ImagePath, handleImageChange } = useProfilePictureUpload();
-  const [ imageUrl, setImageUrl] = useState<string | undefined>(undefined);
+  const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   const inputRef = useRef<HTMLInputElement>(null);
   const existingProfilePictureURL = selectedNode?.data.profilePictureURL;
-  const [ existingImageUrl, setExistingImageUrl ] = useState<string | undefined>(undefined);
+  const [existingImageUrl, setExistingImageUrl] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (s3ImagePath) {
@@ -60,11 +60,11 @@ export const ProfileMediaInput: FC<MediaInputProps> = memo(({ register, setValue
         hidden
         ref={inputRef}
       />
-      <Button type="button" onClick={handleButtonClick}>写真を選択</Button>
+      <Button type="button" onClick={handleButtonClick}>
+        写真を選択
+      </Button>
       {imageUrl && <Image mt={6} src={imageUrl} alt="アップロードされた画像" />}
-      {!imageUrl && existingImageUrl && (
-        <Image mt={6} src={existingImageUrl} alt="アップロードされた画像" />
-      )}
+      {!imageUrl && existingImageUrl && <Image mt={6} src={existingImageUrl} alt="アップロードされた画像" />}
     </FormControl>
   );
 });

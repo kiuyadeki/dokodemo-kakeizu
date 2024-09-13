@@ -72,14 +72,14 @@ export const useInitFamilyTree = () => {
   useEffect(() => {
     if (!isLoadingId && formatedFamilyTreeData.nodes.length) {
       setNodes(formatedFamilyTreeData.nodes);
-      setWholeNodes(formatedFamilyTreeData.nodes)
+      setWholeNodes(formatedFamilyTreeData.nodes);
       setEdges(formatedFamilyTreeData.edges);
       setWholeEdges(formatedFamilyTreeData.edges);
       reactFlowInstance.setViewport(formatedFamilyTreeData.viewport);
       setIsLoading(false);
     } else if (!isLoadingId && !formatedFamilyTreeData.nodes.length) {
       setNodes([initialNode]);
-      setWholeNodes([initialNode])
+      setWholeNodes([initialNode]);
       setEdges([]);
       setWholeEdges([]);
       setIsLoading(false);

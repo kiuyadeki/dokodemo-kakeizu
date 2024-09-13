@@ -127,11 +127,13 @@ const InformationBox = styled.div`
 
 export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
   const { id, data } = props;
-  const { birthDay, firstName, lastName, profilePictureURL } = data;
+  const { birthDay, givenName, familyName, profilePictureURL } = data;
   const selectedNode = useRecoilValue(selectedNodeState);
   const isSelected = id === selectedNode?.id;
-  const fullName = formatFullName({ firstName, lastName });
-  const formattedBirthDay = birthDay ? new Date(birthDay).toLocaleDateString("ja-JP", {year: 'numeric', month: '2-digit', day: '2-digit'}) : '';
+  const fullName = formatFullName({ familyName, givenName });
+  const formattedBirthDay = birthDay
+    ? new Date(birthDay).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    : '';
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   useEffect(() => {
     if (profilePictureURL) {
@@ -177,10 +179,8 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
               </IconBox>
 
               <InformationBox>
-                <Text>{id}</Text>
                 <Text>{fullName}</Text>
                 <Text>{formattedBirthDay}</Text>
-                <Text>{data.gender}</Text>
               </InformationBox>
             </StyledBox>
           </motion.div>

@@ -25,21 +25,20 @@ export const ProfileBirthInput: FC<BirthInputProps> = memo(({ register, birthVal
     <>
       <FormLabel mt={6}>生年月日</FormLabel>
       <HStack>
-        <Controller 
-          control={control} 
-          name='birthDay'
+        <Controller
+          control={control}
+          name="birthDay"
           render={({ field }) => (
-            <DatePicker 
-              locale='ja'
+            <DatePicker
+              locale="ja"
               selected={field.value}
-              onChange={(date) => field.onChange(date)} 
+              onChange={(date) => field.onChange(date)}
               dateFormat={'yyyy/MM/dd'}
               calendarStartDay={1}
               customInput={<Input />}
             />
           )}
         />
-
       </HStack>
     </>
   );
