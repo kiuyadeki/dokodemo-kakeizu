@@ -159,7 +159,7 @@ const calculateChildNodePosition = (
       const childNode = wholeNodes.find((n) => n.id === childId) as PersonNodeType;
       if (childNode) {
         calculateChildNodePosition(wholeNodes, childNode, level + 1, cumulativeOffset);
-        if (childNode?.data?.children?.length) {
+        if (childNode?.data?.children?.length || childNode?.data?.spouse?.length) {
           cumulativeOffset += childNode.data.descendantsWidth;
         } else {
           cumulativeOffset += BASE_SIBLINGS_SPACING;
