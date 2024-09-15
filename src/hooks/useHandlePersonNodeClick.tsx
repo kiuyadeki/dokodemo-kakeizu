@@ -6,7 +6,6 @@ import { useSetRecoilState } from 'recoil';
 
 export const useHandlePersonNodeClick = (
   openModal: () => void,
-  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void
 ) => {
   const setSelectedNode = useSetRecoilState(selectedNodeState);
 

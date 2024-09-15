@@ -49,7 +49,7 @@ export const useInitFamilyTree = () => {
 
     if (!calculatedWholeNodes) return;
     setWholeNodes(calculatedWholeNodes);
-    console.log('calculatedWholeNodes', calculatedWholeNodes);
+    // console.log('calculatedWholeNodes', calculatedWholeNodes);
     setWholeEdges(edges);
     const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(
       calculatedWholeNodes,

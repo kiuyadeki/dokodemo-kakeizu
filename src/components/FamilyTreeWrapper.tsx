@@ -44,7 +44,7 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
   const nodeTypes = useMemo(() => ({ person: PersonNode, marital: MaritalNode }), []);
   const edgeTypes = useMemo(() => ({ parentChild: ParentChildEdge }), []);
-  const handleNodeClick = useHandlePersonNodeClick(openModal, updateFamilyTree);
+  const handleNodeClick = useHandlePersonNodeClick(openModal);
   const toast = useToast();
   useEffect(() => {
     if (!nodes.length) return;
@@ -74,8 +74,6 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
           position: 'top',
         });
       }
-    } else {
-      openModal();
     }
   };
 
