@@ -27,17 +27,15 @@ export const deleteNode = (
       const updatedEdgeList = edgesCopy.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id);
       return { nodeList: newUpdatedNodeList, edgeList: updatedEdgeList };
     } else if (outgoingEdges[0].sourceHandle === ("personSourceLeft" || "personSourceRight")) {
-      const updatedNodeList = nodesCopy.filter((node) => node.id !== selectedNode.id);
+      const updatedNodeList = nodesCopy.filter((node) => (node.id !== selectedNode.id && selectedNode.data.maritalNodeId !== node.id));
       const newUpdatedNodeList = updatedNodeList.map((node) => {
         if (isPersonNodeType(node) && selectedNode.data.spouse.includes(node.id)) {
           const filteredSpouse = node.data.spouse.filter((spouse) => spouse !== selectedNode.id);
-          return { ...node, data: { ...node.data, spouse: filteredSpouse } };
-        } else if (!isPersonNodeType(node) && selectedNode.data.maritalNodeId === node.id) {
-          return;
+          return { ...node, data: { ...node.data, spouse: filteredSpouse, maritalPosition: undefined, maritalNodeId: undefined } };
         }
         return node;
       });
-      const updatedEdgeList = edgesCopy.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id);
+      const updatedEdgeList = edgesCopy.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.data.maritalNodeId);
       return { nodeList: newUpdatedNodeList, edgeList: updatedEdgeList };
     }
   }
