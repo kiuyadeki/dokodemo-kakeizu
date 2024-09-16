@@ -290,6 +290,7 @@ export function calculateNodesPosition(
   const wholeNodesCopy = structuredClone(wholeNodes);
   if (!wholeNodesCopy) return;
   const selectedNodesCopy = wholeNodesCopy.find((node) => node.id === selectedNode.id);
+  console.log('calculateNodesPosition', selectedNodesCopy);
   if (!selectedNodesCopy || !isPersonNodeType(selectedNodesCopy)) return;
   setDescendants(wholeNodesCopy);
   setAncestors(wholeNodesCopy);

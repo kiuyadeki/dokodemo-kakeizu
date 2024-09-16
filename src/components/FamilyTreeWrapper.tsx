@@ -31,7 +31,7 @@ interface FamilyTreeWrapperProps {
   edges: Edge[];
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
-  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void;
+  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[], selectedNode: PersonNodeType | undefined) => void,
   onUpdate: (id: string) => Promise<boolean | undefined>;
 }
 
@@ -44,7 +44,7 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
   const nodeTypes = useMemo(() => ({ person: PersonNode, marital: MaritalNode }), []);
   const edgeTypes = useMemo(() => ({ parentChild: ParentChildEdge }), []);
-  const handleNodeClick = useHandlePersonNodeClick(openModal);
+  const handleNodeClick = useHandlePersonNodeClick(openModal, updateFamilyTree);
   const toast = useToast();
   useEffect(() => {
     if (!nodes.length) return;
@@ -77,10 +77,6 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
     }
   };
 
-  useEffect(() => {
-    updateFamilyTree(wholeNodes, wholeEdges);
-  }, [selectedNode]);
-
   const styles = {
     background: '#E7E1C5',
     backgroundImage: 'url(/bg_noise.jpg)',
@@ -101,7 +97,6 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
         onEdgesChange={onEdgesChange}
         onNodeClick={(e, node) => {
           handleNodeClick(node, selectedNode);
-          updateFamilyTree(wholeNodes, wholeEdges);
         }}
         nodesDraggable={false}
         fitView

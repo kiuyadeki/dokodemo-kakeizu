@@ -179,6 +179,7 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
               </IconBox>
 
               <InformationBox>
+                <Text>{id}</Text>
                 <Text>{fullName}</Text>
                 <Text>{formattedBirthDay}</Text>
               </InformationBox>

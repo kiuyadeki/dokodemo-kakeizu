@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useReducer, useState } from 'react';
+import { FC, memo, useEffect, useReducer, useRef, useState } from 'react';
 import { ProfileEditor } from './ProfileEditor';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
@@ -8,17 +8,18 @@ import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { IoCloseOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 import { ProfileEditorState } from '@/recoil/profileEditorState';
-import { Button, Flex, Grid, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+import { Button, Flex, Grid, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 import { Edge } from 'reactflow';
 import { addParentToSelectedNode } from '@/utils/addParentToSelectedNode';
 import { addSpouseToSelectedNode } from '@/utils/addSpouseToSelectedNode';
 import { deleteNode } from '@/utils/deleteNode';
 import { AlertDialogButton } from './ui/AlertDialogButton';
+import { on } from 'events';
 
 type SelectActionModalProps = {
   closeModal: () => void;
-  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void;
+  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[], selectedNode: PersonNodeType | undefined) => void,
 };
 
 export const SelectActionModal: FC<SelectActionModalProps> = memo(function SelectActionModalComponent(props) {
@@ -27,6 +28,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const wholeNodes = useRecoilValue(wholeNodesState);
   const wholeEdges = useRecoilValue(wholeEdgesState);
   const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
+  const {isOpen, onOpen, onClose: onCloseAlert } = useDisclosure();
 
   const updateNodesAndEdges = (AddedNode: 'parent' | 'child' | 'spouse') => {
     switch (AddedNode) {
@@ -36,7 +38,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
           wholeEdges,
           selectedNode
         );
-        updateFamilyTree(nodesCopyParent, edgesCopyParent);
+        updateFamilyTree(nodesCopyParent, edgesCopyParent, selectedNode);
         break;
       case 'child':
         const { nodesCopy: nodesCopyChild, edgesCopy: edgesCopyChild } = addChildNodeToSelectedNode(
@@ -44,7 +46,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
           wholeEdges,
           selectedNode
         );
-        updateFamilyTree(nodesCopyChild, edgesCopyChild);
+        updateFamilyTree(nodesCopyChild, edgesCopyChild, selectedNode);
         break;
       case 'spouse':
         const { nodesCopy: nodesCopySpouse, edgesCopy: edgesCopySpouse } = addSpouseToSelectedNode(
@@ -52,7 +54,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
           wholeEdges,
           selectedNode
         );
-        updateFamilyTree(nodesCopySpouse, edgesCopySpouse);
+        updateFamilyTree(nodesCopySpouse, edgesCopySpouse, selectedNode);
         break;
       default:
         break;
@@ -113,7 +115,12 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
             >
               配偶者を追加
             </Button>
-            <AlertDialogButton />
+            <Button
+              onClick={onOpen}
+              >
+              削除
+            </Button>
+            <AlertDialogButton isOpen={isOpen} onCloseAlert={onCloseAlert} closeModal={closeModal} updateFamilyTree={updateFamilyTree} />
             <Button
               onClick={() => {
                 displayProfileEditor();

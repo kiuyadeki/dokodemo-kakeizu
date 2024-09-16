@@ -17,7 +17,7 @@ import { updateNodeData } from '@/utils/updateNodeData';
 
 type ProfileEditorProps = {
   onClose: () => void;
-  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void;
+  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[], selectedNode: PersonNodeType | undefined) => void,
 };
 
 export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditorComponent(props) {
@@ -42,7 +42,7 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
       const updatedNodesCopy = wholeNodesCopy.map((node) => {
         return node.id === selectedNode.id ? updatedNode : node;
       });
-      updateFamilyTree(updatedNodesCopy, wholeEdgesCopy);
+      updateFamilyTree(updatedNodesCopy, wholeEdgesCopy, selectedNode);
     }
     onClose();
   };

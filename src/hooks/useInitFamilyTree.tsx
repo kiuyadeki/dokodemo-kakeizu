@@ -18,7 +18,6 @@ export const useInitFamilyTree = () => {
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const selectedNode = useRecoilValue(selectedNodeState);
   const { zoom } = useViewport();
   const reactFlowInstance = useReactFlow();
   const { familyTreeData } = useFetchFamilyTreeData(projectId);
@@ -43,13 +42,13 @@ export const useInitFamilyTree = () => {
     }
   };
 
-  const updateFamilyTree = (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => {
+  const updateFamilyTree = (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[], selectedNode: PersonNodeType | undefined) => {
     if (!selectedNode) return;
     const calculatedWholeNodes = calculateNodesPosition(nodes, selectedNode);
 
     if (!calculatedWholeNodes) return;
     setWholeNodes(calculatedWholeNodes);
-    // console.log('calculatedWholeNodes', calculatedWholeNodes);
+    console.log('calculatedWholeNodes', calculatedWholeNodes);
     setWholeEdges(edges);
     const { directLineageNodes, directLineageEdges } = filterDirectLineagesNodes(
       calculatedWholeNodes,
