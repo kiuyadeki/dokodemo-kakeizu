@@ -33,10 +33,15 @@ export const AlertDialogButton: FC<AlertModalProps> = memo((props) => {
     setUpdatedNodes(nodeList);
     setUpdatedEdges(edgeList);
 
-    const parentNode = wholeNodes.find((node) => node.id === selectedNode?.data.parents[0]);
-    if (isPersonNodeType(parentNode)) {
-      setSelectedNode(parentNode);
-      updateFamilyTree(nodeList, edgeList, parentNode);
+    let directNode: PersonNodeType | MaritalNodeType | undefined;
+    if (selectedNode?.data.parents.length === 0) {
+      directNode = wholeNodes.find((node) => node.id === selectedNode?.data.spouse[0]);
+    } else {
+      directNode = wholeNodes.find((node) => node.id === selectedNode?.data.parents[0]);
+    }
+    if (isPersonNodeType(directNode)) {
+      setSelectedNode(directNode);
+      updateFamilyTree(nodeList, edgeList, directNode);
     }
     onCloseAlert();
     closeModal();
