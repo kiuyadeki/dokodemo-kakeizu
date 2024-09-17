@@ -37,7 +37,6 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
 
   const onSubmit = async (data: ProfileEditorInputs) => {
     if (selectedNode) {
-      console.log('submitData', data);
       const updatedNode = await updateNodeData(data, selectedNode);
       const updatedNodesCopy = wholeNodesCopy.map((node) => {
         return node.id === selectedNode.id ? updatedNode : node;

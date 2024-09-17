@@ -7,7 +7,8 @@ export interface BirthInfo {
 }
 
 export interface FamilyInfo {
-  birthDay: Date;
+  createdAt: number;
+  birthDay?: Date;
   givenName?: string;
   familyName?: string;
   gender?: string;

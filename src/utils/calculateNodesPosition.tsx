@@ -10,6 +10,7 @@ import {
   BASE_SIBLINGS_SPACING,
 } from './constants';
 import { isPersonNodeType } from '../typeGuards/personTypeGuards';
+import { sortNodesByAge } from './sortNodesByAge';
 
 const setDescendants = (wholeNodes: (PersonNodeType | MaritalNodeType)[]) => {
   const calculatedNodes = new Map<string, number[]>();
@@ -154,7 +155,6 @@ const calculateChildNodePosition = (
 
     // 子供の位置計算
     let cumulativeOffset = offsetX;
-    const childrenCounts = node.data.children.length;
     node.data.children.forEach((childId) => {
       const childNode = wholeNodes.find((n) => n.id === childId) as PersonNodeType;
       if (childNode) {
@@ -296,19 +296,7 @@ export function calculateNodesPosition(
   setAncestors(wholeNodesCopy);
 
   const siblingsNodes = wholeNodesCopy.filter((node) => selectedNodesCopy.data.siblings?.includes(node.id));
-  const sortedSiblingsNodes = siblingsNodes.sort((a, b) => {
-    const getAge = (node: PersonNodeType) => {
-      const birthYear = node.data.birthYear;
-      return birthYear ? new Date().getFullYear() - birthYear : -Infinity;
-    };
-    if (!isPersonNodeType(a) || !isPersonNodeType(b)) return 0;
-    const ageA = getAge(a);
-    const ageB = getAge(b);
-
-    if (ageA > ageB) return -1;
-    if (ageA < ageB) return 1;
-    return parseInt(a.id, 10) - parseInt(b.id, 10);
-  });
+  const sortedSiblingsNodes = sortNodesByAge(siblingsNodes);
   let siblingsOffset = 0;
   sortedSiblingsNodes.forEach((node) => {
     calculateChildNodePosition(wholeNodesCopy, node, 0, siblingsOffset);

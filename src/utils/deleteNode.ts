@@ -14,7 +14,6 @@ export const deleteNode = (
 
   const outgoingEdges = extractEdgesFromNode(edgeList, selectedNode);
   if (outgoingEdges.length <= 1 && selectedNode.data.children.length === 0) {
-    console.log(outgoingEdges);
     if (outgoingEdges[0].sourceHandle === "personSourceTop") {
       const updatedNodeList = nodesCopy.filter((node) => node.id !== selectedNode.id);
       const newUpdatedNodeList = updatedNodeList.map((node) => {

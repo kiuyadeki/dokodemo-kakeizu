@@ -18,6 +18,8 @@ export const createPersonNode = (position: PersonNodeType['position'], dataOverr
     type: 'person',
     id: nodeId,
     data: {
+      createdAt: new Date().getTime(),
+      birthDay: undefined,
       label: nodeId,
       parents: [],
       children: [],
