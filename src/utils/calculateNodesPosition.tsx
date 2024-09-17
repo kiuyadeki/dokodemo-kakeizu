@@ -109,7 +109,7 @@ const calculateChildNodePosition = (
         node.position.x = offsetX + (nodeDescendantsWidth - BASE_SIBLINGS_SPACING) / 2 + BASE_MARITAL_SPACING;
         break;
       default:
-        if (!(node.data.siblings?.length || 0 > 1)) {
+        if (!node.data.siblings?.length || node.data.siblings.length <= 1) {
           node.position.x = offsetX + BASE_MARITAL_SPACING;
         } else {
           node.position.x = offsetX;
