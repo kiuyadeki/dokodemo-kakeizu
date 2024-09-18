@@ -155,9 +155,10 @@ const calculateChildNodePosition = (
 
     // 子供の位置計算
     let cumulativeOffset = offsetX;
-    node.data.children.forEach((childId) => {
-      const childNode = wholeNodes.find((n) => n.id === childId) as PersonNodeType;
-      if (childNode) {
+    const childrenNodes = wholeNodes.filter((n) => node.data.children.includes(n.id));
+    const sortedChildrenNodes = sortNodesByAge(childrenNodes);
+    sortedChildrenNodes.forEach((childNode) => {
+      if (isPersonNodeType(childNode)) {
         calculateChildNodePosition(wholeNodes, childNode, level + 1, cumulativeOffset);
         if (childNode?.data?.children?.length || childNode?.data?.spouse?.length) {
           cumulativeOffset += childNode.data.descendantsWidth;

@@ -44,7 +44,7 @@ transform: translate(-50%, -50%) scale(1, 1);
 opacity: 1;
 }
 100% {
-transform: translate(-50%, -50%) scale(1.8, 1.8);
+transform: translate(-50%, -50%) scale(1.7, 1.7);
 opacity: 0;
 }
 `;
@@ -79,7 +79,7 @@ const StyledBox = styled.div.withConfig({
     border-radius: 50%;
     transition: opacity linear 0.4s;
     z-index: -1;
-    border: 1px solid #90cdf4;
+    border: 1px solid #BF6F94;
   }
 `;
 

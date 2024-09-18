@@ -15,10 +15,10 @@ export const sortNodesByAge = (nodes: (PersonNodeType | MaritalNodeType)[]) => {
     if (ageA === undefined && ageB !== undefined) return 1;
 
     if (ageA !== undefined && ageB !== undefined) {
-      return ageA - ageB;
+      return ageB - ageA;
     }
 
-    return a.data.createdAt - b.data.createdAt;
+    return b.data.createdAt - a.data.createdAt;
   });
 
   return sortedNodes;
