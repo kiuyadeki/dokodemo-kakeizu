@@ -5,7 +5,7 @@ export const initialNode: PersonNodeType | MaritalNodeType = {
   id: '0',
   type: 'person',
   data: {
-    label: 'Node',
+    label: '',
     createdAt: new Date().getTime(),
     birthDay: undefined,
     gender: undefined,

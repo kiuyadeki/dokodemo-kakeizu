@@ -142,6 +142,7 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
         setImageUrl(sourceUrl);
       });
     } else {
+      setImageUrl(undefined);
       console.log('no profilePictureURL');
     }
   }, [profilePictureURL]);

@@ -1,12 +1,10 @@
-import { FC, memo, useEffect, useReducer, useRef, useState } from 'react';
+import { FC, memo, useState } from 'react';
 import { ProfileEditor } from './ProfileEditor';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
 import { addChildNodeToSelectedNode } from '../utils/addChildNodeToSelectedNode';
 import { wholeNodesState } from '../recoil/WholeNodesState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
-import { IoCloseOutline } from 'react-icons/io5';
-import styled from 'styled-components';
 import { ProfileEditorState } from '@/recoil/profileEditorState';
 import { Button, Flex, Grid, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
@@ -14,8 +12,8 @@ import { Edge } from 'reactflow';
 import { addParentToSelectedNode } from '@/utils/addParentToSelectedNode';
 import { addSpouseToSelectedNode } from '@/utils/addSpouseToSelectedNode';
 import { deleteNode } from '@/utils/deleteNode';
-import { AlertDialogButton } from './ui/AlertDialogButton';
-import { on } from 'events';
+import { AlertModal } from './ui/AlertModal';
+import { isDeletableNode } from '@/utils/isDeletableNode';
 
 type SelectActionModalProps = {
   closeModal: () => void;
@@ -28,6 +26,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const wholeNodes = useRecoilValue(wholeNodesState);
   const wholeEdges = useRecoilValue(wholeEdgesState);
   const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
+  const [isNodeDeletable, setIsNodeDeletable] = useState(false);
   const {isOpen, onOpen, onClose: onCloseAlert } = useDisclosure();
 
   const updateNodesAndEdges = (AddedNode: 'parent' | 'child' | 'spouse') => {
@@ -61,7 +60,6 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
     }
   };
 
-  // 情報を編集
   const displayProfileEditor = () => {
     if (selectedNode) {
       setShowProfileEditor(true);
@@ -70,6 +68,11 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
 
   const closeAndInitModal = () => {
     closeModal();
+  };
+
+  const handleAlertModal = () => {
+    setIsNodeDeletable(isDeletableNode(wholeEdges, selectedNode));
+    onOpen();
   };
 
   let hasParents = false;
@@ -116,11 +119,11 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
               配偶者を追加
             </Button>
             <Button
-              onClick={onOpen}
+              onClick={handleAlertModal}
               >
               削除
             </Button>
-            <AlertDialogButton isOpen={isOpen} onCloseAlert={onCloseAlert} closeModal={closeModal} updateFamilyTree={updateFamilyTree} />
+            <AlertModal isDeletable={isNodeDeletable} isOpen={isOpen} onCloseAlert={onCloseAlert} closeModal={closeModal} updateFamilyTree={updateFamilyTree} />
             <Button
               onClick={() => {
                 displayProfileEditor();

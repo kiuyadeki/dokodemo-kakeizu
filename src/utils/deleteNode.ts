@@ -2,6 +2,7 @@ import { MaritalData, MaritalNodeType, PersonNodeType } from "@/types/PersonNode
 import { Edge } from "reactflow";
 import extractEdgesFromNode from "./extractEdgesFromNode";
 import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
+import { isDeletableNode } from "./isDeletableNode";
 
 export const deleteNode = (
   nodeList: (PersonNodeType | MaritalNodeType)[],
@@ -13,7 +14,7 @@ export const deleteNode = (
   const edgesCopy = [...edgeList];
 
   const outgoingEdges = extractEdgesFromNode(edgeList, selectedNode);
-  if (outgoingEdges.length <= 1 && selectedNode.data.children.length === 0) {
+  if (isDeletableNode(edgeList, selectedNode)) {
     if (outgoingEdges[0].sourceHandle === "personSourceTop") {
       const updatedNodeList = nodesCopy.filter((node) => node.id !== selectedNode.id);
       const newUpdatedNodeList = updatedNodeList.map((node) => {
