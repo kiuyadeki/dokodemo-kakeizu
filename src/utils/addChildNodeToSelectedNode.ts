@@ -46,8 +46,8 @@ export const addChildNodeToSelectedNode = (
     spouseID = spouseNode.id;
     nodesCopy.push(maritalNode, spouseNode);
     edgesCopy.push(
-      createEdge(selectedNode.id, maritalNodeId, 'smoothstep', 'personSourceRight', 'maritalTargetLeft'),
-      createEdge(spouseID, maritalNodeId, 'smoothstep', 'personSourceLeft', 'maritalTargetRight')
+      createEdge(selectedNode.id, maritalNodeId, 'Marital', 'personSourceRight', 'maritalTargetLeft'),
+      createEdge(spouseID, maritalNodeId, 'Marital', 'personSourceLeft', 'maritalTargetRight')
     );
   } else {
     maritalNodeId =

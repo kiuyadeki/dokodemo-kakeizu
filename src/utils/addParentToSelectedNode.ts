@@ -52,8 +52,8 @@ export const addParentToSelectedNode = (
 
   const edgesToAdd = [
     createEdge(selectedNode.id, maritalNode.id, 'parentChild', 'personSourceTop', 'maritalTargetBottom'),
-    createEdge(leftParentNode.id, maritalNode.id, 'smoothstep', 'personSourceRight', 'maritalTargetLeft'),
-    createEdge(rightParentNode.id, maritalNode.id, 'smoothstep', 'personSourceLeft', 'maritalTargetRight'),
+    createEdge(leftParentNode.id, maritalNode.id, 'Marital', 'personSourceRight', 'maritalTargetLeft'),
+    createEdge(rightParentNode.id, maritalNode.id, 'Marital', 'personSourceLeft', 'maritalTargetRight'),
   ];
 
   const updatedNode = {

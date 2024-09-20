@@ -31,7 +31,7 @@ export const addSpouseToSelectedNode = (
   const selectedToMaritalEdge = createEdge(
     selectedNode.id,
     maritalNode.id,
-    'smoothstep',
+    'Marital',
     'personSourceRight',
     'maritalTargetLeft'
   );
@@ -51,7 +51,7 @@ export const addSpouseToSelectedNode = (
   const spouseToMaritalEdge = createEdge(
     SpouseNode.id,
     maritalNode.id,
-    'smoothstep',
+    'Marital',
     'personSourceLeft',
     'maritalTargetRight'
   );

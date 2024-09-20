@@ -23,6 +23,7 @@ import { useHandlePersonNodeClick } from '@/hooks/useHandlePersonNodeClick';
 import { background, Box, Button, useToast } from '@chakra-ui/react';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 import { on } from 'events';
+import MaritalEdge from './ui/MaritalEdge';
 
 interface FamilyTreeWrapperProps {
   openModal: () => void;
@@ -43,7 +44,7 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
 
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
   const nodeTypes = useMemo(() => ({ person: PersonNode, marital: MaritalNode }), []);
-  const edgeTypes = useMemo(() => ({ parentChild: ParentChildEdge }), []);
+  const edgeTypes = useMemo(() => ({ parentChild: ParentChildEdge, Marital: MaritalEdge }), []);
   const handleNodeClick = useHandlePersonNodeClick(openModal, updateFamilyTree);
   const toast = useToast();
   useEffect(() => {
