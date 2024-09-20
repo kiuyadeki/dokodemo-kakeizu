@@ -8,6 +8,7 @@ export const initialNode: PersonNodeType | MaritalNodeType = {
     label: '',
     createdAt: new Date().getTime(),
     birthDay: undefined,
+    deathDay: undefined,
     gender: undefined,
     profilePictureURL: undefined,
     parents: [],

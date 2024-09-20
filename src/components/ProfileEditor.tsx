@@ -8,7 +8,7 @@ import { ProfileEditorInputs } from '@/types/profileEditorInputs';
 import { ProfileTextInput } from './forms/ProfileTextInput';
 import { Button, HStack } from '@chakra-ui/react';
 import { ProfileGenderInput } from './forms/ProfileGenderInput';
-import { ProfileBirthInput } from './forms/ProfileBirthInput';
+import { ProfileDateInput } from './forms/ProfileDateInput';
 import { ProfileMediaInput } from './forms/ProfileMediaInput';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
 import { Edge } from 'reactflow';
@@ -48,10 +48,11 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
 
   useEffect(() => {
     if (isPersonNodeType(selectedNode)) {
-      const { familyName, givenName, birthDay, gender, profilePictureURL } = selectedNode.data;
+      const { familyName, givenName, birthDay, deathDay, gender, profilePictureURL } = selectedNode.data;
       setValue('familyName', familyName || '');
       setValue('givenName', givenName || '');
       setValue('birthDay', birthDay || new Date());
+      setValue('deathDay', deathDay || new Date());
       setValue('gender', gender || '');
       setValue('profilePictureURL', profilePictureURL || '');
     }
@@ -74,7 +75,10 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
         />
       </HStack>
       <ProfileGenderInput control={control} genderValue="gender" defaultGender={selectedNode?.data?.gender || ''} />
-      <ProfileBirthInput register={register} birthValue="birthDay" control={control} />
+      <HStack>
+      <ProfileDateInput label="生年月日" register={register} dateValue="birthDay" control={control} />
+      <ProfileDateInput label="没年月日" register={register} dateValue="deathDay" control={control} />
+      </HStack>
       <ProfileMediaInput
         register={register}
         setValue={setValue}

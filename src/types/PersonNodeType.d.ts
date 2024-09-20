@@ -9,6 +9,7 @@ export interface BirthInfo {
 export interface FamilyInfo {
   createdAt: number;
   birthDay?: Date;
+  deathDay?: Date;
   givenName?: string;
   familyName?: string;
   gender?: string;

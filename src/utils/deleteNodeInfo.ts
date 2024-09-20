@@ -10,9 +10,10 @@ export const deleteNodeInfo = (
   const nodesCopy = [...nodeList];
   const newNodeList = nodesCopy.map((node) => {
     if (isPersonNodeType(node) && node.id === selectedNode.id) {
-      return { ...node, data: { 
+      return { ...node, data: {
         ...node.data,
         birthDay: undefined,
+        deathDay: undefined,
         gender: undefined,
         profilePictureURL: undefined,
         firstName: '',

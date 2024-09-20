@@ -3,6 +3,7 @@ export type ProfileEditorInputs = {
   familyName?: string;
   gender?: string;
   birthDay?: Date;
+  deathDay?: Date;
   profilePictureURL?: string;
   profilePictureFile?: File;
 };

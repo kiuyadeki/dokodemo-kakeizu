@@ -5,7 +5,6 @@ import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../../recoil/selectedNodeState';
 import { BiSolidUser } from 'react-icons/bi';
 import styled, { css, keyframes } from 'styled-components';
-import { formatBirthDay } from '../../helpers/formatBirthDay';
 import { formatFullName } from '../../helpers/formatFullName';
 import { memo, useEffect, useState } from 'react';
 import { PersonNodeType } from '@/types/PersonNodeType';
@@ -127,12 +126,15 @@ const InformationBox = styled.div`
 
 export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
   const { id, data } = props;
-  const { birthDay, givenName, familyName, profilePictureURL } = data;
+  const { birthDay, deathDay, givenName, familyName, profilePictureURL } = data;
   const selectedNode = useRecoilValue(selectedNodeState);
   const isSelected = id === selectedNode?.id;
   const fullName = formatFullName({ familyName, givenName });
   const formattedBirthDay = birthDay
     ? new Date(birthDay).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    : '';
+  const formattedDeathDay = deathDay
+    ? new Date(deathDay).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
     : '';
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   useEffect(() => {
@@ -182,7 +184,7 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
               <InformationBox>
                 <Text>{id}</Text>
                 <Text>{fullName}</Text>
-                <Text>{formattedBirthDay}</Text>
+                <Text>{formattedBirthDay}~{formattedDeathDay}</Text>
               </InformationBox>
             </StyledBox>
           </motion.div>
