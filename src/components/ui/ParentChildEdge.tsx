@@ -10,7 +10,7 @@ export const ParentChildEdge: React.FC<EdgeProps> = ({
   targetPosition,
   style = {strokeWidth: 2},
 }) => {
-  const middleY = sourceY - 50;
+  const middleY = sourceY - 40;
   const radius = 5;
   let customEdgePath = ``;
   if (Math.abs(sourceX - targetX) <= radius) {

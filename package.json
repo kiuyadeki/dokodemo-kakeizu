@@ -2,12 +2,20 @@
   "name": "test",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/.next/",
+      "<rootDir>/node_modules/"
+    ]
+  
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "jest": "jest env=jsdom --verbose"
   },
   "dependencies": {
     "@aws-amplify/adapter-nextjs": "^1.2.6",

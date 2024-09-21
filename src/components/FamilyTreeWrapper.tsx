@@ -59,7 +59,7 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
       const result = await onUpdate(projectId);
       if (result) {
         toast({
-          title: '保存が成功しました',
+          title: '保存しました',
           status: 'success',
           duration: 3000,
           isClosable: true,
@@ -80,8 +80,7 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
 
   const styles = {
     background: '#E7E1C5',
-    backgroundImage: 'url(/bg_noise.jpg)',
-    backgroundSize: '400px 300px',
+    backgroundImage: 'url(/pattern.jpg)',
   };
 
   return (

@@ -58,7 +58,7 @@ export const CreateNewProject: FC = memo(function CreateNewProjectComponent() {
           <Button
             paddingInline="40px"
             type="submit"
-            colorScheme="blue"
+            colorScheme="teal"
             isLoading={isLoading}
             isDisabled={!projectName}
             loadingText="作成しています"

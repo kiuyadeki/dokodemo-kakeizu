@@ -78,7 +78,7 @@ const StyledBox = styled.div.withConfig({
     border-radius: 50%;
     transition: opacity linear 0.4s;
     z-index: -1;
-    border: 1px solid #BF6F94;
+    border: 2px solid #777;
   }
 `;
 
@@ -119,8 +119,8 @@ const CustomProfileIcon = styled.img`
 const InformationBox = styled.div`
   position: absolute;
   top: calc(100% + 10px);
-  left: 0;
-  right: 0;
+  left: 50%;
+  translate: -50% 0;
   text-align: center;
 `;
 
@@ -182,9 +182,8 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
               </IconBox>
 
               <InformationBox>
-                <Text>{id}</Text>
                 <Text>{fullName}</Text>
-                <Text>{formattedBirthDay}~{formattedDeathDay}</Text>
+                <Text whiteSpace="nowrap">{formattedBirthDay && `${formattedBirthDay}〜`}{formattedDeathDay}</Text>
               </InformationBox>
             </StyledBox>
           </motion.div>

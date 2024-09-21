@@ -6,7 +6,7 @@ import { addChildNodeToSelectedNode } from '../utils/addChildNodeToSelectedNode'
 import { wholeNodesState } from '../recoil/WholeNodesState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
 import { ProfileEditorState } from '@/recoil/profileEditorState';
-import { Button, Flex, Grid, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
+import { Button, Flex, Grid, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 import { Edge } from 'reactflow';
 import { addParentToSelectedNode } from '@/utils/addParentToSelectedNode';
@@ -85,23 +85,35 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   return (
     <>
     <ModalOverlay />
-    <ModalContent p={5}>
+    <ModalContent p={5} maxHeight="calc(100% - 40px)" overflowY="auto">
       <ModalHeader>詳細情報を編集中<ModalCloseButton /></ModalHeader>
       <ModalBody>
       {showProfileEditor ? (
         <ProfileEditor onClose={closeAndInitModal} updateFamilyTree={updateFamilyTree} />
       ) : (
-          <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+          <Grid templateColumns="repeat(2, 1fr)" gap={3}>
             <Button
-              isDisabled={hasParents}
+              colorScheme='orange'
               onClick={() => {
-                updateNodesAndEdges('parent');
-                closeModal();
+                displayProfileEditor();
               }}
             >
-              親を追加
+              情報を編集
             </Button>
+            <Tooltip label="親がいない場合のみ追加できます">
+              <Button
+                colorScheme='teal'
+                isDisabled={hasParents}
+                onClick={() => {
+                  updateNodesAndEdges('parent');
+                  closeModal();
+                }}
+              >
+                親を追加
+              </Button>
+            </Tooltip>
             <Button
+                colorScheme='teal'
               onClick={() => {
                 updateNodesAndEdges('child');
                 closeModal();
@@ -109,28 +121,25 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
             >
               子を追加
             </Button>
-            <Button
-              isDisabled={hasSpouse}
-              onClick={() => {
-                updateNodesAndEdges('spouse');
-                closeModal();
-              }}
-            >
-              配偶者を追加
-            </Button>
+            <Tooltip label="配偶者がいない場合のみ追加できます" >
+              <Button
+                colorScheme='teal'
+                isDisabled={hasSpouse}
+                onClick={() => {
+                  updateNodesAndEdges('spouse');
+                  closeModal();
+                }}
+              >
+                配偶者を追加
+              </Button>
+            </Tooltip>
             <Button
               onClick={handleAlertModal}
+              colorScheme='red'
               >
               削除
             </Button>
             <AlertModal isDeletable={isNodeDeletable} isOpen={isOpen} onCloseAlert={onCloseAlert} closeModal={closeModal} updateFamilyTree={updateFamilyTree} />
-            <Button
-              onClick={() => {
-                displayProfileEditor();
-              }}
-            >
-              情報を編集
-            </Button>
           </Grid>
       )}
       </ModalBody>
