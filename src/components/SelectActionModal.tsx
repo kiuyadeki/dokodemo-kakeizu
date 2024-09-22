@@ -20,11 +20,10 @@ import {
 } from '@chakra-ui/react';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 import { Edge } from 'reactflow';
-import { addParentToSelectedNode } from '@/utils/addParentToSelectedNode';
+import { addParentToSelectedNode } from '@/utils/nodeOperations/addParentToSelectedNode';
 import { addSpouseToSelectedNode } from '@/utils/nodeOperations/addSpouseToSelectedNode';
-import { deleteNode } from '@/utils/deleteNode';
 import { AlertModal } from './ui/AlertModal';
-import { isDeletableNode } from '@/utils/isDeletableNode';
+import { isDeletableNode } from '@/utils/nodeOperations/isDeletableNode';
 
 type SelectActionModalProps = {
   closeModal: () => void;
@@ -101,7 +100,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
     <>
       <ModalOverlay />
       <ModalContent
-        p={5}
+        p={6}
         maxHeight="calc(100% - 40px)"
         overflowY="auto"
       >

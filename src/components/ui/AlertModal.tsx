@@ -3,8 +3,8 @@ import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 import { wholeNodesState } from '@/recoil/WholeNodesState';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
-import { deleteNode } from '@/utils/deleteNode';
-import { deleteNodeInfo } from '@/utils/deleteNodeInfo';
+import { deleteNode } from '@/utils/nodeOperations/deleteNode';
+import { deleteNodeInfo } from '@/utils/nodeOperations/deleteNodeInfo';
 import {
   AlertDialog,
   AlertDialogBody,

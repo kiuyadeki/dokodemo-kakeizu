@@ -13,7 +13,7 @@ import { ProfileMediaInput } from './forms/ProfileMediaInput';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
 import { Edge } from 'reactflow';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
-import { updateNodeData } from '@/utils/updateNodeData';
+import { updateNodeData } from '@/utils/nodeOperations/updateNodeData';
 
 type ProfileEditorProps = {
   onClose: () => void;

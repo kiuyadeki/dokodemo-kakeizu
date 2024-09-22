@@ -33,7 +33,7 @@ const AppPage = () => {
         }
       });
     });
-  }, []);
+  }, [router.query.projectId]);
 
   return (
     <>
