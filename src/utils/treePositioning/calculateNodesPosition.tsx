@@ -10,7 +10,7 @@ import {
   BASE_SIBLINGS_SPACING,
 } from '../common/constants';
 import { isPersonNodeType } from '../../typeGuards/personTypeGuards';
-import { sortNodesByAge } from '../sortNodesByAge';
+import { sortNodesByAge } from '../nodeOperations/sortNodesByAge';
 
 const setDescendants = (wholeNodes: (PersonNodeType | MaritalNodeType)[]) => {
   const calculatedNodes = new Map<string, number[]>();

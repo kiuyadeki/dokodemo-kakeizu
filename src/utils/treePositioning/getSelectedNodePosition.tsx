@@ -1,5 +1,5 @@
-import { MaritalNodeType, PersonNodeType } from '../types/PersonNodeType';
-import { isPersonNodeType } from '../typeGuards/personTypeGuards';
+import { MaritalNodeType, PersonNodeType } from '../../types/PersonNodeType';
+import { isPersonNodeType } from '../../typeGuards/personTypeGuards';
 
 export function getSelectedNodePosition(
   nodesList: (PersonNodeType | MaritalNodeType)[],

@@ -1,5 +1,5 @@
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
-import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
+import { PersonNodeType, MaritalNodeType } from '../../types/PersonNodeType';
 import { Edge } from 'reactflow';
 
 export function filterDirectLineagesNodes(
