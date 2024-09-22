@@ -1,12 +1,16 @@
-import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
-import { MaritalNodeType, PersonNodeType } from "@/types/PersonNodeType";
-import { BASE_MARITAL_SPACING, BASE_SIBLINGS_SPACING } from "../common/constants";
+import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
+import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { BASE_MARITAL_SPACING, BASE_SIBLINGS_SPACING } from '../common/constants';
 
-export const crateNodesDescendantsCalculator = (wholeNodes: (PersonNodeType | MaritalNodeType)[]) => {
-  
-}
+export const crateNodesDescendantsCalculator = (wholeNodes: (PersonNodeType | MaritalNodeType)[]) => {};
 
-export const calculateNodeDescendants = (wholeNodes: (PersonNodeType | MaritalNodeType)[], nodeId: string, ancestors: string[] = [], calculatedNodes: Map<string, number[]>, calculatedNodeWidths: Map<string, number[]>): [number[]] => {
+export const calculateNodeDescendants = (
+  wholeNodes: (PersonNodeType | MaritalNodeType)[],
+  nodeId: string,
+  ancestors: string[] = [],
+  calculatedNodes: Map<string, number[]>,
+  calculatedNodeWidths: Map<string, number[]>
+): [number[]] => {
   if (calculatedNodes.has(nodeId)) {
     return [calculatedNodeWidths.get(nodeId)!];
   }
@@ -24,7 +28,13 @@ export const calculateNodeDescendants = (wholeNodes: (PersonNodeType | MaritalNo
   }
 
   let childWidths = node.data.children.map((childId) => {
-    const [widths] = calculateNodeDescendants(wholeNodes, childId, [...ancestors, nodeId], calculatedNodes, calculatedNodeWidths);
+    const [widths] = calculateNodeDescendants(
+      wholeNodes,
+      childId,
+      [...ancestors, nodeId],
+      calculatedNodes,
+      calculatedNodeWidths
+    );
     return widths;
   });
 
@@ -38,4 +48,4 @@ export const calculateNodeDescendants = (wholeNodes: (PersonNodeType | MaritalNo
   const descendantWidths = childWidths.map((array) => array.reduce((a, b) => a + b, 0));
   calculatedNodeWidths.set(nodeId, descendantWidths);
   return [descendantWidths];
-}
+};

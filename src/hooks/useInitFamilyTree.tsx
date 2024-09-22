@@ -42,7 +42,11 @@ export const useInitFamilyTree = () => {
     }
   };
 
-  const updateFamilyTree = (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[], selectedNode: PersonNodeType | undefined) => {
+  const updateFamilyTree = (
+    nodes: (PersonNodeType | MaritalNodeType)[],
+    edges: Edge[],
+    selectedNode: PersonNodeType | undefined
+  ) => {
     if (!selectedNode) return;
     const calculatedWholeNodes = calculateNodesPosition(nodes, selectedNode);
 

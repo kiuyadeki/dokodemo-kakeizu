@@ -1,23 +1,36 @@
-import { selectedNodeState } from "@/recoil/selectedNodeState";
-import { wholeEdgesState } from "@/recoil/WholeEdgesState";
-import { wholeNodesState } from "@/recoil/WholeNodesState";
-import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
-import { MaritalNodeType, PersonNodeType } from "@/types/PersonNodeType";
-import { deleteNode } from "@/utils/deleteNode";
-import { deleteNodeInfo } from "@/utils/deleteNodeInfo";
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, useDisclosure } from "@chakra-ui/react";
-import { set } from "date-fns";
-import { FC, memo, useEffect, useRef, useState } from "react";
-import { Edge } from "reactflow";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { selectedNodeState } from '@/recoil/selectedNodeState';
+import { wholeEdgesState } from '@/recoil/WholeEdgesState';
+import { wholeNodesState } from '@/recoil/WholeNodesState';
+import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
+import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { deleteNode } from '@/utils/deleteNode';
+import { deleteNodeInfo } from '@/utils/deleteNodeInfo';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Button,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { set } from 'date-fns';
+import { FC, memo, useEffect, useRef, useState } from 'react';
+import { Edge } from 'reactflow';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 type AlertModalProps = {
   isDeletable: boolean;
   isOpen: boolean;
   closeModal: () => void;
   onCloseAlert: () => void;
-  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[], selectedNode: PersonNodeType | undefined) => void,
-}
+  updateFamilyTree: (
+    nodes: (PersonNodeType | MaritalNodeType)[],
+    edges: Edge[],
+    selectedNode: PersonNodeType | undefined
+  ) => void;
+};
 
 export const AlertModal: FC<AlertModalProps> = memo((props) => {
   const { isDeletable, isOpen, closeModal, onCloseAlert, updateFamilyTree } = props;
@@ -47,7 +60,7 @@ export const AlertModal: FC<AlertModalProps> = memo((props) => {
     }
     onCloseAlert();
     closeModal();
-  }
+  };
 
   const handleDeleteInfo = () => {
     const nodeList = deleteNodeInfo(wholeNodes, selectedNode);
@@ -58,29 +71,53 @@ export const AlertModal: FC<AlertModalProps> = memo((props) => {
   };
 
   return (
-    <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onCloseAlert} isCentered motionPreset="slideInBottom">
-    <AlertDialogOverlay>
-      <AlertDialogContent>
-        <AlertDialogHeader fontSize="lg" fontWeight="bold">
-          人物を削除
-        </AlertDialogHeader>
-        <AlertDialogBody>
-          {
-            isDeletable
-            ? "この操作は取り消せません。本当に人物を削除しますか?"
-            : "この人物は削除できません。代わりに情報のみを削除しますか?"
-          }
-        </AlertDialogBody>
-        <AlertDialogFooter>
-        <Button ref={cancelRef} onClick={onCloseAlert}>キャンセル</Button>
-        {
-          isDeletable
-          ? <Button colorScheme="red" ml={3} onClick={handleDeleteNode}>削除する</Button>
-          : <Button colorScheme="red" ml={3} onClick={handleDeleteInfo}>削除する</Button>
-        }
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialogOverlay>
+    <AlertDialog
+      isOpen={isOpen}
+      leastDestructiveRef={cancelRef}
+      onClose={onCloseAlert}
+      isCentered
+      motionPreset="slideInBottom"
+    >
+      <AlertDialogOverlay>
+        <AlertDialogContent>
+          <AlertDialogHeader
+            fontSize="lg"
+            fontWeight="bold"
+          >
+            人物を削除
+          </AlertDialogHeader>
+          <AlertDialogBody>
+            {isDeletable
+              ? 'この操作は取り消せません。本当に人物を削除しますか?'
+              : 'この人物は削除できません。代わりに情報のみを削除しますか?'}
+          </AlertDialogBody>
+          <AlertDialogFooter>
+            <Button
+              ref={cancelRef}
+              onClick={onCloseAlert}
+            >
+              キャンセル
+            </Button>
+            {isDeletable ? (
+              <Button
+                colorScheme="red"
+                ml={3}
+                onClick={handleDeleteNode}
+              >
+                削除する
+              </Button>
+            ) : (
+              <Button
+                colorScheme="red"
+                ml={3}
+                onClick={handleDeleteInfo}
+              >
+                削除する
+              </Button>
+            )}
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
     </AlertDialog>
   );
 });

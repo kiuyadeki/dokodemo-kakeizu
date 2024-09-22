@@ -30,7 +30,7 @@ export const MaritalEdge: React.FC<EdgeProps> = ({
     <>
       <path
         id={id}
-        style={{ ...style,  strokeWidth: strokeWidth, strokeLinecap: 'round', strokeLinejoin: 'round' }}
+        style={{ ...style, strokeWidth: strokeWidth, strokeLinecap: 'round', strokeLinejoin: 'round' }}
         className="react-flow__edge-path"
         d={customPathUpper}
       />

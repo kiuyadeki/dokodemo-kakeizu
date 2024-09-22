@@ -9,7 +9,11 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 export const useHandlePersonNodeClick = (
   openModal: () => void,
-  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[], selectedNode: PersonNodeType | undefined) => void,
+  updateFamilyTree: (
+    nodes: (PersonNodeType | MaritalNodeType)[],
+    edges: Edge[],
+    selectedNode: PersonNodeType | undefined
+  ) => void
 ) => {
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
   const [isSelectedNodeChanged, setIsSelectedNodeChanged] = useState(false);

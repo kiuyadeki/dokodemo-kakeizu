@@ -18,7 +18,7 @@ export const ProfileDateInput: FC<DateInputProps> = memo(({ label, register, dat
   return (
     <>
       <FormControl>
-      <FormLabel mt={6}>{label}</FormLabel>
+        <FormLabel mt={6}>{label}</FormLabel>
         <Controller
           control={control}
           name={dateValue}

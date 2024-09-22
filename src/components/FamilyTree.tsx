@@ -23,7 +23,10 @@ export const FamilyTree: FC = memo(function FamilyTreeComponent() {
       {isLoading ? (
         <Center minHeight="100vh">
           <VStack>
-            <CircularProgress isIndeterminate color="blue.600" />
+            <CircularProgress
+              isIndeterminate
+              color="blue.600"
+            />
             <Text mt={3}>家系図を描画しています。</Text>
           </VStack>
         </Center>
@@ -39,8 +42,16 @@ export const FamilyTree: FC = memo(function FamilyTreeComponent() {
           onUpdate={onUpdate}
         />
       )}
-      <Modal isOpen={isOpen} onClose={onClose} size='lg' isCentered>
-        <SelectActionModal closeModal={onClose} updateFamilyTree={updateFamilyTree} />
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size="lg"
+        isCentered
+      >
+        <SelectActionModal
+          closeModal={onClose}
+          updateFamilyTree={updateFamilyTree}
+        />
       </Modal>
     </>
   );

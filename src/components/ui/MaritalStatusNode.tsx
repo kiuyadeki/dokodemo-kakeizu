@@ -59,9 +59,21 @@ export const MaritalNode = memo((props: NodeProps<MaritalNodeType['data']>) => {
   return (
     <NodeContainer onClick={handleClick}>
       <NodeInner>{!data.isDivorced ? <GiBigDiamondRing /> : <TfiUnlink />}</NodeInner>
-      <StyledHandle type="target" position={Position.Right} id="maritalTargetRight" />
-      <StyledHandle type="target" position={Position.Left} id="maritalTargetLeft" />
-      <StyledHandle type="target" position={Position.Bottom} id="maritalTargetBottom" />
+      <StyledHandle
+        type="target"
+        position={Position.Right}
+        id="maritalTargetRight"
+      />
+      <StyledHandle
+        type="target"
+        position={Position.Left}
+        id="maritalTargetLeft"
+      />
+      <StyledHandle
+        type="target"
+        position={Position.Bottom}
+        id="maritalTargetBottom"
+      />
     </NodeContainer>
   );
 });

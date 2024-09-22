@@ -1,5 +1,5 @@
-import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
-import { MaritalNodeType, PersonNodeType } from "@/types/PersonNodeType";
+import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
+import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 
 export const sortNodesByAge = (nodes: (PersonNodeType | MaritalNodeType)[]) => {
   const sortedNodes = nodes.sort((a, b) => {
@@ -22,4 +22,4 @@ export const sortNodesByAge = (nodes: (PersonNodeType | MaritalNodeType)[]) => {
   });
 
   return sortedNodes;
-}
+};

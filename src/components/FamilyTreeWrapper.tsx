@@ -32,7 +32,11 @@ interface FamilyTreeWrapperProps {
   edges: Edge[];
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
-  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[], selectedNode: PersonNodeType | undefined) => void,
+  updateFamilyTree: (
+    nodes: (PersonNodeType | MaritalNodeType)[],
+    edges: Edge[],
+    selectedNode: PersonNodeType | undefined
+  ) => void;
   onUpdate: (id: string) => Promise<boolean | undefined>;
 }
 
@@ -84,8 +88,19 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
   };
 
   return (
-    <Box w="100vw" h="100vh" className="wrapper" ref={reactFlowWrapper}>
-      <Button onClick={handleSaveButtonClick} position="absolute" right={4} top={4} zIndex={10}>
+    <Box
+      w="100vw"
+      h="100vh"
+      className="wrapper"
+      ref={reactFlowWrapper}
+    >
+      <Button
+        onClick={handleSaveButtonClick}
+        position="absolute"
+        right={4}
+        top={4}
+        zIndex={10}
+      >
         保存する
       </Button>
       <ReactFlow

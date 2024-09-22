@@ -31,15 +31,18 @@ const AppPage = () => {
         if (item.id === router.query.projectId) {
           setProjectName(item.name);
         }
-      })
-    })
+      });
+    });
   }, []);
 
   return (
     <>
       <Head>
         <title>{projectName} - 家系図</title>
-        <meta property="description" content={`${projectName}の家系図データです。`} />
+        <meta
+          property="description"
+          content={`${projectName}の家系図データです。`}
+        />
       </Head>
       <GlobalStyle />
       <ChakraProvider>
@@ -49,6 +52,6 @@ const AppPage = () => {
       </ChakraProvider>
     </>
   );
-}
+};
 
 export default AppPage;

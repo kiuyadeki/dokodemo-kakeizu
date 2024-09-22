@@ -60,11 +60,30 @@ export const ProfileMediaInput: FC<MediaInputProps> = memo(({ register, setValue
         hidden
         ref={inputRef}
       />
-      <Button type="button" onClick={handleButtonClick}>
+      <Button
+        type="button"
+        onClick={handleButtonClick}
+      >
         写真を選択する
       </Button>
-      {imageUrl && <Image boxSize="300px" objectFit="cover" mt={6} src={imageUrl} alt="アップロードされた画像" />}
-      {!imageUrl && existingImageUrl && <Image boxSize="300px" objectFit="cover" mt={6} src={existingImageUrl} alt="アップロードされた画像" />}
+      {imageUrl && (
+        <Image
+          boxSize="300px"
+          objectFit="cover"
+          mt={6}
+          src={imageUrl}
+          alt="アップロードされた画像"
+        />
+      )}
+      {!imageUrl && existingImageUrl && (
+        <Image
+          boxSize="300px"
+          objectFit="cover"
+          mt={6}
+          src={existingImageUrl}
+          alt="アップロードされた画像"
+        />
+      )}
     </FormControl>
   );
 });

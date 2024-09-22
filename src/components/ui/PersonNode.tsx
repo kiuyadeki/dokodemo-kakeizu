@@ -151,9 +151,21 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
 
   return (
     <>
-      <StyledHandle type="source" position={Position.Right} id="personSourceRight" />
-      <StyledHandle type="source" position={Position.Left} id="personSourceLeft" />
-      <StyledHandle type="source" position={Position.Top} id="personSourceTop" />
+      <StyledHandle
+        type="source"
+        position={Position.Right}
+        id="personSourceRight"
+      />
+      <StyledHandle
+        type="source"
+        position={Position.Left}
+        id="personSourceLeft"
+      />
+      <StyledHandle
+        type="source"
+        position={Position.Top}
+        id="personSourceTop"
+      />
       <AnimatePresence>
         {data.isVisible && (
           <motion.div
@@ -169,13 +181,19 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
             }}
           >
             <StyledBox isSelected={isSelected}>
-              <IconBox isSelected={isSelected} gender={data.gender}>
+              <IconBox
+                isSelected={isSelected}
+                gender={data.gender}
+              >
                 <IconInner>
                   {imageUrl ? (
                     <CustomProfileIcon src={imageUrl} />
                   ) : (
                     <DefaultProfileIcon>
-                      <BiSolidUser size={100} color="#ffffff" />
+                      <BiSolidUser
+                        size={100}
+                        color="#ffffff"
+                      />
                     </DefaultProfileIcon>
                   )}
                 </IconInner>

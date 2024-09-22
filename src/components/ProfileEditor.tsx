@@ -17,7 +17,11 @@ import { updateNodeData } from '@/utils/updateNodeData';
 
 type ProfileEditorProps = {
   onClose: () => void;
-  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[], selectedNode: PersonNodeType | undefined) => void,
+  updateFamilyTree: (
+    nodes: (PersonNodeType | MaritalNodeType)[],
+    edges: Edge[],
+    selectedNode: PersonNodeType | undefined
+  ) => void;
 };
 
 export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditorComponent(props) {
@@ -74,10 +78,24 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
           errorMessage={errors.givenName?.message}
         />
       </HStack>
-      <ProfileGenderInput control={control} genderValue="gender" defaultGender={selectedNode?.data?.gender || ''} />
+      <ProfileGenderInput
+        control={control}
+        genderValue="gender"
+        defaultGender={selectedNode?.data?.gender || ''}
+      />
       <HStack>
-      <ProfileDateInput label="生年月日" register={register} dateValue="birthDay" control={control} />
-      <ProfileDateInput label="没年月日" register={register} dateValue="deathDay" control={control} />
+        <ProfileDateInput
+          label="生年月日"
+          register={register}
+          dateValue="birthDay"
+          control={control}
+        />
+        <ProfileDateInput
+          label="没年月日"
+          register={register}
+          dateValue="deathDay"
+          control={control}
+        />
       </HStack>
       <ProfileMediaInput
         register={register}
@@ -86,7 +104,11 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
         selectedNode={selectedNode}
       />
 
-      <Button mt={4} isLoading={isSubmitting} type="submit">
+      <Button
+        mt={4}
+        isLoading={isSubmitting}
+        type="submit"
+      >
         保存する
       </Button>
     </form>

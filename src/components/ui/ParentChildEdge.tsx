@@ -8,7 +8,7 @@ export const ParentChildEdge: React.FC<EdgeProps> = ({
   targetY,
   sourcePosition,
   targetPosition,
-  style = {strokeWidth: 2},
+  style = { strokeWidth: 2 },
 }) => {
   const middleY = sourceY - 40;
   const radius = 5;
@@ -21,5 +21,12 @@ export const ParentChildEdge: React.FC<EdgeProps> = ({
     customEdgePath = `M${sourceX},${sourceY} V${middleY + radius} A${radius},${radius} 0 0 0 ${sourceX - radius},${middleY} H${targetX} V${targetY}`;
   }
 
-  return <path id={id} style={{...style, strokeWidth: 2}} className="react-flow__edge-path" d={customEdgePath} />;
+  return (
+    <path
+      id={id}
+      style={{ ...style, strokeWidth: 2 }}
+      className="react-flow__edge-path"
+      d={customEdgePath}
+    />
+  );
 };

@@ -43,7 +43,10 @@ export const CreateNewProject: FC = memo(function CreateNewProjectComponent() {
   return (
     <Box>
       <form onSubmit={onSubmit}>
-        <FormControl mb={6} isInvalid={!!errors.projectName}>
+        <FormControl
+          mb={6}
+          isInvalid={!!errors.projectName}
+        >
           <Input
             size="md"
             placeholder="〇〇家"

@@ -10,7 +10,11 @@ Amplify.configure(amplifyconfig);
 const Myapp = ({ Component, pageProps, signOut, user }: AppProps & WithAuthenticatorProps) => {
   return (
     <RecoilRoot>
-      <Component {...pageProps} signOut={signOut} user={user} />
+      <Component
+        {...pageProps}
+        signOut={signOut}
+        user={user}
+      />
     </RecoilRoot>
   );
 };

@@ -13,7 +13,12 @@ export const ProfileTextInput: FC<TextInputProps> = memo(({ textValue, label, re
   return (
     <FormControl>
       <FormLabel htmlFor={textValue}>{label}</FormLabel>
-      <Input type="text" id={textValue} placeholder={label} {...register(textValue)} />
+      <Input
+        type="text"
+        id={textValue}
+        placeholder={label}
+        {...register(textValue)}
+      />
       {errorMessage && <FormErrorMessage>{errorMessage}</FormErrorMessage>}
     </FormControl>
   );
