@@ -1,6 +1,6 @@
 import { Edge } from 'reactflow';
-import { createMaritalNode, createPersonNode } from '../utils/nodeUtils';
-import { createEdge } from '../utils/edgeUtils';
+import { createMaritalNode, createPersonNode } from './nodeUtils';
+import { createEdge } from './edgeUtils';
 import {
   BASE_GENERATIONS_SPACING,
   BASE_MARITAL_NODE_HEIGHT,
@@ -8,7 +8,7 @@ import {
   BASE_MARITAL_SPACING,
   BASE_PERSON_NODE_HEIGHT,
   BASE_PERSON_NODE_WIDTH,
-} from '../utils/constants';
+} from '../common/constants';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 
 export const addParentToSelectedNode = (

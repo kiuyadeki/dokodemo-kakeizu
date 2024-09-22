@@ -2,9 +2,9 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { Edge } from 'reactflow';
 import { createMaritalNode, createPersonNode } from './nodeUtils';
 import { createEdge } from './edgeUtils';
-import { BASE_MARITAL_SPACING } from './constants';
+import { BASE_MARITAL_SPACING } from '../common/constants';
 import { useRecoilValue } from 'recoil';
-import { selectedNodeState } from '../recoil/selectedNodeState';
+import { selectedNodeState } from '../../recoil/selectedNodeState';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
 import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
 

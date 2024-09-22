@@ -1,5 +1,5 @@
 import { Handle, NodeProps, Position } from 'reactflow';
-import { BASE_MARITAL_NODE_HEIGHT, BASE_MARITAL_NODE_WIDTH } from '../../utils/constants';
+import { BASE_MARITAL_NODE_HEIGHT, BASE_MARITAL_NODE_WIDTH } from '../../utils/common/constants';
 
 import { GiBigDiamondRing } from 'react-icons/gi';
 import { TfiUnlink } from 'react-icons/tfi';

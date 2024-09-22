@@ -1,8 +1,8 @@
-import { MaritalData, MaritalNodeType, PersonNodeType } from "@/types/PersonNodeType";
-import { Edge } from "reactflow";
-import extractEdgesFromNode from "./extractEdgesFromNode";
-import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
-import { isDeletableNode } from "./isDeletableNode";
+import { MaritalData, MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { Edge } from 'reactflow';
+import extractEdgesFromNode from './extractEdgesFromNode';
+import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
+import { isDeletableNode } from './isDeletableNode';
 
 export const deleteNode = (
   nodeList: (PersonNodeType | MaritalNodeType)[],
@@ -15,7 +15,7 @@ export const deleteNode = (
 
   const outgoingEdges = extractEdgesFromNode(edgeList, selectedNode);
   if (isDeletableNode(edgeList, selectedNode)) {
-    if (outgoingEdges[0].sourceHandle === "personSourceTop") {
+    if (outgoingEdges[0].sourceHandle === 'personSourceTop') {
       const updatedNodeList = nodesCopy.filter((node) => node.id !== selectedNode.id);
       const newUpdatedNodeList = updatedNodeList.map((node) => {
         if (isPersonNodeType(node) && selectedNode.data.parents.includes(node.id)) {
@@ -24,20 +24,29 @@ export const deleteNode = (
         }
         return node;
       });
-      const updatedEdgeList = edgesCopy.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id);
+      const updatedEdgeList = edgesCopy.filter(
+        (edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id
+      );
       return { nodeList: newUpdatedNodeList, edgeList: updatedEdgeList };
-    } else if (outgoingEdges[0].sourceHandle === ("personSourceLeft" || "personSourceRight")) {
-      const updatedNodeList = nodesCopy.filter((node) => (node.id !== selectedNode.id && selectedNode.data.maritalNodeId !== node.id));
+    } else if (outgoingEdges[0].sourceHandle === ('personSourceLeft' || 'personSourceRight')) {
+      const updatedNodeList = nodesCopy.filter(
+        (node) => node.id !== selectedNode.id && selectedNode.data.maritalNodeId !== node.id
+      );
       const newUpdatedNodeList = updatedNodeList.map((node) => {
         if (isPersonNodeType(node) && selectedNode.data.spouse.includes(node.id)) {
           const filteredSpouse = node.data.spouse.filter((spouse) => spouse !== selectedNode.id);
-          return { ...node, data: { ...node.data, spouse: filteredSpouse, maritalPosition: undefined, maritalNodeId: undefined } };
+          return {
+            ...node,
+            data: { ...node.data, spouse: filteredSpouse, maritalPosition: undefined, maritalNodeId: undefined },
+          };
         }
         return node;
       });
-      const updatedEdgeList = edgesCopy.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.data.maritalNodeId);
+      const updatedEdgeList = edgesCopy.filter(
+        (edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.data.maritalNodeId
+      );
       return { nodeList: newUpdatedNodeList, edgeList: updatedEdgeList };
     }
   }
-  return { nodeList, edgeList}
-}
+  return { nodeList, edgeList };
+};

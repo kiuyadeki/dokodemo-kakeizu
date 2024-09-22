@@ -1,5 +1,5 @@
 import { Handle, NodeProps, Position } from 'reactflow';
-import { BASE_PERSON_NODE_WIDTH } from '../../utils/constants';
+import { BASE_PERSON_NODE_WIDTH } from '../../utils/common/constants';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../../recoil/selectedNodeState';
@@ -183,7 +183,10 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
 
               <InformationBox>
                 <Text>{fullName}</Text>
-                <Text whiteSpace="nowrap">{formattedBirthDay && `${formattedBirthDay}〜`}{formattedDeathDay}</Text>
+                <Text whiteSpace="nowrap">
+                  {formattedBirthDay && `${formattedBirthDay}〜`}
+                  {formattedDeathDay}
+                </Text>
               </InformationBox>
             </StyledBox>
           </motion.div>

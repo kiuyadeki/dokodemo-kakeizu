@@ -1,4 +1,4 @@
-import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
+import { PersonNodeType, MaritalNodeType } from '../../types/PersonNodeType';
 import {
   BASE_GENERATIONS_SPACING,
   BASE_MARITAL_NODE_HEIGHT,
@@ -8,9 +8,9 @@ import {
   BASE_PERSON_NODE_HEIGHT,
   BASE_PERSON_NODE_WIDTH,
   BASE_SIBLINGS_SPACING,
-} from './constants';
-import { isPersonNodeType } from '../typeGuards/personTypeGuards';
-import { sortNodesByAge } from './sortNodesByAge';
+} from '../common/constants';
+import { isPersonNodeType } from '../../typeGuards/personTypeGuards';
+import { sortNodesByAge } from '../sortNodesByAge';
 
 const setDescendants = (wholeNodes: (PersonNodeType | MaritalNodeType)[]) => {
   const calculatedNodes = new Map<string, number[]>();

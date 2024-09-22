@@ -1,5 +1,5 @@
 import { getAddedNodeId } from './getAddedNodeId';
-import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
+import { PersonNodeType, MaritalNodeType } from '../../types/PersonNodeType';
 import { Node } from 'reactflow';
 
 export const createMaritalNode = (position: MaritalNodeType['position']): MaritalNodeType => {
