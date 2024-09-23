@@ -43,6 +43,7 @@ const AppPage = () => {
           property="description"
           content={`${projectName}の家系図データです。`}
         />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <GlobalStyle />
       <ChakraProvider>

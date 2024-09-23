@@ -7,25 +7,25 @@ export interface BirthInfo {
 }
 
 export interface FamilyInfo {
-  createdAt: number;
+  createdAt?: number;
   birthDay?: Date;
   deathDay?: Date;
   givenName?: string;
   familyName?: string;
   gender?: string;
   profilePictureURL?: string;
-  label: string;
+  label?: string;
   selected: boolean;
-  parents: string[];
-  children: string[];
-  spouse: string[];
-  descendants: number;
-  descendantsWidth: number;
-  ancestors: number;
+  parents?: string[];
+  children?: string[];
+  spouse?: string[];
+  descendants?: number;
+  descendantsWidth?: number;
+  ancestors?: number;
   siblings?: string[];
   maritalPosition?: 'right' | 'left';
   maritalNodeId?: string;
-  isDivorced: boolean;
+  isDivorced?: boolean;
   isVisible?: boolean;
 }
 
