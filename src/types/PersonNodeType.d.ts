@@ -1,12 +1,6 @@
 import { Node } from 'reactflow';
 
-export interface BirthInfo {
-  birthYear?: number;
-  birthMonth?: number;
-  birthDate?: number;
-}
-
-export interface FamilyInfo {
+export interface PersonData {
   createdAt?: number;
   birthDay?: Date;
   deathDay?: Date;
@@ -15,7 +9,7 @@ export interface FamilyInfo {
   gender?: string;
   profilePictureURL?: string;
   label?: string;
-  selected: boolean;
+  selected?: boolean;
   parents?: string[];
   children?: string[];
   spouse?: string[];
@@ -33,11 +27,5 @@ export interface MaritalData {
   isDivorced: boolean;
 }
 
-export type PersonData = BirthInfo & FamilyInfo;
-export interface NodeData<T> extends Node<T> {
-  type: string;
-  data: T;
-}
-
-export type MaritalNodeType = NodeData<MaritalData>;
-export type PersonNodeType = NodeData<PersonData>;
+export type MaritalNodeType = Node<MaritalData>;
+export type PersonNodeType = Node<PersonData>;
