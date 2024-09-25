@@ -1,13 +1,13 @@
-import { MaritalData, MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
-import { Edge } from 'reactflow';
+import { Edge, Node } from 'reactflow';
 import extractEdgesFromNode from './extractEdgesFromNode';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
 import { isDeletableNode } from './isDeletableNode';
+import { NodeData, PersonData } from '@/types/NodeData';
 
 export const deleteNode = (
-  nodeList: (PersonNodeType | MaritalNodeType)[],
+  nodeList: Node<NodeData>[],
   edgeList: Edge[],
-  selectedNode: PersonNodeType | undefined
+  selectedNode: Node<PersonData> | undefined
 ) => {
   if (!selectedNode) return { nodeList, edgeList };
   const nodesCopy = [...nodeList];

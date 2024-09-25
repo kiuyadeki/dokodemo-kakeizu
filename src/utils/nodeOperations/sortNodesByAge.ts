@@ -1,9 +1,10 @@
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { NodeData, PersonData } from '@/types/NodeData';
+import { Node } from 'reactflow';
 
-export const sortNodesByAge = (nodes: (PersonNodeType | MaritalNodeType)[]) => {
+export const sortNodesByAge = (nodes: Node<NodeData>[]) => {
   const sortedNodes = nodes.sort((a, b) => {
-    const getAge = (node: PersonNodeType) => {
+    const getAge = (node: Node<PersonData>) => {
       const birthDay = node.data.birthDay;
       return birthDay ? new Date().getTime() - new Date(birthDay).getTime() : -Infinity;
     };

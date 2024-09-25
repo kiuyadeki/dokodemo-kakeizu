@@ -1,8 +1,9 @@
 import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
-import { MaritalNodeType, PersonNodeType } from "@/types/PersonNodeType";
+import { NodeData } from "@/types/NodeData";
+import { Node } from "reactflow";
 
 export const createNodeAncestorsCalculator = (
-  wholeNodes: (PersonNodeType | MaritalNodeType)[],
+  wholeNodes: Node<NodeData>[],
   calculatedNodes: Map<string, number[]>
 ) => {
   const calculateNodeAncestors = (nodeId: string, ancestors: string[] = []): number[] => {

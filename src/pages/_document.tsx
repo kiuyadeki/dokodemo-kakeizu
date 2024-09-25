@@ -1,5 +1,4 @@
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document';
-import { JSX } from 'react/jsx-runtime';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {

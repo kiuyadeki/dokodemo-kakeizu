@@ -18,8 +18,8 @@ import {
   Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
-import { Edge } from 'reactflow';
+import { NodeData, PersonData } from '@/types/NodeData';
+import { Edge, Node } from 'reactflow';
 import { addParentToSelectedNode } from '@/utils/nodeOperations/addParentToSelectedNode';
 import { addSpouseToSelectedNode } from '@/utils/nodeOperations/addSpouseToSelectedNode';
 import { AlertModal } from './ui/AlertModal';
@@ -28,9 +28,9 @@ import { isDeletableNode } from '@/utils/nodeOperations/isDeletableNode';
 type SelectActionModalProps = {
   closeModal: () => void;
   updateFamilyTree: (
-    nodes: (PersonNodeType | MaritalNodeType)[],
+    nodes: Node<NodeData>[],
     edges: Edge[],
-    selectedNode: PersonNodeType | undefined
+    selectedNode: Node<PersonData> | undefined
   ) => void;
 };
 

@@ -1,9 +1,10 @@
-import { MaritalNodeType, PersonNodeType } from '../../types/PersonNodeType';
+import { NodeData, PersonData } from '../../types/NodeData';
 import { isPersonNodeType } from '../../typeGuards/personTypeGuards';
+import { Node } from 'reactflow';
 
 export function getSelectedNodePosition(
-  nodesList: (PersonNodeType | MaritalNodeType)[],
-  selectedNode: PersonNodeType
+  nodesList: Node<NodeData>[],
+  selectedNode: Node<PersonData>,
 ): number[] {
   const defaultPosition = [0, 0];
   if (!selectedNode || !nodesList.length) return defaultPosition;

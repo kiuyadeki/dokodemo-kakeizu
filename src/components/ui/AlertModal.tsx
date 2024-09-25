@@ -2,7 +2,7 @@ import { selectedNodeState } from '@/recoil/selectedNodeState';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 import { wholeNodesState } from '@/recoil/WholeNodesState';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { NodeData, PersonData } from '@/types/NodeData';
 import { deleteNode } from '@/utils/nodeOperations/deleteNode';
 import { deleteNodeInfo } from '@/utils/nodeOperations/deleteNodeInfo';
 import {
@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { set } from 'date-fns';
 import { FC, memo, useEffect, useRef, useState } from 'react';
-import { Edge } from 'reactflow';
+import { Edge, Node } from 'reactflow';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 type AlertModalProps = {
@@ -26,9 +26,9 @@ type AlertModalProps = {
   closeModal: () => void;
   onCloseAlert: () => void;
   updateFamilyTree: (
-    nodes: (PersonNodeType | MaritalNodeType)[],
+    nodes: Node<NodeData>[],
     edges: Edge[],
-    selectedNode: PersonNodeType | undefined
+    selectedNode: Node<PersonData> | undefined
   ) => void;
 };
 
@@ -38,9 +38,7 @@ export const AlertModal: FC<AlertModalProps> = memo((props) => {
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
   const wholeNodes = useRecoilValue(wholeNodesState);
   const wholeEdges = useRecoilValue(wholeEdgesState);
-
-  const [isNodeDeleted, setIsNodeDeleted] = useState(false);
-  const [updatedNodes, setUpdatedNodes] = useState<(PersonNodeType | MaritalNodeType)[]>([]);
+  const [updatedNodes, setUpdatedNodes] = useState<Node<NodeData>[]>([]);
   const [updatedEdges, setUpdatedEdges] = useState<Edge[]>([]);
 
   const handleDeleteNode = () => {
@@ -48,7 +46,7 @@ export const AlertModal: FC<AlertModalProps> = memo((props) => {
     setUpdatedNodes(nodeList);
     setUpdatedEdges(edgeList);
 
-    let directNode: PersonNodeType | MaritalNodeType | undefined;
+    let directNode: Node<NodeData> | undefined;
     if (selectedNode?.data.parents.length === 0) {
       directNode = wholeNodes.find((node) => node.id === selectedNode?.data.spouse[0]);
     } else {

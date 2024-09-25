@@ -1,7 +1,8 @@
 import { atom } from 'recoil';
-import { PersonNodeType, MaritalNodeType } from '../types/PersonNodeType';
+import { NodeData } from '@/types/NodeData';
+import { Node } from 'reactflow';
 
-export const initialNode: PersonNodeType | MaritalNodeType = {
+export const initialNode: Node<NodeData> = {
   id: '0',
   type: 'person',
   data: {
@@ -26,7 +27,7 @@ export const initialNode: PersonNodeType | MaritalNodeType = {
   position: { x: 0, y: 0 },
 };
 
-export const wholeNodesState = atom<(PersonNodeType | MaritalNodeType)[]>({
+export const wholeNodesState = atom<Node<NodeData>[]>({
   key: 'wholeNodesState',
   default: [initialNode],
   dangerouslyAllowMutability: true,

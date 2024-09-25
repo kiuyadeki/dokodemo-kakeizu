@@ -1,11 +1,12 @@
-import { MaritalNodeType, PersonNodeType } from "@/types/PersonNodeType";
+import { NodeData, PersonData } from "@/types/NodeData";
 import { BASE_GENERATIONS_SPACING, BASE_MARITAL_NODE_HEIGHT, BASE_MARITAL_NODE_WIDTH, BASE_MARITAL_SPACING, BASE_PARENTS_GAP, BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from "../common/constants";
 import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
+import { Node } from "reactflow";
 
 export const calculateParentNodePosition = (
-  wholeNodes: (PersonNodeType | MaritalNodeType)[],
-  node: PersonNodeType | MaritalNodeType,
-  selectedNode: PersonNodeType,
+  wholeNodes: Node<NodeData>[],
+  node: Node<NodeData>,
+  selectedNode: Node<PersonData>,
   level: number,
   offsetX: number,
   ancestorsSide: 'left' | 'right' | ''

@@ -1,4 +1,4 @@
-import { Edge } from 'reactflow';
+import { Edge, Node } from 'reactflow';
 import { createMaritalNode, createPersonNode } from './nodeUtils';
 import { createEdge } from './edgeUtils';
 import {
@@ -9,12 +9,13 @@ import {
   BASE_PERSON_NODE_HEIGHT,
   BASE_PERSON_NODE_WIDTH,
 } from '../common/constants';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { NodeData, PersonData } from '@/types/NodeData';
 
 export const addParentToSelectedNode = (
-  nodeList: (PersonNodeType | MaritalNodeType)[],
+  nodeList: Node<NodeData>[],
   edgeList: Edge[],
-  selectedNode: PersonNodeType | undefined
+  
+  selectedNode: Node<PersonData> | undefined
 ) => {
   const nodesCopy = [...nodeList];
   const edgesCopy = [...edgeList];

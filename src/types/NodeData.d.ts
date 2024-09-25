@@ -1,7 +1,7 @@
 import { Node } from 'reactflow';
 
 export interface PersonData {
-  createdAt?: number;
+  createdAt: number;
   birthDay?: Date;
   deathDay?: Date;
   givenName?: string;
@@ -10,13 +10,13 @@ export interface PersonData {
   profilePictureURL?: string;
   label?: string;
   selected?: boolean;
-  parents?: string[];
-  children?: string[];
-  spouse?: string[];
-  descendants?: number;
-  descendantsWidth?: number;
-  ancestors?: number;
-  siblings?: string[];
+  parents: string[];
+  children: string[];
+  spouse: string[];
+  descendants: number;
+  descendantsWidth: number;
+  ancestors: number;
+  siblings: string[];
   maritalPosition?: 'right' | 'left';
   maritalNodeId?: string;
   isDivorced?: boolean;
@@ -27,5 +27,5 @@ export interface MaritalData {
   isDivorced: boolean;
 }
 
-export type MaritalNodeType = Node<MaritalData>;
-export type PersonNodeType = Node<PersonData>;
+export type NodeData = PersonData | MaritalData;
+

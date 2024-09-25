@@ -1,13 +1,14 @@
-import { PersonNodeType, MaritalNodeType } from '../../types/PersonNodeType';
+import { NodeData, PersonData } from '../../types/NodeData';
 import { isPersonNodeType } from '../../typeGuards/personTypeGuards';
 import { setDescendants } from './setDescendants';
 import { setAncestors } from './setAncestors';
 import { calculateParentNodePosition } from './calculateParentNodePosition';
 import { calculateSiblingsNodePosition } from './calculateSiblingsNodePosition';
+import { Node } from 'reactflow';
 
 export function calculateNodesPosition(
-  wholeNodes: (PersonNodeType | MaritalNodeType)[],
-  selectedNode: PersonNodeType | undefined
+  wholeNodes: Node<NodeData>[],
+  selectedNode: Node<PersonData> | undefined
 ) {
   if (!selectedNode) return;
   const wholeNodesCopy = structuredClone(wholeNodes);

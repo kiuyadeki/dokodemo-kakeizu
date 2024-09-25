@@ -1,17 +1,15 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { Edge } from 'reactflow';
+import { Edge, Node } from 'reactflow';
 import { createMaritalNode, createPersonNode } from './nodeUtils';
 import { createEdge } from './edgeUtils';
 import { BASE_MARITAL_SPACING } from '../common/constants';
-import { useRecoilValue } from 'recoil';
-import { selectedNodeState } from '../../recoil/selectedNodeState';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { NodeData } from '@/types/NodeData';
+import { PersonData } from '@/types/NodeData';
 
 export const addSpouseToSelectedNode = (
-  nodeList: (PersonNodeType | MaritalNodeType)[],
+  nodeList: Node<NodeData>[],
   edgeList: Edge[],
-  selectedNode: PersonNodeType | undefined
+  selectedNode: Node<PersonData> | undefined
 ) => {
   const nodesCopy = [...nodeList];
   const edgesCopy = [...edgeList];

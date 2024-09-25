@@ -1,8 +1,8 @@
 import { getAddedNodeId } from './getAddedNodeId';
-import { PersonNodeType, MaritalNodeType } from '../../types/PersonNodeType';
+import { MaritalData, PersonData } from '../../types/NodeData';
 import { Node } from 'reactflow';
 
-export const createMaritalNode = (position: MaritalNodeType['position']): MaritalNodeType => {
+export const createMaritalNode = (position: Node<MaritalData>['position']): Node<MaritalData> => {
   const maritalId = getAddedNodeId();
   return {
     type: 'marital',
@@ -12,7 +12,7 @@ export const createMaritalNode = (position: MaritalNodeType['position']): Marita
   };
 };
 
-export const createPersonNode = (position: PersonNodeType['position'], dataOverrides = {}): PersonNodeType => {
+export const createPersonNode = (position: Node<PersonData>['position'], dataOverrides = {}): Node<PersonData> => {
   const nodeId = getAddedNodeId();
   return {
     type: 'person',

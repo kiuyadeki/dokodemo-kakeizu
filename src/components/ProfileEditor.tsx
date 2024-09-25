@@ -1,9 +1,9 @@
 import { FC, FormEvent, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { wholeNodesState } from '../recoil/WholeNodesState';
 import { selectedNodeState } from '../recoil/selectedNodeState';
-import { MaritalNodeType, PersonNodeType } from '../types/PersonNodeType';
+import { NodeData, PersonData } from '../types/NodeData';
 import { ProfileEditorInputs } from '@/types/profileEditorInputs';
 import { ProfileTextInput } from './forms/ProfileTextInput';
 import { Button, HStack } from '@chakra-ui/react';
@@ -11,17 +11,13 @@ import { ProfileGenderInput } from './forms/ProfileGenderInput';
 import { ProfileDateInput } from './forms/ProfileDateInput';
 import { ProfileMediaInput } from './forms/ProfileMediaInput';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
-import { Edge } from 'reactflow';
+import { Edge, Node } from 'reactflow';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 import { updateNodeData } from '@/utils/nodeOperations/updateNodeData';
 
 type ProfileEditorProps = {
   onClose: () => void;
-  updateFamilyTree: (
-    nodes: (PersonNodeType | MaritalNodeType)[],
-    edges: Edge[],
-    selectedNode: PersonNodeType | undefined
-  ) => void;
+  updateFamilyTree: (nodes: Node<NodeData>[], edges: Edge[], selectedNode: Node<PersonData> | undefined) => void;
 };
 
 export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditorComponent(props) {

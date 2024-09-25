@@ -1,7 +1,8 @@
-import { PersonNodeType } from '@/types/PersonNodeType';
+import { PersonData } from '@/types/NodeData';
 import { ProfileEditorInputs } from '@/types/profileEditorInputs';
+import { Node } from 'reactflow';
 
-export const updateNodeData = (data: ProfileEditorInputs, node: PersonNodeType): Promise<PersonNodeType> => {
+export const updateNodeData = (data: ProfileEditorInputs, node: Node<PersonData>): Promise<Node<PersonData>> => {
   const updatedNode = {
     ...node,
     data: {

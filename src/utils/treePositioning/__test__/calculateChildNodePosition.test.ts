@@ -1,23 +1,28 @@
 import { calculateChildNodePosition } from "../calculateChildNodePosition";
-import { PersonNodeType, MaritalNodeType } from "@/types/PersonNodeType";
-import { BASE_GENERATIONS_SPACING, BASE_MARITAL_SPACING, BASE_SIBLINGS_SPACING } from "../../common/constants";
+import { NodeData, PersonData } from "@/types/NodeData";
+import { BASE_GENERATIONS_SPACING, BASE_MARITAL_SPACING } from "../../common/constants";
+import { Node } from "reactflow";
 
 describe("calculateChildNodePosition", () => {
-  const createPersonNode = (id: string, maritalPosition: "right" | "left" | undefined, descendantsWidth = 0, children = [], spouse = [], siblings = []): PersonNodeType => ({
+  const createPersonNode = (id: string, maritalPosition: "right" | "left" | undefined, descendantsWidth = 0, children = [], spouse = [], siblings = []): Node<PersonData> => ({
     id,
     type: "person",
     data: {
+      createdAt: new Date().getTime(),
       maritalPosition,
       descendantsWidth,
       children,
       spouse,
       siblings,
       selected: false,
+      parents: [],
+      descendants: 0,
+      ancestors: 0,
     },
     position: { x: 0, y: 0 },
   });
 
-  const createMaritalNode = (id: string): MaritalNodeType => ({
+  const createMaritalNode = (id: string): Node<NodeData> => ({
     id: id,
     type: "marital",
     position: { x: 0, y: 0 },

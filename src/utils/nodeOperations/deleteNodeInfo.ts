@@ -1,9 +1,10 @@
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { NodeData, PersonData } from '@/types/NodeData';
+import { Node } from 'reactflow';
 
 export const deleteNodeInfo = (
-  nodeList: (PersonNodeType | MaritalNodeType)[],
-  selectedNode: PersonNodeType | undefined
+  nodeList: Node<NodeData>[],
+  selectedNode: Node<PersonData> | undefined
 ) => {
   if (!isPersonNodeType(selectedNode)) return nodeList;
 

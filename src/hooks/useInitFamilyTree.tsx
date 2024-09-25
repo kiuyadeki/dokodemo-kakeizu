@@ -1,14 +1,13 @@
-import { selectedNodeState } from '@/recoil/selectedNodeState';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 import { initialNode, wholeNodesState } from '@/recoil/WholeNodesState';
 import { updateFamilyTreeData } from '@/services/updateFamilyTreeData';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { NodeData, PersonData } from '@/types/NodeData';
 import { calculateNodesPosition } from '@/utils/treePositioning/calculateNodesPosition';
 import { BASE_PERSON_NODE_HEIGHT, BASE_PERSON_NODE_WIDTH } from '@/utils/common/constants';
 import { filterDirectLineagesNodes } from '@/utils/nodeOperations/filterDirectLineageNodes';
 import { getSelectedNodePosition } from '@/utils/treePositioning/getSelectedNodePosition';
-import { Edge, useEdgesState, useNodesState, useReactFlow, useViewport } from 'reactflow';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { Edge, Node, useEdgesState, useNodesState, useReactFlow, useViewport } from 'reactflow';
+import { useRecoilState } from 'recoil';
 import { useFetchFamilyTreeData } from './useFetchFamilyTreeData';
 import { useEffect, useMemo, useState } from 'react';
 import { useGetProjectId } from './useGetProjectId';
@@ -43,9 +42,9 @@ export const useInitFamilyTree = () => {
   };
 
   const updateFamilyTree = (
-    nodes: (PersonNodeType | MaritalNodeType)[],
+    nodes: Node<NodeData>[],
     edges: Edge[],
-    selectedNode: PersonNodeType | undefined
+    selectedNode: Node<PersonData> | undefined
   ) => {
     if (!selectedNode) return;
     const calculatedWholeNodes = calculateNodesPosition(nodes, selectedNode);

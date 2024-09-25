@@ -1,9 +1,10 @@
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { NodeData } from '@/types/NodeData';
 import { BASE_MARITAL_SPACING, BASE_SIBLINGS_SPACING } from '../common/constants';
+import { Node } from 'reactflow';
 
 export const createNodeDescendantsCalculator = (
-  wholeNodes: (PersonNodeType | MaritalNodeType)[],
+  wholeNodes: Node<NodeData>[],
   calculatedNodes: Map<string, number[]>,
   calculatedNodeWidths: Map<string, number[]>
 ) => {

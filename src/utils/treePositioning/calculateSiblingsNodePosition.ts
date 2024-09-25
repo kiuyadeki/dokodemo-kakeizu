@@ -1,11 +1,12 @@
-import { MaritalNodeType, PersonNodeType } from "@/types/PersonNodeType";
+import { NodeData, PersonData } from "@/types/NodeData";
 import { sortNodesByAge } from "../nodeOperations/sortNodesByAge";
 import { calculateChildNodePosition } from "./calculateChildNodePosition";
 import { isPersonNodeType } from "@/typeGuards/personTypeGuards";
+import { Node } from "reactflow";
 
 export const calculateSiblingsNodePosition = (
-  wholeNodes: (PersonNodeType | MaritalNodeType)[],
-  selectedNode: PersonNodeType
+  wholeNodes: Node<NodeData>[],
+  selectedNode: Node<PersonData>,
 ) => {
   const siblingsNodes = wholeNodes.filter((node) => selectedNode.data.siblings?.includes(node.id));
   const sortedSiblingsNodes = sortNodesByAge(siblingsNodes);

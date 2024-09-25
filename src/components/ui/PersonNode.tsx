@@ -1,4 +1,4 @@
-import { Handle, NodeProps, Position } from 'reactflow';
+import { Handle, Node, NodeProps, Position } from 'reactflow';
 import { BASE_PERSON_NODE_WIDTH } from '../../utils/common/constants';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
@@ -7,7 +7,7 @@ import { BiSolidUser } from 'react-icons/bi';
 import styled, { css, keyframes } from 'styled-components';
 import { formatFullName } from '../../helpers/formatFullName';
 import { memo, useEffect, useState } from 'react';
-import { PersonNodeType } from '@/types/PersonNodeType';
+import { PersonData } from '@/types/NodeData';
 import { Text } from '@chakra-ui/react';
 import { getS3ImageUrl } from '@/utils/getS3ImageUrl';
 
@@ -124,7 +124,7 @@ const InformationBox = styled.div`
   text-align: center;
 `;
 
-export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
+export const PersonNode = memo((props: NodeProps<Node<PersonData>['data']>) => {
   const { id, data } = props;
   const { birthDay, deathDay, givenName, familyName, profilePictureURL } = data;
   const selectedNode = useRecoilValue(selectedNodeState);

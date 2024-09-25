@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Center,
-  ChakraBaseProvider,
   ChakraProvider,
   CircularProgress,
   Container,
@@ -15,7 +14,6 @@ import {
   extendTheme,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { CreateNewProject } from '@/components/CreateNewProject';
 import { fetchFamilyTreeSummary } from '@/services/fetchFamilyTreeSummary';
 import { useRouter } from 'next/router';

@@ -2,17 +2,17 @@ import { selectedNodeState } from '@/recoil/selectedNodeState';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
 import { wholeNodesState } from '@/recoil/WholeNodesState';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { NodeData, PersonData } from '@/types/NodeData';
 import { useEffect, useState } from 'react';
 import { Edge, Node } from 'reactflow';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 export const useHandlePersonNodeClick = (
   openModal: () => void,
   updateFamilyTree: (
-    nodes: (PersonNodeType | MaritalNodeType)[],
+    nodes: Node<NodeData>[],
     edges: Edge[],
-    selectedNode: PersonNodeType | undefined
+    selectedNode: Node<PersonData> | undefined
   ) => void
 ) => {
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
@@ -26,7 +26,7 @@ export const useHandlePersonNodeClick = (
     }
   }, [isSelectedNodeChanged]);
 
-  return (clickedNode: Node, selectedNode: PersonNodeType | undefined) => {
+  return (clickedNode: Node, selectedNode: Node<PersonData> | undefined) => {
     if (!isPersonNodeType(clickedNode) || !isPersonNodeType(selectedNode)) {
       return;
     }

@@ -4,20 +4,8 @@ import { selectedNodeState } from '../recoil/selectedNodeState';
 import { FC, use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PersonNode } from './ui/PersonNode';
 import { MaritalNode } from './ui/MaritalStatusNode';
-import {
-  ReactFlow,
-  Background,
-  BackgroundVariant,
-  useEdgesState,
-  useNodesState,
-  useReactFlow,
-  useViewport,
-  Edge,
-  Node,
-  OnNodesChange,
-  OnEdgesChange,
-} from 'reactflow';
-import { PersonNodeType, MaritalNodeType, MaritalData } from '../types/PersonNodeType';
+import { ReactFlow, Edge, Node, OnNodesChange, OnEdgesChange } from 'reactflow';
+import { MaritalData, PersonData, NodeData } from '../types/NodeData';
 import { ParentChildEdge } from './ui/ParentChildEdge';
 import { useHandlePersonNodeClick } from '@/hooks/useHandlePersonNodeClick';
 import { background, Box, Button, useToast } from '@chakra-ui/react';
@@ -28,15 +16,11 @@ import MaritalEdge from './ui/MaritalEdge';
 interface FamilyTreeWrapperProps {
   openModal: () => void;
   projectId: string | undefined;
-  nodes: Node<MaritalData, string | undefined>[];
+  nodes: Node<NodeData, string | undefined>[];
   edges: Edge[];
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
-  updateFamilyTree: (
-    nodes: (PersonNodeType | MaritalNodeType)[],
-    edges: Edge[],
-    selectedNode: PersonNodeType | undefined
-  ) => void;
+  updateFamilyTree: (nodes: Node<NodeData>[], edges: Edge[], selectedNode: Node<PersonData> | undefined) => void;
   onUpdate: (id: string) => Promise<boolean | undefined>;
 }
 
@@ -53,9 +37,9 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
   const toast = useToast();
   useEffect(() => {
     if (!nodes.length) return;
-    setWholeNodes(nodes as (PersonNodeType | MaritalNodeType)[]);
+    setWholeNodes(nodes as Node<NodeData>[]);
     setWholeEdges(edges);
-    setSelectedNode(wholeNodes[0] as PersonNodeType);
+    setSelectedNode(wholeNodes[0] as Node<PersonData>);
   }, []);
 
   const handleSaveButtonClick = async () => {

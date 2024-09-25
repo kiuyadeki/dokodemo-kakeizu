@@ -1,22 +1,22 @@
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
-import { PersonNodeType, MaritalNodeType } from '../../types/PersonNodeType';
-import { Edge } from 'reactflow';
+import { PersonData, NodeData } from '../../types/NodeData';
+import { Edge, Node } from 'reactflow';
 
 export function filterDirectLineagesNodes(
-  wholeNodes: (PersonNodeType | MaritalNodeType)[],
+  wholeNodes: Node<NodeData>[],
   wholeEdges: Edge[],
-  selectedNode: PersonNodeType | undefined
+  selectedNode: Node<PersonData> | undefined
 ) {
   const findDirectLineage = () => {
     if (!selectedNode || !isPersonNodeType(selectedNode)) {
       return { directLineageNodes: wholeNodes, directLineageEdges: wholeEdges };
     }
 
-    const lineageNodes = new Set<PersonNodeType | MaritalNodeType>();
+    const lineageNodes = new Set<Node<NodeData>>();
     const lineageEdges = new Set<Edge>();
     const findRelatedNodesAndEdges = (
-      nodeId: PersonNodeType['id'],
-      selectedNodeId: PersonNodeType['id'],
+      nodeId: Node<PersonData>['id'],
+      selectedNodeId: Node<PersonData>['id'],
       lineage: 'isSibling' | 'isParent' | 'isChild' | 'isSelected'
     ) => {
       const node = wholeNodes.find((n) => n.id === nodeId);
