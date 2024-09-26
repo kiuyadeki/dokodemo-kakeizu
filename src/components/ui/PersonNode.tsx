@@ -137,6 +137,20 @@ export const PersonNode = memo((props: NodeProps<Node<PersonData>['data']>) => {
     ? new Date(deathDay).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
     : '';
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
+
+  const getAge = (birthDate: Date | undefined): number | undefined => {
+    if (!birthDate) return undefined;
+    const birth = new Date(birthDate);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  };
+  const age = getAge(birthDay);
+
   useEffect(() => {
     if (profilePictureURL) {
       getS3ImageUrl(profilePictureURL).then((sourceUrl) => {
@@ -204,6 +218,9 @@ export const PersonNode = memo((props: NodeProps<Node<PersonData>['data']>) => {
                 <Text whiteSpace="nowrap">
                   {formattedBirthDay && `${formattedBirthDay}〜`}
                   {formattedDeathDay}
+                </Text>
+                <Text whiteSpace="nowrap">
+                  {age !== undefined && `${age}歳`}
                 </Text>
               </InformationBox>
             </StyledBox>

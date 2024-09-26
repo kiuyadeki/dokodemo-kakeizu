@@ -51,8 +51,8 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
       const { familyName, givenName, birthDay, deathDay, gender, profilePictureURL } = selectedNode.data;
       setValue('familyName', familyName || '');
       setValue('givenName', givenName || '');
-      setValue('birthDay', birthDay || new Date());
-      setValue('deathDay', deathDay || new Date());
+      setValue('birthDay', birthDay || undefined);
+      setValue('deathDay', deathDay || undefined);
       setValue('gender', gender || '');
       setValue('profilePictureURL', profilePictureURL || '');
     }
