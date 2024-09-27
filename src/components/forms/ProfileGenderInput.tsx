@@ -39,20 +39,26 @@ export const ProfileGenderInput: FC<GenderInputProps> = memo(({ control, genderV
       <FormLabel mt={6}>性別</FormLabel>
       <HStack>
         <Controller
-        name={genderValue}
-        control={control}
-        defaultValue={defaultGender}
-        render={({ field }) => (
-        <RadioGroup {...field}>
-          <Stack direction="row" spacing={6}>
-            {genders.map((gender) => (
-              <Radio key={gender.value} value={gender.value}>
-                {gender.label}
-              </Radio>
-            ))}
-          </Stack>
-        </RadioGroup>
-        )}
+          name={genderValue}
+          control={control}
+          defaultValue={defaultGender}
+          render={({ field }) => (
+            <RadioGroup {...field}>
+              <Stack
+                direction="row"
+                spacing={6}
+              >
+                {genders.map((gender) => (
+                  <Radio
+                    key={gender.value}
+                    value={gender.value}
+                  >
+                    {gender.label}
+                  </Radio>
+                ))}
+              </Stack>
+            </RadioGroup>
+          )}
         />
       </HStack>
     </>

@@ -1,5 +1,4 @@
 import { putProfilePictureToS3 } from '@/utils/putProfilePictureToS3';
-import { getUrl } from '@aws-amplify/storage';
 import { ChangeEvent, useState } from 'react';
 
 export const useProfilePictureUpload = () => {

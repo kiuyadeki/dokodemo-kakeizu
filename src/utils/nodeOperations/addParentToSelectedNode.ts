@@ -1,6 +1,6 @@
-import { Edge } from 'reactflow';
-import { createMaritalNode, createPersonNode } from '../utils/nodeUtils';
-import { createEdge } from '../utils/edgeUtils';
+import { Edge, Node } from 'reactflow';
+import { createMaritalNode, createPersonNode } from './nodeUtils';
+import { createEdge } from './edgeUtils';
 import {
   BASE_GENERATIONS_SPACING,
   BASE_MARITAL_NODE_HEIGHT,
@@ -8,13 +8,14 @@ import {
   BASE_MARITAL_SPACING,
   BASE_PERSON_NODE_HEIGHT,
   BASE_PERSON_NODE_WIDTH,
-} from '../utils/constants';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+} from '../common/constants';
+import { NodeData, PersonData } from '@/types/NodeData';
 
 export const addParentToSelectedNode = (
-  nodeList: (PersonNodeType | MaritalNodeType)[],
+  nodeList: Node<NodeData>[],
   edgeList: Edge[],
-  selectedNode: PersonNodeType | undefined
+  
+  selectedNode: Node<PersonData> | undefined
 ) => {
   const nodesCopy = [...nodeList];
   const edgesCopy = [...edgeList];
@@ -52,8 +53,8 @@ export const addParentToSelectedNode = (
 
   const edgesToAdd = [
     createEdge(selectedNode.id, maritalNode.id, 'parentChild', 'personSourceTop', 'maritalTargetBottom'),
-    createEdge(leftParentNode.id, maritalNode.id, 'smoothstep', 'personSourceRight', 'maritalTargetLeft'),
-    createEdge(rightParentNode.id, maritalNode.id, 'smoothstep', 'personSourceLeft', 'maritalTargetRight'),
+    createEdge(leftParentNode.id, maritalNode.id, 'Marital', 'personSourceRight', 'maritalTargetLeft'),
+    createEdge(rightParentNode.id, maritalNode.id, 'Marital', 'personSourceLeft', 'maritalTargetRight'),
   ];
 
   const updatedNode = {

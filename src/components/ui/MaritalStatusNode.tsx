@@ -1,11 +1,11 @@
-import { Handle, NodeProps, Position } from 'reactflow';
-import { BASE_MARITAL_NODE_HEIGHT, BASE_MARITAL_NODE_WIDTH } from '../../utils/constants';
+import { Handle, Node, NodeProps, Position } from 'reactflow';
+import { BASE_MARITAL_NODE_HEIGHT, BASE_MARITAL_NODE_WIDTH } from '../../utils/common/constants';
 
 import { GiBigDiamondRing } from 'react-icons/gi';
 import { TfiUnlink } from 'react-icons/tfi';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { MaritalNodeType } from '@/types/PersonNodeType';
+import { MaritalData } from '@/types/NodeData';
 import { wholeNodesState } from '@/recoil/WholeNodesState';
 import { memo } from 'react';
 
@@ -41,7 +41,7 @@ const NodeInner = styled.div`
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 `;
 
-export const MaritalNode = memo((props: NodeProps<MaritalNodeType['data']>) => {
+export const MaritalNode = memo((props: NodeProps<Node<MaritalData>['data']>) => {
   const { id, data } = props;
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const handleClick = (event: React.MouseEvent) => {
@@ -54,14 +54,25 @@ export const MaritalNode = memo((props: NodeProps<MaritalNodeType['data']>) => {
       return newNodes;
     });
   };
-  // const isDivorced = data.isDivorced ?? false;
 
   return (
     <NodeContainer onClick={handleClick}>
       <NodeInner>{!data.isDivorced ? <GiBigDiamondRing /> : <TfiUnlink />}</NodeInner>
-      <StyledHandle type="target" position={Position.Right} id="maritalTargetRight" />
-      <StyledHandle type="target" position={Position.Left} id="maritalTargetLeft" />
-      <StyledHandle type="target" position={Position.Bottom} id="maritalTargetBottom" />
+      <StyledHandle
+        type="target"
+        position={Position.Right}
+        id="maritalTargetRight"
+      />
+      <StyledHandle
+        type="target"
+        position={Position.Left}
+        id="maritalTargetLeft"
+      />
+      <StyledHandle
+        type="target"
+        position={Position.Bottom}
+        id="maritalTargetBottom"
+      />
     </NodeContainer>
   );
 });

@@ -1,94 +1,38 @@
-import { FC, memo, useEffect, useReducer, useState } from 'react';
+import { FC, memo, useState } from 'react';
 import { ProfileEditor } from './ProfileEditor';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../recoil/selectedNodeState';
-import { addChildNodeToSelectedNode } from '../utils/addChildNodeToSelectedNode';
+import { addChildNodeToSelectedNode } from '../utils/nodeOperations/addChildNodeToSelectedNode';
 import { wholeNodesState } from '../recoil/WholeNodesState';
 import { wholeEdgesState } from '../recoil/WholeEdgesState';
-import { IoCloseOutline } from 'react-icons/io5';
-import styled from 'styled-components';
 import { ProfileEditorState } from '@/recoil/profileEditorState';
-import { Button, Flex, Grid } from '@chakra-ui/react';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
-import { Edge } from 'reactflow';
-import { addParentToSelectedNode } from '@/utils/addParentToSelectedNode';
-import { addSpouseToSelectedNode } from '@/utils/addSpouseToSelectedNode';
+import {
+  Button,
+  Flex,
+  Grid,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Tooltip,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { NodeData, PersonData } from '@/types/NodeData';
+import { Edge, Node } from 'reactflow';
+import { addParentToSelectedNode } from '@/utils/nodeOperations/addParentToSelectedNode';
+import { addSpouseToSelectedNode } from '@/utils/nodeOperations/addSpouseToSelectedNode';
+import { AlertModal } from './ui/AlertModal';
+import { isDeletableNode } from '@/utils/nodeOperations/isDeletableNode';
 
 type SelectActionModalProps = {
   closeModal: () => void;
-  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void;
+  updateFamilyTree: (
+    nodes: Node<NodeData>[],
+    edges: Edge[],
+    selectedNode: Node<PersonData> | undefined
+  ) => void;
 };
-
-const ButtonList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-  column-gap: 1rem;
-  row-gap: 1.2rem;
-`;
-
-const StyledButton = styled.button`
-  display: inline-flex;
-  appearance: none;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-  position: relative;
-  white-space: nowrap;
-  vertical-align: middle;
-  outline: none;
-  border: none;
-  line-height: 1.2;
-  border-radius: 0.375rem;
-  font-weight: 600;
-  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
-  transition-duration: 200ms;
-  height: 2.5rem;
-  min-width: 2.5rem;
-  font-size: 1rem;
-  padding-inline: 1rem;
-  background: #edf2f7;
-  color: #1a202c;
-  cursor: pointer;
-
-  @media (hover) {
-    &:hover {
-      background-color: #e2e8f0;
-    }
-  }
-
-  &[disabled] {
-    opacity: 0.4;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-`;
-
-const ModalBody = styled.div`
-  padding-inline: 2.5rem;
-  padding-block: 5rem 3rem;
-  flex: 1 1 0%;
-  position: relative;
-`;
-
-const CloseButton = styled.button`
-  appearance: none;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  position: absolute;
-  padding: 3px;
-  border-radius: 4px;
-  right: 0.7rem;
-  top: 0.5rem;
-  cursor: pointer;
-  line-height: 0;
-  transition: background-color 300ms;
-  @media (hover) {
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.06);
-    }
-  }
-`;
 
 export const SelectActionModal: FC<SelectActionModalProps> = memo(function SelectActionModalComponent(props) {
   const { closeModal, updateFamilyTree } = props;
@@ -96,6 +40,8 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
   const wholeNodes = useRecoilValue(wholeNodesState);
   const wholeEdges = useRecoilValue(wholeEdgesState);
   const [showProfileEditor, setShowProfileEditor] = useRecoilState(ProfileEditorState);
+  const [isNodeDeletable, setIsNodeDeletable] = useState(false);
+  const { isOpen, onOpen, onClose: onCloseAlert } = useDisclosure();
 
   const updateNodesAndEdges = (AddedNode: 'parent' | 'child' | 'spouse') => {
     switch (AddedNode) {
@@ -105,7 +51,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
           wholeEdges,
           selectedNode
         );
-        updateFamilyTree(nodesCopyParent, edgesCopyParent);
+        updateFamilyTree(nodesCopyParent, edgesCopyParent, selectedNode);
         break;
       case 'child':
         const { nodesCopy: nodesCopyChild, edgesCopy: edgesCopyChild } = addChildNodeToSelectedNode(
@@ -113,7 +59,7 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
           wholeEdges,
           selectedNode
         );
-        updateFamilyTree(nodesCopyChild, edgesCopyChild);
+        updateFamilyTree(nodesCopyChild, edgesCopyChild, selectedNode);
         break;
       case 'spouse':
         const { nodesCopy: nodesCopySpouse, edgesCopy: edgesCopySpouse } = addSpouseToSelectedNode(
@@ -121,14 +67,13 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
           wholeEdges,
           selectedNode
         );
-        updateFamilyTree(nodesCopySpouse, edgesCopySpouse);
+        updateFamilyTree(nodesCopySpouse, edgesCopySpouse, selectedNode);
         break;
       default:
         break;
     }
   };
 
-  // 情報を編集
   const displayProfileEditor = () => {
     if (selectedNode) {
       setShowProfileEditor(true);
@@ -137,7 +82,11 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
 
   const closeAndInitModal = () => {
     closeModal();
-    setShowProfileEditor(false);
+  };
+
+  const handleAlertModal = () => {
+    setIsNodeDeletable(isDeletableNode(wholeEdges, selectedNode));
+    onOpen();
   };
 
   let hasParents = false;
@@ -149,25 +98,49 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
 
   return (
     <>
-      <ModalBody>
-        <CloseButton onClick={closeAndInitModal}>
-          <IoCloseOutline size={25} color="currentColor" />
-        </CloseButton>
-        {showProfileEditor ? (
-          <ProfileEditor onClose={closeAndInitModal} updateFamilyTree={updateFamilyTree} />
-        ) : (
-          <>
-            <Grid templateColumns="repeat(2, 1fr)" gap={5}>
+      <ModalOverlay />
+      <ModalContent
+        p={6}
+        maxHeight="calc(100% - 40px)"
+        overflowY="auto"
+      >
+        <ModalHeader>
+          詳細情報を編集中
+          <ModalCloseButton />
+        </ModalHeader>
+        <ModalBody>
+          {showProfileEditor ? (
+            <ProfileEditor
+              onClose={closeAndInitModal}
+              updateFamilyTree={updateFamilyTree}
+            />
+          ) : (
+            <Grid
+              templateColumns="repeat(2, 1fr)"
+              gap={3}
+            >
               <Button
-                isDisabled={hasParents}
+                colorScheme="orange"
                 onClick={() => {
-                  updateNodesAndEdges('parent');
-                  closeModal();
+                  displayProfileEditor();
                 }}
               >
-                親を追加
+                情報を編集
               </Button>
+              <Tooltip label="親がいない場合のみ追加できます">
+                <Button
+                  colorScheme="teal"
+                  isDisabled={hasParents}
+                  onClick={() => {
+                    updateNodesAndEdges('parent');
+                    closeModal();
+                  }}
+                >
+                  親を追加
+                </Button>
+              </Tooltip>
               <Button
+                colorScheme="teal"
                 onClick={() => {
                   updateNodesAndEdges('child');
                   closeModal();
@@ -175,26 +148,35 @@ export const SelectActionModal: FC<SelectActionModalProps> = memo(function Selec
               >
                 子を追加
               </Button>
+              <Tooltip label="配偶者がいない場合のみ追加できます">
+                <Button
+                  colorScheme="teal"
+                  isDisabled={hasSpouse}
+                  onClick={() => {
+                    updateNodesAndEdges('spouse');
+                    closeModal();
+                  }}
+                >
+                  配偶者を追加
+                </Button>
+              </Tooltip>
               <Button
-                isDisabled={hasSpouse}
-                onClick={() => {
-                  updateNodesAndEdges('spouse');
-                  closeModal();
-                }}
+                onClick={handleAlertModal}
+                colorScheme="red"
               >
-                配偶者を追加
+                削除
               </Button>
-              <Button
-                onClick={() => {
-                  displayProfileEditor();
-                }}
-              >
-                情報を編集
-              </Button>
+              <AlertModal
+                isDeletable={isNodeDeletable}
+                isOpen={isOpen}
+                onCloseAlert={onCloseAlert}
+                closeModal={closeModal}
+                updateFamilyTree={updateFamilyTree}
+              />
             </Grid>
-          </>
-        )}
-      </ModalBody>
+          )}
+        </ModalBody>
+      </ModalContent>
     </>
   );
 });

@@ -1,20 +1,20 @@
-import { FC, memo, useEffect } from 'react';
-import { ReactFlowProvider } from 'reactflow';
+import { FC, memo } from 'react';
 import 'reactflow/dist/style.css';
 import { SelectActionModal } from './SelectActionModal';
-import { UseMicroModal } from '@/hooks/useMicromodal';
 import { FamilyTreeWrapper } from './FamilyTreeWrapper';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ProfileEditorState } from '@/recoil/profileEditorState';
 import { useInitFamilyTree } from '@/hooks/useInitFamilyTree';
-import { useGetProjectId } from '@/hooks/useGetProjectId';
-import { Center, CircularProgress, CircularProgressLabel, HStack, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Center, CircularProgress, Modal, Text, useDisclosure, VStack } from '@chakra-ui/react';
 
 export const FamilyTree: FC = memo(function FamilyTreeComponent() {
   const setShowProfileEditor = useSetRecoilState(ProfileEditorState);
-  const { Modal, open, close } = UseMicroModal('select-action-modal', () => {
-    setShowProfileEditor(false);
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    onClose: () => {
+      setShowProfileEditor(false);
+    },
   });
+
   const { isLoading, projectId, nodes, edges, onNodesChange, onEdgesChange, onUpdate, updateFamilyTree } =
     useInitFamilyTree();
 
@@ -23,14 +23,17 @@ export const FamilyTree: FC = memo(function FamilyTreeComponent() {
       {isLoading ? (
         <Center minHeight="100vh">
           <VStack>
-            <CircularProgress isIndeterminate color="blue.600" />
+            <CircularProgress
+              isIndeterminate
+              color="blue.600"
+            />
             <Text mt={3}>家系図を描画しています。</Text>
           </VStack>
         </Center>
       ) : (
         <FamilyTreeWrapper
           projectId={projectId}
-          openModal={open}
+          openModal={onOpen}
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
@@ -39,8 +42,16 @@ export const FamilyTree: FC = memo(function FamilyTreeComponent() {
           onUpdate={onUpdate}
         />
       )}
-      <Modal>
-        <SelectActionModal closeModal={close} updateFamilyTree={updateFamilyTree} />
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size="lg"
+        isCentered
+      >
+        <SelectActionModal
+          closeModal={onClose}
+          updateFamilyTree={updateFamilyTree}
+        />
       </Modal>
     </>
   );

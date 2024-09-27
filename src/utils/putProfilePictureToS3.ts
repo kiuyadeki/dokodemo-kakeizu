@@ -13,10 +13,6 @@ export const putProfilePictureToS3 = async (file: File) => {
       },
     });
     const result = await operation.result;
-    console.log('S3 result', result);
-    // const uploadedImageObject = await getUrl({
-    //   path: result.path,
-    // });
 
     return result.path;
   } catch (error) {

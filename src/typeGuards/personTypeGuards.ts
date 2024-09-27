@@ -1,7 +1,7 @@
 import { Node } from 'reactflow';
-import { PersonNodeType } from '@/types/PersonNodeType';
+import { PersonData } from '@/types/NodeData';
 
-export const isPersonNodeType = function (node: Node | null | undefined): node is PersonNodeType {
+export const isPersonNodeType = function (node: Node | null | undefined): node is Node<PersonData> {
   if (!node || !node.data) return false;
   const data = node.data;
   return (

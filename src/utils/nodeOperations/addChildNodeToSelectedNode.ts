@@ -1,18 +1,18 @@
-import { Edge } from 'reactflow';
+import { Edge, Node } from 'reactflow';
 import extractEdgesFromNode from './extractEdgesFromNode';
 import { createMaritalNode, createPersonNode } from './nodeUtils';
 import { createEdge } from './edgeUtils';
-import { BASE_GENERATIONS_SPACING, BASE_MARITAL_SPACING } from './constants';
-import { isPersonNodeType } from '../typeGuards/personTypeGuards';
-import { MaritalNodeType, PersonNodeType } from '@/types/PersonNodeType';
+import { BASE_GENERATIONS_SPACING, BASE_MARITAL_SPACING } from '../common/constants';
+import { isPersonNodeType } from '../../typeGuards/personTypeGuards';
+import { NodeData, PersonData } from '@/types/NodeData';
 import { updateSpouseAndChildren } from './updateSpouseAndChildren';
 import { updateSiblings } from './updateSiblings';
 import { updateChildren } from './updateChildren';
 
 export const addChildNodeToSelectedNode = (
-  nodeList: (PersonNodeType | MaritalNodeType)[],
+  nodeList: Node<NodeData>[],
   edgeList: Edge[],
-  selectedNode: PersonNodeType | undefined
+  selectedNode: Node<PersonData> | undefined
 ) => {
   const nodesCopy = [...nodeList];
   const edgesCopy = [...edgeList];
@@ -24,8 +24,8 @@ export const addChildNodeToSelectedNode = (
   if (!selectedNodeMaritalPosition) {
     selectedNodeMaritalPosition = 'left';
   }
-  let maritalNodeId: MaritalNodeType['id'];
-  let spouseID: MaritalNodeType['id'] = selectedNode.data.spouse[0] || '';
+  let maritalNodeId: Node<PersonData>['id'];
+  let spouseID: Node<PersonData>['id'] = selectedNode.data.spouse[0] || '';
   if (!selectedNode.data.spouse.length) {
     const maritalNode = createMaritalNode({
       x: selectedNode.position.x + BASE_MARITAL_SPACING,
@@ -46,8 +46,8 @@ export const addChildNodeToSelectedNode = (
     spouseID = spouseNode.id;
     nodesCopy.push(maritalNode, spouseNode);
     edgesCopy.push(
-      createEdge(selectedNode.id, maritalNodeId, 'smoothstep', 'personSourceRight', 'maritalTargetLeft'),
-      createEdge(spouseID, maritalNodeId, 'smoothstep', 'personSourceLeft', 'maritalTargetRight')
+      createEdge(selectedNode.id, maritalNodeId, 'Marital', 'personSourceRight', 'maritalTargetLeft'),
+      createEdge(spouseID, maritalNodeId, 'Marital', 'personSourceLeft', 'maritalTargetRight')
     );
   } else {
     maritalNodeId =

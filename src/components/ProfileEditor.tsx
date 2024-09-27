@@ -1,23 +1,23 @@
 import { FC, FormEvent, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { wholeNodesState } from '../recoil/WholeNodesState';
 import { selectedNodeState } from '../recoil/selectedNodeState';
-import { MaritalNodeType, PersonNodeType } from '../types/PersonNodeType';
+import { NodeData, PersonData } from '../types/NodeData';
 import { ProfileEditorInputs } from '@/types/profileEditorInputs';
 import { ProfileTextInput } from './forms/ProfileTextInput';
 import { Button, HStack } from '@chakra-ui/react';
 import { ProfileGenderInput } from './forms/ProfileGenderInput';
-import { ProfileBirthInput } from './forms/ProfileBirthInput';
+import { ProfileDateInput } from './forms/ProfileDateInput';
 import { ProfileMediaInput } from './forms/ProfileMediaInput';
 import { isPersonNodeType } from '@/typeGuards/personTypeGuards';
-import { Edge } from 'reactflow';
+import { Edge, Node } from 'reactflow';
 import { wholeEdgesState } from '@/recoil/WholeEdgesState';
-import { updateNodeData } from '@/utils/updateNodeData';
+import { updateNodeData } from '@/utils/nodeOperations/updateNodeData';
 
 type ProfileEditorProps = {
   onClose: () => void;
-  updateFamilyTree: (nodes: (PersonNodeType | MaritalNodeType)[], edges: Edge[]) => void;
+  updateFamilyTree: (nodes: Node<NodeData>[], edges: Edge[], selectedNode: Node<PersonData> | undefined) => void;
 };
 
 export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditorComponent(props) {
@@ -37,22 +37,22 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
 
   const onSubmit = async (data: ProfileEditorInputs) => {
     if (selectedNode) {
-      console.log('submitData', data);
       const updatedNode = await updateNodeData(data, selectedNode);
       const updatedNodesCopy = wholeNodesCopy.map((node) => {
         return node.id === selectedNode.id ? updatedNode : node;
       });
-      updateFamilyTree(updatedNodesCopy, wholeEdgesCopy);
+      updateFamilyTree(updatedNodesCopy, wholeEdgesCopy, selectedNode);
     }
     onClose();
   };
 
   useEffect(() => {
     if (isPersonNodeType(selectedNode)) {
-      const { familyName, givenName, birthDay, gender, profilePictureURL } = selectedNode.data;
+      const { familyName, givenName, birthDay, deathDay, gender, profilePictureURL } = selectedNode.data;
       setValue('familyName', familyName || '');
       setValue('givenName', givenName || '');
-      setValue('birthDay', birthDay || new Date());
+      setValue('birthDay', birthDay || undefined);
+      setValue('deathDay', deathDay || undefined);
       setValue('gender', gender || '');
       setValue('profilePictureURL', profilePictureURL || '');
     }
@@ -74,8 +74,25 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
           errorMessage={errors.givenName?.message}
         />
       </HStack>
-      <ProfileGenderInput control={control} genderValue="gender" defaultGender={selectedNode?.data?.gender || ''} />
-      <ProfileBirthInput register={register} birthValue="birthDay" control={control} />
+      <ProfileGenderInput
+        control={control}
+        genderValue="gender"
+        defaultGender={selectedNode?.data?.gender || ''}
+      />
+      <HStack>
+        <ProfileDateInput
+          label="生年月日"
+          register={register}
+          dateValue="birthDay"
+          control={control}
+        />
+        <ProfileDateInput
+          label="没年月日"
+          register={register}
+          dateValue="deathDay"
+          control={control}
+        />
+      </HStack>
       <ProfileMediaInput
         register={register}
         setValue={setValue}
@@ -83,7 +100,11 @@ export const ProfileEditor: FC<ProfileEditorProps> = memo(function ProfileEditor
         selectedNode={selectedNode}
       />
 
-      <Button mt={4} isLoading={isSubmitting} type="submit">
+      <Button
+        mt={4}
+        isLoading={isSubmitting}
+        type="submit"
+      >
         保存する
       </Button>
     </form>

@@ -1,16 +1,17 @@
 import { useProfilePictureUpload } from '@/hooks/useProfilePictureChange';
-import { PersonNodeType } from '@/types/PersonNodeType';
+import { PersonData } from '@/types/NodeData';
 import { ProfileEditorInputs } from '@/types/profileEditorInputs';
 import { getS3ImageUrl } from '@/utils/getS3ImageUrl';
 import { Button, FormControl, FormLabel, Image, Input } from '@chakra-ui/react';
 import { FC, memo, useEffect, useRef, useState } from 'react';
 import { FieldValues, set, UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { Node } from 'reactflow';
 
 interface MediaInputProps {
   mediaValue: string;
   setValue: UseFormSetValue<ProfileEditorInputs>;
   register: UseFormRegister<ProfileEditorInputs>;
-  selectedNode: PersonNodeType | undefined;
+  selectedNode: Node<PersonData> | undefined;
 }
 
 export const ProfileMediaInput: FC<MediaInputProps> = memo(({ register, setValue, mediaValue, selectedNode }) => {
@@ -60,11 +61,30 @@ export const ProfileMediaInput: FC<MediaInputProps> = memo(({ register, setValue
         hidden
         ref={inputRef}
       />
-      <Button type="button" onClick={handleButtonClick}>
-        写真を選択
+      <Button
+        type="button"
+        onClick={handleButtonClick}
+      >
+        写真を選択する
       </Button>
-      {imageUrl && <Image mt={6} src={imageUrl} alt="アップロードされた画像" />}
-      {!imageUrl && existingImageUrl && <Image mt={6} src={existingImageUrl} alt="アップロードされた画像" />}
+      {imageUrl && (
+        <Image
+          boxSize="300px"
+          objectFit="cover"
+          mt={6}
+          src={imageUrl}
+          alt="アップロードされた画像"
+        />
+      )}
+      {!imageUrl && existingImageUrl && (
+        <Image
+          boxSize="300px"
+          objectFit="cover"
+          mt={6}
+          src={existingImageUrl}
+          alt="アップロードされた画像"
+        />
+      )}
     </FormControl>
   );
 });

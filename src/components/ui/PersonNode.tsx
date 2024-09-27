@@ -1,14 +1,13 @@
-import { Handle, NodeProps, Position } from 'reactflow';
-import { BASE_PERSON_NODE_WIDTH } from '../../utils/constants';
+import { Handle, Node, NodeProps, Position } from 'reactflow';
+import { BASE_PERSON_NODE_WIDTH } from '../../utils/common/constants';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 import { selectedNodeState } from '../../recoil/selectedNodeState';
 import { BiSolidUser } from 'react-icons/bi';
 import styled, { css, keyframes } from 'styled-components';
-import { formatBirthDay } from '../../helpers/formatBirthDay';
 import { formatFullName } from '../../helpers/formatFullName';
 import { memo, useEffect, useState } from 'react';
-import { PersonNodeType } from '@/types/PersonNodeType';
+import { PersonData } from '@/types/NodeData';
 import { Text } from '@chakra-ui/react';
 import { getS3ImageUrl } from '@/utils/getS3ImageUrl';
 
@@ -79,7 +78,7 @@ const StyledBox = styled.div.withConfig({
     border-radius: 50%;
     transition: opacity linear 0.4s;
     z-index: -1;
-    border: 1px solid #90cdf4;
+    border: 2px solid #BF712C;
   }
 `;
 
@@ -94,7 +93,7 @@ const IconBox = styled.div.withConfig({
   overflow: hidden;
   border-radius: 50%;
   position: relative;
-  background-color: ${({ isSelected }) => (isSelected ? '#3182ce' : '#ccc')};
+  background-color: ${({ isSelected }) => (isSelected ? '#D9A74A' : '#ccc')};
   border-width: 2px;
   border-style: solid;
   border-color: ${({ gender }) => (gender === 'male' ? '#3182ce' : gender === 'female' ? '#E53E3E' : '#ccc')};
@@ -119,22 +118,39 @@ const CustomProfileIcon = styled.img`
 
 const InformationBox = styled.div`
   position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  right: 0;
+  top: calc(100% + 14px);
+  left: 50%;
+  translate: -50% 0;
   text-align: center;
 `;
 
-export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
+export const PersonNode = memo((props: NodeProps<Node<PersonData>['data']>) => {
   const { id, data } = props;
-  const { birthDay, givenName, familyName, profilePictureURL } = data;
+  const { birthDay, deathDay, givenName, familyName, profilePictureURL } = data;
   const selectedNode = useRecoilValue(selectedNodeState);
   const isSelected = id === selectedNode?.id;
   const fullName = formatFullName({ familyName, givenName });
   const formattedBirthDay = birthDay
     ? new Date(birthDay).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
     : '';
+  const formattedDeathDay = deathDay
+    ? new Date(deathDay).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    : '';
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
+
+  const getAge = (birthDate: Date | undefined): number | undefined => {
+    if (!birthDate) return undefined;
+    const birth = new Date(birthDate);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  };
+  const age = getAge(birthDay);
+
   useEffect(() => {
     if (profilePictureURL) {
       getS3ImageUrl(profilePictureURL).then((sourceUrl) => {
@@ -142,15 +158,28 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
         setImageUrl(sourceUrl);
       });
     } else {
+      setImageUrl(undefined);
       console.log('no profilePictureURL');
     }
   }, [profilePictureURL]);
 
   return (
     <>
-      <StyledHandle type="source" position={Position.Right} id="personSourceRight" />
-      <StyledHandle type="source" position={Position.Left} id="personSourceLeft" />
-      <StyledHandle type="source" position={Position.Top} id="personSourceTop" />
+      <StyledHandle
+        type="source"
+        position={Position.Right}
+        id="personSourceRight"
+      />
+      <StyledHandle
+        type="source"
+        position={Position.Left}
+        id="personSourceLeft"
+      />
+      <StyledHandle
+        type="source"
+        position={Position.Top}
+        id="personSourceTop"
+      />
       <AnimatePresence>
         {data.isVisible && (
           <motion.div
@@ -166,21 +195,33 @@ export const PersonNode = memo((props: NodeProps<PersonNodeType['data']>) => {
             }}
           >
             <StyledBox isSelected={isSelected}>
-              <IconBox isSelected={isSelected} gender={data.gender}>
+              <IconBox
+                isSelected={isSelected}
+                gender={data.gender}
+              >
                 <IconInner>
                   {imageUrl ? (
                     <CustomProfileIcon src={imageUrl} />
                   ) : (
                     <DefaultProfileIcon>
-                      <BiSolidUser size={100} color="#ffffff" />
+                      <BiSolidUser
+                        size={100}
+                        color="#ffffff"
+                      />
                     </DefaultProfileIcon>
                   )}
                 </IconInner>
               </IconBox>
 
               <InformationBox>
-                <Text>{fullName}</Text>
-                <Text>{formattedBirthDay}</Text>
+                <Text fontSize="xl" fontWeight="600" whiteSpace="nowrap">{fullName}</Text>
+                <Text fontSize="xl" fontWeight="600" whiteSpace="nowrap">
+                  {age !== undefined && `（${age}歳）`}
+                </Text>
+                <Text whiteSpace="nowrap" fontWeight="500">
+                  {formattedBirthDay && `${formattedBirthDay}〜`}
+                  {formattedDeathDay}
+                </Text>
               </InformationBox>
             </StyledBox>
           </motion.div>
