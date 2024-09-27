@@ -7,10 +7,12 @@ import {
   CircularProgress,
   Container,
   Flex,
+  HStack,
   Heading,
   Spinner,
   Text,
   VStack,
+  background,
   extendTheme,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
@@ -23,6 +25,7 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
+        backgroundImage: 'url(/pattern.jpg)',
         bg: 'gray.100',
         color: 'gray.800',
       },
@@ -33,12 +36,18 @@ const theme = extendTheme({
 const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
   const [familyTreeSummary, setFamilyTreeSummary] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingSummary, setLoadingSummary] = useState(true);
   const router = useRouter();
 
   const fetchData = async () => {
-    const result = await fetchFamilyTreeSummary();
-    if (result) {
-      setFamilyTreeSummary(result);
+    setLoadingSummary(true);
+    try {
+      const result = await fetchFamilyTreeSummary();
+      if (result) {
+        setFamilyTreeSummary(result);
+      }
+    } finally {
+      setLoadingSummary(false);
     }
   };
 
@@ -90,7 +99,7 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
                 <Heading
                   as="h2"
                   size="md"
-                  mb={5}
+                  mb={8}
                 >
                   編集する家系図を選択してください。
                 </Heading>
@@ -100,14 +109,24 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
                   rowGap={4}
                   wrap="wrap"
                 >
-                  {familyTreeSummary.map((tree: { id: string; name: string }) => (
-                    <Button
-                      key={tree.id}
-                      onClick={() => handleButtonClick(`/app/${tree.id}`)}
-                    >
-                      {tree.name}
-                    </Button>
-                  ))}
+                  {loadingSummary ? (
+                    <Center w="100%">
+                      <CircularProgress
+                      isIndeterminate
+                      color="blue.600"
+                    />
+                    </Center>
+                  ) : (
+                    familyTreeSummary.map((tree: { id: string; name: string }) => (
+                      <Button
+                        key={tree.id}
+                        onClick={() => handleButtonClick(`/app/${tree.id}`)}
+                      >
+                        {tree.name}
+                      </Button>
+                    ))
+                  )
+                }
                 </Flex>
               </Box>
 
