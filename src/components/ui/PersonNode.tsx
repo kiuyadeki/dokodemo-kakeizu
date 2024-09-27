@@ -43,7 +43,7 @@ transform: translate(-50%, -50%) scale(1, 1);
 opacity: 1;
 }
 100% {
-transform: translate(-50%, -50%) scale(1.7, 1.7);
+transform: translate(-50%, -50%) scale(1.8, 1.8);
 opacity: 0;
 }
 `;
@@ -78,7 +78,7 @@ const StyledBox = styled.div.withConfig({
     border-radius: 50%;
     transition: opacity linear 0.4s;
     z-index: -1;
-    border: 2px solid #777;
+    border: 2px solid #BF712C;
   }
 `;
 
@@ -93,7 +93,7 @@ const IconBox = styled.div.withConfig({
   overflow: hidden;
   border-radius: 50%;
   position: relative;
-  background-color: ${({ isSelected }) => (isSelected ? '#3182ce' : '#ccc')};
+  background-color: ${({ isSelected }) => (isSelected ? '#D9A74A' : '#ccc')};
   border-width: 2px;
   border-style: solid;
   border-color: ${({ gender }) => (gender === 'male' ? '#3182ce' : gender === 'female' ? '#E53E3E' : '#ccc')};
@@ -118,7 +118,7 @@ const CustomProfileIcon = styled.img`
 
 const InformationBox = styled.div`
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 14px);
   left: 50%;
   translate: -50% 0;
   text-align: center;
@@ -214,13 +214,13 @@ export const PersonNode = memo((props: NodeProps<Node<PersonData>['data']>) => {
               </IconBox>
 
               <InformationBox>
-                <Text>{fullName}</Text>
-                <Text whiteSpace="nowrap">
+                <Text fontSize="xl" fontWeight="600" whiteSpace="nowrap">{fullName}</Text>
+                <Text fontSize="xl" fontWeight="600" whiteSpace="nowrap">
+                  {age !== undefined && `（${age}歳）`}
+                </Text>
+                <Text whiteSpace="nowrap" fontWeight="500">
                   {formattedBirthDay && `${formattedBirthDay}〜`}
                   {formattedDeathDay}
-                </Text>
-                <Text whiteSpace="nowrap">
-                  {age !== undefined && `${age}歳`}
                 </Text>
               </InformationBox>
             </StyledBox>

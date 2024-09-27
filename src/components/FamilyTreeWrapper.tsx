@@ -29,6 +29,7 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
   const [wholeNodes, setWholeNodes] = useRecoilState(wholeNodesState);
   const [wholeEdges, setWholeEdges] = useRecoilState(wholeEdgesState);
   const [selectedNode, setSelectedNode] = useRecoilState(selectedNodeState);
+  const [isLoadingBtn, setIsLoadingBtn] = useState(false);
 
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
   const nodeTypes = useMemo(() => ({ person: PersonNode, marital: MaritalNode }), []);
@@ -43,26 +44,31 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
   }, []);
 
   const handleSaveButtonClick = async () => {
-    if (projectId) {
-      const result = await onUpdate(projectId);
-      if (result) {
-        toast({
-          title: '保存しました',
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-          position: 'top',
-        });
-      } else {
-        toast({
-          title: '保存が失敗しました',
-          description: '家系図の更新中にエラーが発生しました。もう一度お試しください。',
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-          position: 'top',
-        });
+    setIsLoadingBtn(true);
+    try {
+      if (projectId) {
+        const result = await onUpdate(projectId);
+        if (result) {
+          toast({
+            title: '保存しました',
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+            position: 'top',
+          });
+        } else {
+          toast({
+            title: '保存が失敗しました',
+            description: '家系図の更新中にエラーが発生しました。もう一度お試しください。',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+            position: 'top',
+          });
+        }
       }
+    } finally {
+      setIsLoadingBtn(false);
     }
   };
 
@@ -84,6 +90,8 @@ export const FamilyTreeWrapper: FC<FamilyTreeWrapperProps> = (props) => {
         right={4}
         top={4}
         zIndex={10}
+        isDisabled={isLoadingBtn}
+        isLoading={isLoadingBtn}
       >
         保存する
       </Button>
