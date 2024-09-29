@@ -3,6 +3,9 @@
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
   "AuthCognitoUserPoolId": {
-    "Fn::GetAtt": ["authnextfamilytreed58e572c", "Outputs.UserPoolId"]
+    "Fn::GetAtt": [
+      "authnextfamilytreed58e572c",
+      "Outputs.UserPoolId"
+    ]
   }
 }

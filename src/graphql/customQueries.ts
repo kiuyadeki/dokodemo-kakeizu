@@ -16,6 +16,7 @@ export const listFamilyTreeSummary = /* GraphQL */ `query listFamilyTrees(
     items {
       id
       name
+      createdAt
     }
     nextToken
   }

@@ -8,4 +8,5 @@ type FamilyTree @model @auth(rules: [{ allow: owner, operations: [create, update
   owner: String!
   name: String!
   data: AWSJSON
+  createdAt: AWSDateTime!
 }
