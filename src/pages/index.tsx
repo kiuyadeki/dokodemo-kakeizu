@@ -4,11 +4,16 @@ import {
   Button,
   Center,
   ChakraProvider,
+  CheckboxIcon,
   CircularProgress,
   Container,
   Flex,
   HStack,
   Heading,
+  List,
+  ListIcon,
+  ListItem,
+  Spacer,
   Spinner,
   Text,
   VStack,
@@ -20,6 +25,8 @@ import { CreateNewProject } from '@/components/CreateNewProject';
 import { fetchFamilyTreeSummary } from '@/services/fetchFamilyTreeSummary';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { formatDate } from '@/helpers/formatDate';
+import { EditIcon } from '@chakra-ui/icons';
 
 const theme = extendTheme({
   styles: {
@@ -76,7 +83,8 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
       <ChakraProvider theme={theme}>
         <Center
           minHeight="100dvh"
-          p={10}
+          py={20}
+          px={6}
         >
           {loading ? (
             <VStack>
@@ -117,14 +125,31 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
                     />
                     </Center>
                   ) : (
-                    familyTreeSummary.map((tree: { id: string; name: string }) => (
-                      <Button
-                        key={tree.id}
-                        onClick={() => handleButtonClick(`/app/${tree.id}`)}
-                      >
-                        {tree.name}
-                      </Button>
-                    ))
+                    <List spacing={0} w="100%" borderTop="1px solid" borderColor="gray.200">
+
+                      {familyTreeSummary.map((tree: { id: string; name: string; createdAt: string; }) => (
+                        <ListItem
+                          key={tree.id}
+                          onClick={() => handleButtonClick(`/app/${tree.id}`)}
+                          display="flex"
+                          alignItems="center"
+                          cursor="pointer"
+                          py={4}
+                          borderBottom="1px solid"
+                          borderColor="gray.200"
+                          transition="opacity 0.3s"
+                          _hover={{ opacity: 0.5 }}
+                          aria-label={`Edit ${tree.name}`}
+                        >
+                          <ListIcon as={EditIcon} color='#aaa' />
+                          <Flex flex="1" alignItems="baseline">
+                          <Text fontSize="md" color="gray.800">{tree.name}</Text>
+                          <Spacer />
+                          <Text fontSize="sm" color="gray.500">作成日: {formatDate(tree.createdAt)}</Text>
+                          </Flex>
+                        </ListItem>
+                      ))}
+                    </List>
                   )
                 }
                 </Flex>
@@ -140,7 +165,10 @@ const HomePage = ({ signOut, user }: WithAuthenticatorProps) => {
               </Heading>
               <CreateNewProject />
 
-              <Button onClick={signOut}>Sign Out {user!.username}</Button>
+              <Text fontWeight="600" position="fixed" left="20px" top="10px">{user!.username}</Text>
+              <Flex justifyContent="flex-end">
+              <Button mt={8} onClick={signOut}>ログアウト</Button>
+              </Flex>
             </Container>
           )}
         </Center>
