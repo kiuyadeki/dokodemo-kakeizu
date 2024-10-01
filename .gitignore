@@ -56,3 +56,10 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+# Amplifyの機密情報を除外
+amplify/.config
+amplify/team-provider-info.json
+amplify/backend/awscloudformation
+amplify/backend/auth/*/cli-inputs.json
+amplify/backend/storage/*/cli-inputs.json
